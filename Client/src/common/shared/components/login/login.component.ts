@@ -19,12 +19,11 @@ export class LoginComponent implements OnInit {
     login() {
         console.log(this.returnUrl);
         //where do i need to return to after authenticating? it should be returnUrl parameter, if it is passed in.
-        this.security.authN(this.returnUrl);
+        this.security.authN(this.credentials, this.returnUrl);
     }
 
     ngOnInit() {
         this.returnUrl = decodeURI(this.route.snapshot.queryParamMap.get('returnUrl') || "");
         if (this.isWindows) this.login();
     }
-
 }

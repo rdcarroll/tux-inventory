@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, of } from 'rxjs';
 import { CurrentUser } from '../app';
 import { ApiClientService } from '../services/api-client.service';
@@ -33,9 +33,20 @@ export class SecurityService {
         return this.authZSubject.asObservable();
     }
 
-    authN(returnUrl: string): void {
+    authN(creds:any, returnUrl: string): void {
         this.returnUrl = returnUrl;
-        this.http.get('/logon').subscribe((user:any) => {
+        
+        let body = new URLSearchParams();
+        body.set('username', creds.uid);
+        body.set('password', creds.pwd);
+        body.set('grant_type',"password");
+        body.set('client_id',"asdf");
+        body.set('client_secret',"asdf");
+
+        let options = {
+            headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+        };
+        this.http.post('/auth/login', body.toString(), options).subscribe((user:any) => {
                 if (user) {
                     // store user details and token in local storage to keep user logged in between page refreshes
                     sessionStorage.setItem('currentUser', JSON.stringify(user));
@@ -47,7 +58,7 @@ export class SecurityService {
             });
     }
     authZ() {
-        this.ApiClient.pGet("Users/Me", {}).pipe(take(1))
+        this.ApiClient.pGet("Employees/Me", {}).pipe(take(1))
             .subscribe(res => {
                 let roleId: number = 0;
                 if (res.ActiveFlag) roleId += this.Access.User;

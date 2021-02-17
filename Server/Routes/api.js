@@ -1,12 +1,10 @@
-var express = require('express');
-var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.send('api works');
-});
-router.get('/administrators', function(req, res, next) {
-  let data = [{firstname:'rick',lastname:'carroll'}]
-  res.status(200).json(data);
-});
+module.exports = (router, app) => {
+  //const employeeService = require("../server/Services/EmployeeService.js");
+  const employeeService = require("../../server/Services/EmployeeService");
+  router.get("/employees", app.oauth.authorise(), employeeService.getEmployees);
+  router.get("/employees/Me", app.oauth.authorise(), employeeService.getEmployee);
+  router.get("/employees/:id", app.oauth.authorise(), employeeService.getEmployee);
 
-module.exports = router;
+  return router;
+};

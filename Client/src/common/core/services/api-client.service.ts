@@ -89,7 +89,10 @@ export class ApiClientService {
 
     private request(options: ApiOptions): Observable<any> {
 
-        options.headers = Object.assign(this.defaultHeaders, options.headers || {})
+        let cu = JSON.parse(sessionStorage.getItem('currentUser'));
+        //let authheader = {'Authorization':`${cu.token_type} ${cu.access_token}`};
+        let authheader = {'Authorization':`Bearer ${cu.access_token}`};
+        options.headers = Object.assign(this.defaultHeaders, authheader, options.headers || {})
         if (options.cache && options.cache === true) {
             if (sessionStorage.getItem(encodeURIComponent(options.url)) != null) {
                 return observableOf(JSON.parse(sessionStorage.getItem(encodeURIComponent(options.url))));
