@@ -1,0 +1,26 @@
+﻿<!--<input class="form-control" type="text"
+       [placeholder]="placeholder"
+       [required]="required"
+       (change)="getChange($event)"
+       [formControl]="myControl"
+       [matAutocomplete]="auto">-->
+
+<div class="my-search input-group" [ngClass]="{'input-group-sm': size === 'sm'}">
+    <input class="form-control" type="text" #inputbox
+           [placeholder]="placeholder"
+           [required]="required"
+           (change)="getChange($event)"
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="clearFilter();">
+            <fa-icon *ngIf="!btnText" [icon]="['fas', 'times']"></fa-icon>
+            <span *ngIf="btnText">{{btnText}}</span>
+        </button>
+    </div>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn.bind(this)" (optionSelected)='getSelected($event.option.value)' [panelWidth]="panelwidth">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option[valueField]">
+            {{option[displayField]}}
+        </mat-option>
+    </mat-autocomplete>
+</div>

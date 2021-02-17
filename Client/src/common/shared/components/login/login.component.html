@@ -1,0 +1,52 @@
+﻿<!--<div class="jumbotron ettp-primary not-round d-none d-md-block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="/dist/images/LogoTrans.png" />
+                <div class="padded"></div>
+            </div>
+            <div class="col-md-6 text-center">
+                <p>Welcome to AMS.IO</p>
+                <p>You must login to continue</p>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>-->
+<app-jumbo customTitle="Welcome to PCS" unsetBottom="true"></app-jumbo>
+
+<div class="container" *ngIf="!isWindows">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 well">
+            <div>
+                <h2>Please Login</h2>
+                <div class="form-group row">
+                    <input class="form-control" placeholder="UID" [(ngModel)]="credentials.uid">
+                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="credentials.pwd">
+                </div>
+                <button class="btn btn-primary btn-block" type="button" (click)="login()">Login</button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+    <div class="row" *ngIf="primaryemail">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <p class="padded ettp-text-compliment"><a class="padded ettp-text-compliment" href="mailto:{{primaryemail}}">Request Access</a></p>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+<div class="container" *ngIf="isWindows">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center">
+            <div>
+                <h3>Please Wait. Logging in...</h3>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+node_modules
+[Bb]in/
+dist/
+
+# Others
+**/Client/src/**/*.js
+**/Client/src/**/*.js.map
+Client/src/**/*.js
+Client/src/**/*.js.map

@@ -1,0 +1,18 @@
+﻿
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+//$theme-colors: ( "primary" : rgb(10,52,67), "success":rgb(120,149,61), "warning":rgb(237,176,84), "info":rgb(27,116,138), "danger": rgb(213,70,41) );
+
+$ettp-primary: #555;
+$ettp-secondary: darken($ettp-primary, 10%);
+$ettp-compliment: #c9d8c5;
+//#c9d8c5 #fff
+$ettp-pass: #C1C9A2;
+$ettp-fail: #D54629;
+
+$navbar-dark-color: $ettp-compliment;
+$navbar-inverse-bg: $ettp-primary;
+
+@import "~bootstrap/scss/bootstrap";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
