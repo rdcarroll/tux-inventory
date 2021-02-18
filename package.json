@@ -17,7 +17,7 @@
     "build:clean": "del-cli \"Client/src/**/*.js.map\" \"Client/src/**/*.js\" \"Client/src/**/*.ngsummary.json\" \"Client/src/**/*.metadata.json\" \"Client/src/**/**/*.ngfactory.ts\" \"Client/src/**/*.ngstyle.ts\" \"Client/src/**/*.shim.ts\""
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "cookie-pnarser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
