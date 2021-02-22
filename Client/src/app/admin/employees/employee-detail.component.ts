@@ -3,16 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { ApiClientService, Util } from '../../../common/core';
-import { Administrator } from '../admin';
+import { Employee } from '../admin';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'administrators-detail',
-    templateUrl: './administrators-detail.component.html'
+    selector: 'employee-detail',
+    templateUrl: './employee-detail.component.html'
 })
-export class AdministratorsDetailComponent implements OnInit {
+export class EmployeeDetailComponent implements OnInit {
     
-    item: Administrator;
+    item: Employee;
     id: string;
 
     constructor(
@@ -26,31 +26,31 @@ export class AdministratorsDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
         if (this.id === 'add') {
-            this.item = new Administrator();
+            this.item = new Employee();
         }
         else {
-            this.ApiClient.pGet("administrators/" + this.id, {}).pipe(take(1))
+            this.ApiClient.pGet("employees/" + this.id, {}).pipe(take(1))
                 .subscribe(res => this.item = res);
         }
     }
 
     add(): void {
-        this.ApiClient.pPost("administrators", {}, this.item).pipe(take(1))
+        this.ApiClient.pPost("employees", {}, this.item).pipe(take(1))
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'administrators', this.item.ID]);
-                this.util.alert("success", "Success Adding Administrator", false, { icon: 'check' }, true);
+                this.router.navigate(['/admin', 'employees', this.item.ID]);
+                this.util.alert("success", "Success Adding Employee", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
             });
     }
 
     save(): void {
-        this.ApiClient.pPut("administrators/" + this.id, {}, this.item).pipe(take(1))
+        this.ApiClient.pPut("employees/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'administrators']);
-                this.util.alert("success", "Success Saving Administrator", false, { icon: 'check' }, true);
+                this.router.navigate(['/admin', 'employees']);
+                this.util.alert("success", "Success Saving Employee", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
             });

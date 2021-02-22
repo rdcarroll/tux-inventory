@@ -10,7 +10,7 @@ module.exports = (injectedUserDB) => {
 };
 
 function registerUser(req, res) {
-    userDB.isValidUser(req.body.username, (error, isValidUser) => {
+    userDB.isValidUser(req.body.UserName, (error, isValidUser) => {
         if (error || !isValidUser) {
             const message = error
                 ? "Something went wrong!"
@@ -21,10 +21,10 @@ function registerUser(req, res) {
             return;
         }
 
-        userDB.register(req.body.username, req.body.password, (response) => {
+        userDB.register(req.body.UserName, req.body.Password, (response) => {
             sendResponse(
                 res,
-                response.error === undefined ? "Success!!" : "Something went wrong!",
+                !response.error  ? "Success!!" : "Something went wrong!",
                 response.error
             );
         });

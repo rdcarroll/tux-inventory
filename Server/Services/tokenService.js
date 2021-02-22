@@ -34,18 +34,26 @@ function getUser(username, password, cbFunc) {
 }
 
 function saveAccessToken(accessToken, clientID, expires, user, cbFunc) {
-    tokenDB.saveAccessToken(accessToken, user.id, cbFunc);
+    tokenDB.saveAccessToken(accessToken, user.ID, cbFunc);
 }
 
 function getAccessToken(bearerToken, cbFunc) {
     tokenDB.getUserIDFromBearerToken(bearerToken, (userID) => {
-        const accessToken = {
-            user: {
-                id: userID,
-            },
-            expires: null,
-        };
-
-        cbFunc(userID === null, userID === null ? null : accessToken);
+        try {
+            let user = userDB.getUserByID(userID, (err,data)=>{
+                const accessToken = {
+                    user: {
+                        id: data.ID,
+                        name: data.UserName,
+                        isAdmin:data.IsAdmin
+                    },
+                    expires: null,
+                };
+        
+                cbFunc(userID === null, userID === null ? null : accessToken);
+            });
+        } catch (error) {
+            cbFunc(error, null);
+        }
     });
 }

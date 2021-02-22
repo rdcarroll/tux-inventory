@@ -1,9 +1,9 @@
 ﻿
-export class Administrator {
+export class Employee {
     ID: number;
-    FULL_NAME: string;
-    USER_ID: string;
-    EMPLOYEE_ID: number;
+    FullName: string;
+    LastName: string;
+    FirstName: number;
     created_at: string;
     updated_at: string;
 }

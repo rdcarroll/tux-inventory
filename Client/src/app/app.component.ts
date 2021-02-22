@@ -3,13 +3,14 @@ import { SecurityService, CurrentUser, Util, ApiClientService } from './../commo
 import { NavigationStart, Router } from '@angular/router';
 import { filter, finalize, map, take } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
+import * as root from '../common/globals';
 
 @Component({
     selector: 'my-app',
     templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-    title = 'PCS.IO';
+    title = root.companyname;
     user: CurrentUser;
     navs: any[];
     navName: string;
@@ -45,12 +46,6 @@ export class AppComponent implements OnInit {
             {
                 link: "/wbs/home", display: "WBS", condition: this.canUse.toString(), icon: "fas list", childnavs: [
                 ]
-            },
-            {
-                link: null, display: "BCR", condition: this.canUse.toString(), icon: "fas code-branch", childnavs: [
-                    { link: "/bcrs/home", display: "Baseline Change Requests", condition: this.canUse.toString(), icon: "fas code-branch", childnavs: [] },
-                    { link: "/bcrs/add", display: "New BCR", condition: this.canUse.toString(), icon: "fas plus", childnavs: [] }
-                ] 
             }, 
             {
                 link: null, display: "Reports", condition: this.canUse.toString(), icon: "far file-alt", childnavs: [
@@ -60,7 +55,13 @@ export class AppComponent implements OnInit {
             },
             {
                 link: null, display: "Admin", condition: this.canAdmin.toString(), icon: "fas wrench", childnavs: [
-                    { link: "/admin/administrators", display: "Administrators", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/employees", display: "Employees", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/customers", display: "Customers", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/eventtypes", display: "EventTypes", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/inventory", display: "Inventory", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/inventoryitems", display: "InventoryItems", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/inventoryitems", display: "InventoryTypes", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/packages", display: "Packages", condition: this.canUse.toString(), icon: null, childnavs: [] },
           ]
             }
         ];
@@ -108,6 +109,6 @@ export class AppComponent implements OnInit {
                 this.util.alertcancel(true);
             });
 
-        this.cacheData().subscribe((res: any) => { });
+   //this.cacheData().subscribe((res: any) => { });
     }
 }

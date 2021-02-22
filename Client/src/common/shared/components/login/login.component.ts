@@ -11,7 +11,8 @@ import * as root from '../../../globals';
 export class LoginComponent implements OnInit {
     returnUrl: string;
     isWindows: boolean;
-    credentials = { uid: "", password: "" };
+    credentials = { uid: "KC1", pwd: "Happy123" };
+    title = `Welcome to ${root.companyname}`
 
     constructor(private security: SecurityService, private route: ActivatedRoute) {
         this.isWindows = root.loginmodel.toString() == "windows";

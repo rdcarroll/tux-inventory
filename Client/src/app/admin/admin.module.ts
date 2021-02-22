@@ -4,8 +4,8 @@ import { SharedModule } from '../../common/shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 
 import { AdminComponent } from './admin.component';
-import { AdministratorsComponent } from './administrators/administrators.component';
-import { AdministratorsDetailComponent } from './administrators/administrators-detail.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { EmployeeDetailComponent } from './employees/employee-detail.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -16,8 +16,8 @@ import { AdministratorsDetailComponent } from './administrators/administrators-d
     ],
     declarations: [
         AdminComponent,
-        AdministratorsComponent,
-        AdministratorsDetailComponent
+        EmployeesComponent,
+        EmployeeDetailComponent
     ]
 })
 export class AdminModule { }

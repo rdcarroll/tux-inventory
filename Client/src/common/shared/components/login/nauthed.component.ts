@@ -1,4 +1,5 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import * as root from '../../../globals';
 
 @Component({
     selector: 'my-nauthed',
@@ -7,6 +8,7 @@
 
 export class NauthedComponent implements OnInit {
     link: string;
+    title = `Unauthorized to use ${root.companyname}`;
     constructor() {}
 
 

@@ -1,14 +1,14 @@
 ﻿
 <nav class="navbar navbar-expand-lg navbar-dark ettp-primary ettp-seperate fixed-top hide-on-print" id="mainmenu" *ngIf="canUse">
     <div class="container">
-        <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarTogglerMain" aria-controls="navbarTogglerMain" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <div class="navbar-header navbar-left">
+            <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarTogglerMain" aria-controls="navbarTogglerMain" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                <a class="navbar-brand"  routerLink="/landing">{{title}}</a>
+        </div>
         <div class="collapse navbar-collapse" id="navbarTogglerMain" [ngbCollapse]="isCollapsed">
-
-            <!--<a class="navbar-brand"  routerLink="/landing">PCS</a>-->
-
-            <ul class="navbar-nav mr-auto" *ngIf="canUse">
+            <ul class="navbar-nav mr-auto navbar-right" *ngIf="canUse">
                 <li class="nav-item" *ngFor="let nav of navs | myfilter : {condition:true}" [ngClass]="{'dropdown': nav.childnavs.length>0}" ngbDropdown (openChange)="menuclicked($event);">
 
                     <a *ngIf="nav.link!=null" class="nav-link" routerLink="{{nav.link}}" routerLinkActive="active" style="font-size: 0.9em;"><fa-icon *ngIf="nav.icon!=null" [icon]="nav.icon.split(' ')"></fa-icon> {{nav.display}}</a>
@@ -44,13 +44,13 @@
 
 <nav class="navbar ettp-primary ettp-seperate-top hide-on-print">
     <p style="font-size: 17px; padding-top: 0px; margin: 0px auto 20px auto; color: #bbb; text-align: center;">
-        For support please contact the Demo Systems Group:<br/>
+        For support please contact the {{title}} Systems Group:<br/>
         <!--<i class="fa fa-envelope icon-white"></i>-->
         <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
-        <a href="mailto:test@test.com?subject=Demo Systems Support" style="color: #bbb;"> Demo Systems Group</a> <br/>
+        <a href="mailto:test@test.com?subject={{title}} Systems Support" style="color: #bbb;"> {{title}} Systems Group</a> <br/>
         Or the following phone numbers:<br/>
         <fa-icon [icon]="['fas', 'phone-alt']"></fa-icon> 865-241-6882 <br/>
-        Demo V4.00
+        {{title}} V4.00
     </p>
 </nav>
  

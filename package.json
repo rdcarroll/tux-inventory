@@ -7,17 +7,16 @@
     "serv": "node app.js",
     "webpack-dev": "cross-env NODE_ENV=development webpack",
     "webpack-production": "cross-env NODE_ENV=production webpack",
-    "build-serv-dev": "npm run webpack-dev && node app.js",
-    "build-serv-prod": "npm run webpack-prod && node app.js",
+    "build-dev": "npm run webpack-dev",
+    "build-prod": "npm run webpack-prod",
     "watch-webpack-dev": "webpack --env=dev --watch --color",
-    "watch-webpack-production": "npm run build-production --watch --color",
+    "watch-webpack-production": "npm run build-prod --watch --color",
     "explore": "source-map-explorer dist/app.js dist/app.js.map",
     "copy-images": "copyfiles -f \"Client/src/assets/images/**\" \"dist/images\"",
     "copy-views": "copyfiles -f \"Server/Views/**\" \"dist/views\"",
     "build:clean": "del-cli \"Client/src/**/*.js.map\" \"Client/src/**/*.js\" \"Client/src/**/*.ngsummary.json\" \"Client/src/**/*.metadata.json\" \"Client/src/**/**/*.ngfactory.ts\" \"Client/src/**/*.ngstyle.ts\" \"Client/src/**/*.shim.ts\""
   },
   "dependencies": {
-    "cookie-pnarser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
@@ -54,7 +53,9 @@
     "node-htmldiff": "0.9.3",
     "popper.js": "1.16.1",
     "rxjs": "~6.5.5",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.10.3",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
   },
   "devDependencies": {
     "@angular/cli": "^9.1.13",
@@ -95,6 +96,7 @@
     "uglifyjs-webpack-plugin": "2.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
-    "webpack-merge": "^4.1.4"
+    "webpack-merge": "^4.1.4",
+    "sequelize-automate": "1.2.2"
   }
 }

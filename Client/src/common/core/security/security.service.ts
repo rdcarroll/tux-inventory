@@ -16,6 +16,7 @@ export class SecurityService {
     getUser(): CurrentUser{
         let value = JSON.parse(sessionStorage.getItem('currentUser'));
         var cu: CurrentUser = typeof value === 'object' ? value : null;
+        if(cu) cu.FullName=`${cu.FirstName} ${cu.LastName}`;
         return cu;
     }
     getReturnUrl(): string {
@@ -61,11 +62,13 @@ export class SecurityService {
         this.ApiClient.pGet("Employees/Me", {}).pipe(take(1))
             .subscribe(res => {
                 let roleId: number = 0;
-                if (res.ActiveFlag) roleId += this.Access.User;
+                //if (res.ActiveFlag) roleId += this.Access.User;
+                if (res.UserName) roleId += this.Access.User;
                 if (res.IsAdmin) roleId += this.Access.Admin;
                 res.role_id = roleId;
+                let cu =  this.getUser();
                 // store user details and token in local storage to keep user logged in between page refreshes
-                sessionStorage.setItem('currentUser', JSON.stringify(res));
+                sessionStorage.setItem('currentUser', JSON.stringify(Object.assign({}, cu, res)) );
                 this.authZSubject.next({ success: roleId > 0 });
             }, (err) => {
                 this.authZSubject.next({ success: false });

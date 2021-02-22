@@ -1,7 +1,7 @@
 ﻿
 <div class="card" saveQuery>
     <div class="card-header">
-        <h4 style="margin: 0px;">Administrators</h4>
+        <h4 style="margin: 0px;">Employees</h4>
     </div>
     <div class="card-block">
         <div class="row">
@@ -9,7 +9,7 @@
                 <div class="float-left">
                     <my-search [search]="searchText" (searchChanged)="searchChanged($event)"></my-search>
                 </div>
-                <a class="btn btn-primary float-right" [routerLink]="['/admin/administrators/add']"><fa-icon [icon]="['fas', 'plus']"></fa-icon> Administrator</a>
+                <a class="btn btn-primary float-right" [routerLink]="['/admin/employees/add']"><fa-icon [icon]="['fas', 'plus']"></fa-icon> Employee</a>
             </div>
         </div>
         <div class="padded"></div>

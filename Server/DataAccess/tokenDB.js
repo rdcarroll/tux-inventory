@@ -10,27 +10,22 @@ module.exports = (injectedPgPool) => {
 };
 
 function saveAccessToken(accessToken, userID, cbFunc) {
-    // const getUserQuery = `INSERT INTO access_tokens (access_token, user_id) VALUES ('${accessToken}', ${userID});`;
+    const getUserQuery = `INSERT INTO access_tokens (access_token, user_id) VALUES ('${accessToken}', ${userID}) ON DUPLICATE KEY UPDATE access_token = "${accessToken}";`;
 
-    // pgPool.query(getUserQuery, (response) => {
-    //     cbFunc(response.error);
-    // });
-    
-    cbFunc(null);
+    pgPool.query(getUserQuery, (response) => {
+        cbFunc(response.error);
+    });
 }
 
 function getUserIDFromBearerToken(bearerToken, cbFunc) {
-    // const getUserIDQuery = `SELECT * FROM access_tokens WHERE access_token = '${bearerToken}';`;
+    const getUserIDQuery = `SELECT * FROM access_tokens WHERE access_token = '${bearerToken}';`;
 
-    // pgPool.query(getUserIDQuery, (response) => {
-    //     const userID =
-    //         response.results && response.results.rowCount == 1
-    //             ? response.results.rows[0].user_id
-    //             : null;
+    pgPool.query(getUserIDQuery, (response) => {
+        const userID =
+            response.results && response.results.length == 1
+                ? response.results[0].user_id
+                : null;
 
-    //     cbFunc(userID);
-    // });
-
-    
-    cbFunc('RC1');
+        cbFunc(userID);
+    });
 }

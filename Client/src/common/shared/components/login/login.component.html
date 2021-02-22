@@ -1,5 +1,5 @@
 ﻿
-<app-jumbo customTitle="Welcome to ABC" unsetBottom="true"></app-jumbo>
+<app-jumbo [customTitle]="title" unsetBottom="true"></app-jumbo>
 
 <div class="container" *ngIf="!isWindows">
     <div class="row">
@@ -9,7 +9,7 @@
                 <h2>Please Login</h2>
                 <div class="form-group row">
                     <input class="form-control" placeholder="UID" [(ngModel)]="credentials.uid">
-                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="credentials.pwd">
+                    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="credentials.uid">
                 </div>
                 <button class="btn btn-primary btn-block" type="button" (click)="login()">Login</button>
             </div>

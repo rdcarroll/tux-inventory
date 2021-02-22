@@ -1,35 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { Administrator } from '../admin';
+import { Employee } from '../admin';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Column, Config } from '../../../common/shared';
 
 @Component({
-    selector: 'my-administrators',
-    templateUrl: './administrators.component.html'
+    selector: 'my-employees',
+    templateUrl: './employees.component.html'
 })
-export class AdministratorsComponent implements OnInit {
-    items: Administrator[];
+export class EmployeesComponent implements OnInit {
+    items: Employee[];
     config: Config;
     searchText: string;
     columns : Column[] = [
         {
             display: 'Full Name', //The text to display
-            variable: 'FULL_NAME', //The name of the key that's apart of the data array
+            variable: 'FullName', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
             sortable: false
         },
         {
             display: 'User ID',
-            variable: 'USER_ID',
+            variable: 'UserName',
             filter: 'text',
             sortable: false
         },
         {
-            display: 'Badge',
-            variable: 'EMPLOYEE_ID',
-            filter: 'text',
+            display: 'Created Date',
+            variable: 'createdAt',
+            filter: 'date',
             sortable: false
         },
         {
@@ -65,10 +65,10 @@ export class AdministratorsComponent implements OnInit {
         if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
 
         this.util.loading(true, null);
-        this.ApiClient.pGet("administrators", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
+        this.ApiClient.pGet("employees", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
-                    this.items = res.Items;
+                    this.items = res;
                     this.config.collectionSize = res.TotalCount;
                 }, (err) => {
                     this.util.alert("error", err.statusText, false, null);
@@ -84,9 +84,9 @@ export class AdministratorsComponent implements OnInit {
         this.pageChange();
     }
     remove(id: number): void {
-        this.ApiClient.pRemove("administrators/" + id, {}).pipe(take(1))
+        this.ApiClient.pRemove("employees/" + id, {}).pipe(take(1))
             .subscribe(res => {
-                this.util.alert("success", "Administrator was successfully removed.", false, { icon: 'check' }, true);
+                this.util.alert("success", "Employee was successfully removed.", false, { icon: 'check' }, true);
                 this.pageChange();
             }, (err) => {
                 this.util.handleError(err, "Error Removing");
@@ -100,7 +100,7 @@ export class AdministratorsComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/administrators', args[0].ID]);
+                this.router.navigate(['/admin/employees', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {
