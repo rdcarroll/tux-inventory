@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../admin';
+import { InventoryType } from '../admin';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Column, Config } from '../../../common/shared';
 
 @Component({
-    selector: 'my-customers',
-    templateUrl: './customers.component.html'
+    selector: 'my-inventorytypes',
+    templateUrl: './inventorytypes.component.html'
 })
-export class customersComponent implements OnInit {
-    items: Customer[];
+export class inventorytypesComponent implements OnInit {
+    items: InventoryType[];
     config: Config;
     searchText: string;
     columns : Column[] = [
@@ -65,7 +65,7 @@ export class customersComponent implements OnInit {
         if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
 
         this.util.loading(true, null);
-        this.ApiClient.pGet("customers", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
+        this.ApiClient.pGet("inventory_types", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
                     this.items = res;
@@ -84,9 +84,9 @@ export class customersComponent implements OnInit {
         this.pageChange();
     }
     remove(id: number): void {
-        this.ApiClient.pRemove("customers/" + id, {}).pipe(take(1))
+        this.ApiClient.pRemove("inventory_types/" + id, {}).pipe(take(1))
             .subscribe(res => {
-                this.util.alert("success", "Customer was successfully removed.", false, { icon: 'check' }, true);
+                this.util.alert("success", "Inventory Type was successfully removed.", false, { icon: 'check' }, true);
                 this.pageChange();
             }, (err) => {
                 this.util.handleError(err, "Error Removing");
@@ -100,7 +100,7 @@ export class customersComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/customers', args[0].ID]);
+                this.router.navigate(['/admin/inventory_types', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {

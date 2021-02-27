@@ -3,16 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { ApiClientService, Util } from '../../../common/core';
-import { Customer } from '../admin';
+import { EventType } from '../admin';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'customer-detail',
-    templateUrl: './customer-detail.component.html'
+    selector: 'eventtype-detail',
+    templateUrl: './eventtype-detail.component.html'
 })
-export class CustomerDetailComponent implements OnInit {
+export class EventTypeDetailComponent implements OnInit {
     
-    item: Customer;
+    item: EventType;
     id: string;
 
     constructor(
@@ -26,31 +26,31 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
         if (this.id === 'add') {
-            this.item = new Customer();
+            this.item = new EventType();
         }
         else {
-            this.ApiClient.pGet("customers/" + this.id, {}).pipe(take(1))
+            this.ApiClient.pGet("event_types/" + this.id, {}).pipe(take(1))
                 .subscribe(res => this.item = res);
         }
     }
 
     add(): void {
-        this.ApiClient.pPost("customers", {}, this.item).pipe(take(1))
+        this.ApiClient.pPost("event_types", {}, this.item).pipe(take(1))
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'customers', this.item.ID]);
-                this.util.alert("success", "Success Adding Customer", false, { icon: 'check' }, true);
+                this.router.navigate(['/admin', 'event_types', this.item.ID]);
+                this.util.alert("success", "Success Adding Event Type", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
             });
     }
 
     save(): void {
-        this.ApiClient.pPut("customers/" + this.id, {}, this.item).pipe(take(1))
+        this.ApiClient.pPut("event_types/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'customers']);
-                this.util.alert("success", "Success Saving Customer", false, { icon: 'check' }, true);
+                this.router.navigate(['/admin', 'event_types']);
+                this.util.alert("success", "Success Saving Event Type", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
             });

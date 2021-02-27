@@ -65,7 +65,7 @@ export class eventtypesComponent implements OnInit {
         if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
 
         this.util.loading(true, null);
-        this.ApiClient.pGet("eventtypes", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
+        this.ApiClient.pGet("event_types", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
                     this.items = res;
@@ -84,7 +84,7 @@ export class eventtypesComponent implements OnInit {
         this.pageChange();
     }
     remove(id: number): void {
-        this.ApiClient.pRemove("eventtypes/" + id, {}).pipe(take(1))
+        this.ApiClient.pRemove("event_types/" + id, {}).pipe(take(1))
             .subscribe(res => {
                 this.util.alert("success", "EventType was successfully removed.", false, { icon: 'check' }, true);
                 this.pageChange();
@@ -100,7 +100,7 @@ export class eventtypesComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/eventtypes', args[0].ID]);
+                this.router.navigate(['/admin/event_types', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {

@@ -6,8 +6,8 @@
         <div class="col-md-12">
             <div class="card" *ngIf="item">
                 <div class="card-header">
-                    <my-backbutton class="float-right" [link]="['/admin/customers']"></my-backbutton>
-                    <h3><span>{{id==='add'?"Create":"Update"}} </span>Customer</h3>
+                    <my-backbutton class="float-right" [link]="['/admin/inventoryitems']"></my-backbutton>
+                    <h3><span>{{id==='add'?"Create":"Update"}} </span>Inventory Item</h3>
                 </div>
                 <div class="card-body">
 
@@ -46,8 +46,8 @@
                         <div class="form-group row">
                             <div class="offset-sm-4 col-sm-8">
                                 <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-success" (click)="add()" *ngIf="id==='add'">Create Customer</button>
-                                    <button type="button" class="btn btn-success" (click)="save()" *ngIf="id!='add'">Update Customer</button>
+                                    <button type="button" class="btn btn-success" (click)="add()" *ngIf="id==='add'">Create Inventory Item</button>
+                                    <button type="button" class="btn btn-success" (click)="save()" *ngIf="id!='add'">Update Inventory Item</button>
                                 </div>
                             </div>
                         </div>
