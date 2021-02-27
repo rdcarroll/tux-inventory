@@ -44,12 +44,12 @@ export class AppComponent implements OnInit {
         this.canUse = this.security.hasAccess(this.security.Access.User);
         this.navs = [
             {
-                link: "/wbs/home", display: "WBS", condition: this.canUse.toString(), icon: "fas list", childnavs: [
+                link: "/wbs/home", display: "Events", condition: this.canUse.toString(), icon: "fas list", childnavs: [
                 ]
             }, 
             {
                 link: null, display: "Reports", condition: this.canUse.toString(), icon: "far file-alt", childnavs: [
-                    { link: "/work_authorizations/reports/my_work_authorizations", display: "My WCA Summary Report", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
+                    { link: "/work_authorizations/reports/my_work_authorizations", display: "My Summary Report", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
                   
                 ]
             },

@@ -4,6 +4,18 @@ export class Employee {
     FullName: string;
     LastName: string;
     FirstName: number;
-    created_at: string;
-    updated_at: string;
+    IsAdmin: boolean;
+    createdAt: string;
+    updatedAt: string;
+}
+export class Customer {
+    ID: number;
+    FullName: string;
+    LastName: string;
+    FirstName: number;
+    Email: string;
+    Phone: string;
+    Address: string;
+    createdAt: string;
+    updatedAt: string;
 }

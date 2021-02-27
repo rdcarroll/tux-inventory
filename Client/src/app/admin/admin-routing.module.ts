@@ -5,13 +5,18 @@ import { AuthGuard, AdminGuard } from '../../common/core';
 import { AdminComponent } from './admin.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeDetailComponent } from './employees/employee-detail.component';
+import { customersComponent } from './customers/customers.component';
+import { CustomerDetailComponent } from './customers/customer-detail.component';
 
 const routes: Routes = [
     {
         path: 'admin', component: AdminComponent, canActivate: [AuthGuard, AdminGuard],
         children: [
             { path: 'employees', component: EmployeesComponent },
-            { path: 'employees/:id', component: EmployeeDetailComponent }
+            { path: 'employees/:id', component: EmployeeDetailComponent },
+            
+            { path: 'customers', component: customersComponent },
+            { path: 'customers/:id', component: CustomerDetailComponent }
         ]
     }
 ];

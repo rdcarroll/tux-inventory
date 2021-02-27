@@ -37,7 +37,7 @@ module.exports = sequelize => {
         return `${this.FirstName} ${this.LastName}`;
       },
       set(value) {
-        throw new Error('Do not try to set the `fullName` value!');
+        //throw new Error('Do not try to set the `fullName` value!');
       }
     },
     UserName: {

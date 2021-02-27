@@ -1,20 +1,29 @@
-const emplyee_service = require("../Services/EmployeeService");
-const token_service = require('../Services/tokenService');
+const model_service = require(`../Services/EmployeeService`);
+const model_name = `Employee`;
 
 // Create and Save a new Customer
-exports.create = (req, res) => {
-  
+exports.create = async (req, res) => {
+  let response;
+  let nModel = req.body;
+  try {
+    response = await model_service.create(nModel);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error creating ${model_name}`
+    });
+  }
 };
 
 // Retrieve all Employees from the database.
 exports.findAll = async (req, res) => {
   let response;
   try {
-    response = await emplyee_service.getEmployees();
+    response = await model_service.getAll();
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: "Error retrieving employees"
+      message: `Error retrieving ${model_name}s`
     });
   }
 };
@@ -24,18 +33,28 @@ exports.findOne = async (req, res) => {
   let response;
   const id = req.params.id;
   try {
-    response = await emplyee_service.getEmployee(id);
+    response = await model_service.getOne(id);
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: "Error retrieving employee"
+      message: `Error retrieving ${model_name}`
     });
   }
 };
 
 // Update a Customer by the id in the request
-exports.update = (req, res) => {
-  
+exports.update = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  let uModel = req.body;
+  try {
+    response = await model_service.update(id, uModel);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error updating ${model_name}.`
+    });
+  }
 };
 
 // Delete a Customer with the specified id in the request
@@ -51,25 +70,18 @@ exports.deleteAll = (req, res) => {
 // Find all published Employees
 exports.findAllPublished = (req, res) => {
   
-// Retrieve all Employees from the database.
+};
+
 exports.findMe = async (req, res) => {
   let response;
-  const access_token = req.header('authorization');
-  try {
-    token_service.getAccessToken(token, async (err,access_token) =>{
-          try {
-            response = await emplyee_service.getEmployee(access_token.id);
-            res.json(response);
-          } catch (err) {
-            res.status(500).send({
-              message: "Error retrieving employee"
-            });
-          }
-    });
-  } catch (err) {
-    res.status(500).send({
-      message: "Error retrieving access_token"
-    });
-  }
+  const userID = req.authedID;
+        try {
+          response = await model_service.getOne(userID);
+          res.json(response);
+        } catch (err) {
+          res.status(500).send({
+            message: `Error retrieving ${model_name}`
+          });
+        }
 };
-};
+

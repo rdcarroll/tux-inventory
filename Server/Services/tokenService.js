@@ -10,7 +10,7 @@ module.exports = (injectedUserDB, injectedTokenDB) => {
         saveAccessToken: saveAccessToken,
         getUser: getUser,
         grantTypeAllowed: grantTypeAllowed,
-        getAccessToken: getAccessToken,
+        getAccessToken: getAccessToken
     };
 };
 
@@ -57,3 +57,4 @@ function getAccessToken(bearerToken, cbFunc) {
         }
     });
 }
+

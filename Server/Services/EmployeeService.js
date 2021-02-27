@@ -1,37 +1,42 @@
 const db = require("../models");
-const Employees = db.employees;
+const Model = db.employees;
 
 module.exports = {
-    getEmployees: getEmployees,
-    getEmployee: getEmployee,
-    //getLoggedInUser: getLoggedInUser
+    getAll: getAll,
+    getOne: getOne,
+    create: create,
+    update: update
 };
-async function getEmployees() {
+async function getAll() {
     try {
-      return await Employees.findAll();
+      return await Model.findAll();
     } catch (err) {
       throw err;
     }
 }
-async function getEmployee(id) {
+async function getOne(id) {
     try {
-      return await Employees.findOne(id);
+      return await Model.findByPk(id);
     } catch (err) {
       throw err;
     }
 }
 
-// function getLoggedInUser(token,cbFunc) {
-//     try {
-//         token_service.getAccessToken(token, (err,access_token) =>{
-//             try {
-//         let emp = getEmployee(access_token.id);
-//                 cbFunc( emp);
-//               } catch (err) {
-//                 throw err;
-//               }
-//         });
-//       } catch (err) {
-//         throw err;
-//       }
-// }
+async function create(record) {
+  try {
+    return await Model.create(record);
+  } catch (err) {
+    throw err;
+  }
+}
+async function update(id,record) {
+  try {
+    return await Model.update(record, {
+      where: {
+        ID: id
+      }
+    });
+  } catch (err) {
+    throw err;
+  }
+}

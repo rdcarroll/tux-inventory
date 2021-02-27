@@ -1,44 +1,60 @@
-const db = require("../models");
-const Customers = db.customers;
-const Op = db.Sequelize.Op;
+const model_service = require(`../Services/CustomerService`);
+const model_name = `Customer`;
 
 // Create and Save a new Customer
-exports.create = (req, res) => {
-  
+exports.create = async (req, res) => {
+  let response;
+  let nModel = req.body;
+  try {
+    response = await model_service.create(nModel);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error creating ${model_name}`
+    });
+  }
 };
 
-// Retrieve all Customers from the database.
-exports.findAll = (req, res) => {
-    Customers.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving customers."
-      });
+// Retrieve all Employees from the database.
+exports.findAll = async (req, res) => {
+  let response;
+  try {
+    response = await model_service.getAll();
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}s`
     });
+  }
 };
 
-// Find a single Customer with an id
-exports.findOne = (req, res) => {
-    const id = req.params.id;
-
-    Customers.findByPk(id)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error retrieving customer with id=" + id
-      });
+// Find a single Employee with an id
+exports.findOne = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  try {
+    response = await model_service.getOne(id);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}`
     });
+  }
 };
 
 // Update a Customer by the id in the request
-exports.update = (req, res) => {
-  
+exports.update = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  let uModel = req.body;
+  try {
+    response = await model_service.update(id, uModel);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error updating ${model_name}.`
+    });
+  }
 };
 
 // Delete a Customer with the specified id in the request
@@ -46,12 +62,26 @@ exports.delete = (req, res) => {
   
 };
 
-// Delete all Customers from the database.
+// Delete all Employees from the database.
 exports.deleteAll = (req, res) => {
   
 };
 
-// Find all published Customers
+// Find all published Employees
 exports.findAllPublished = (req, res) => {
   
 };
+
+exports.findMe = async (req, res) => {
+  let response;
+  const userID = req.authedID;
+        try {
+          response = await model_service.getOne(userID);
+          res.json(response);
+        } catch (err) {
+          res.status(500).send({
+            message: `Error retrieving ${model_name}`
+          });
+        }
+};
+

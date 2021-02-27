@@ -33,11 +33,14 @@ const authenticator = require("./server/security/authenticator")(userDB);
 const routes = require("./server/security/login")(express.Router(),app,authenticator);
 app.use("/auth", routes);
 
+const authmiddleware = require("./server/Security/auth.js")(tokenDB);
+app.use(authmiddleware.setUserFromToken);
 // Set our api routes
 const api = require('./server/routes/api')(express.Router(),app);
 app.use('/api', api);
 
-const db = require("./server/Models");
+// const db = require("./server/Models");
+// const tokenService = require('./Server/Services/tokenService');
 //db.sequelize.sync();
 
 // Catch all other routes and return the index file
