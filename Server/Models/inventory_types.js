@@ -13,14 +13,14 @@ module.exports = sequelize => {
       comment: null,
       field: "ID"
     },
-    InventoryTypeName: {
+    Name: {
       type: DataTypes.STRING(45),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "InventoryTypeName"
+      field: "Name"
     }
   };
   const options = {

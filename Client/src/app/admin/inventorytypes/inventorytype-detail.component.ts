@@ -39,7 +39,7 @@ export class InventoryTypeDetailComponent implements OnInit {
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'inventorytypes', this.item.ID]);
+                this.router.navigate(['/admin', 'inventorytypes']);
                 this.util.alert("success", "Success Adding Inventory Type", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");

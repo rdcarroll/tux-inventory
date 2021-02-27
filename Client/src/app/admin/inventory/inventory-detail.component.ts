@@ -3,16 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { ApiClientService, Util } from '../../../common/core';
-import { Customer } from '../admin';
+import { Inventory } from '../admin';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'customer-detail',
-    templateUrl: './customer-detail.component.html'
+    selector: 'inventory-detail',
+    templateUrl: './inventory-detail.component.html'
 })
-export class CustomerDetailComponent implements OnInit {
+export class InventoryDetailComponent implements OnInit {
     
-    item: Customer;
+    item: Inventory;
     id: string;
 
     constructor(
@@ -26,31 +26,31 @@ export class CustomerDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
         if (this.id === 'add') {
-            this.item = new Customer();
+            this.item = new Inventory();
         }
         else {
-            this.ApiClient.pGet("customers/" + this.id, {}).pipe(take(1))
+            this.ApiClient.pGet("inventory/" + this.id, {}).pipe(take(1))
                 .subscribe(res => this.item = res);
         }
     }
 
     add(): void {
-        this.ApiClient.pPost("customers", {}, this.item).pipe(take(1))
+        this.ApiClient.pPost("inventory", {}, this.item).pipe(take(1))
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'customers', this.item.ID]);
-                this.util.alert("success", "Success Adding Customer", false, { icon: 'check' }, true);
+                this.router.navigate(['/admin', 'inventory']);
+                this.util.alert("success", "Success Adding Inventory", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
             });
     }
 
     save(): void {
-        this.ApiClient.pPut("customers/" + this.id, {}, this.item).pipe(take(1))
+        this.ApiClient.pPut("inventory/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'customers']);
-                this.util.alert("success", "Success Saving Customer", false, { icon: 'check' }, true);
+                this.router.navigate(['/admin', 'inventory']);
+                this.util.alert("success", "Success Saving Inventory", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
             });

@@ -27,12 +27,10 @@ export class EventType {
 }
 export class Inventory {
     ID: number;
-    FullName: string;
-    LastName: string;
-    FirstName: number;
-    Email: string;
-    Phone: string;
-    Address: string;
+    ModelName: string;
+    Description: string;
+    InventoryTypeID: number;
+    Cost: number;
     createdAt: string;
     updatedAt: string;
 }
@@ -44,7 +42,11 @@ export class InventoryType {
 }
 export class InventoryItem {
     ID: number;
-    Name: string;
+    InventoryID: number;
+    StatusID: number;
+    Size: string;
+    Barcode: string;
+    SerialNumber: string;
     createdAt: string;
     updatedAt: string;
 }

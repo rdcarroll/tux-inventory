@@ -31,14 +31,14 @@ module.exports = sequelize => {
       comment: null,
       field: "Description"
     },
-    Model: {
+    ModelName: {
       type: DataTypes.STRING(45),
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "Model"
+      field: "ModelName"
     },
     Cost: {
       type: DataTypes.DOUBLE,

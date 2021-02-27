@@ -25,6 +25,7 @@ db.event_types = require("./event_types.js")(sequelize);
 db.inventory = require("./inventory.js")(sequelize);
 db.inventory_items = require("./inventory_items.js")(sequelize);
 db.inventory_types = require("./inventory_types.js")(sequelize);
+db.status_types = require("./status_types.js")(sequelize);
 //db.packages = require("./packages.js")(sequelize);
 
 module.exports = db;

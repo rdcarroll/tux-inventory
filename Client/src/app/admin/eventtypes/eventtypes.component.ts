@@ -15,15 +15,9 @@ export class eventtypesComponent implements OnInit {
     searchText: string;
     columns : Column[] = [
         {
-            display: 'Full Name', //The text to display
-            variable: 'FullName', //The name of the key that's apart of the data array
+            display: 'Name', //The text to display
+            variable: 'Name', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
-        },
-        {
-            display: 'Email',
-            variable: 'Email',
-            filter: 'text',
             sortable: false
         },
         {
@@ -100,7 +94,7 @@ export class eventtypesComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/event_types', args[0].ID]);
+                this.router.navigate(['/admin/eventtypes', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {

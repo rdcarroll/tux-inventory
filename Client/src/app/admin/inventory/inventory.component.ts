@@ -15,14 +15,14 @@ export class inventoryComponent implements OnInit {
     searchText: string;
     columns : Column[] = [
         {
-            display: 'Full Name', //The text to display
-            variable: 'FullName', //The name of the key that's apart of the data array
+            display: 'Model Name', //The text to display
+            variable: 'ModelName', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
             sortable: false
         },
         {
-            display: 'Email',
-            variable: 'Email',
+            display: 'Type',
+            variable: 'InventoryType.Name',
             filter: 'text',
             sortable: false
         },

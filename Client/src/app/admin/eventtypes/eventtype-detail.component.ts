@@ -39,7 +39,7 @@ export class EventTypeDetailComponent implements OnInit {
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'event_types', this.item.ID]);
+                this.router.navigate(['/admin', 'eventtypes']);
                 this.util.alert("success", "Success Adding Event Type", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
@@ -49,7 +49,7 @@ export class EventTypeDetailComponent implements OnInit {
     save(): void {
         this.ApiClient.pPut("event_types/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'event_types']);
+                this.router.navigate(['/admin', 'eventtypes']);
                 this.util.alert("success", "Success Saving Event Type", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
