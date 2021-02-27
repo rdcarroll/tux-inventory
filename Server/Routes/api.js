@@ -13,5 +13,12 @@ module.exports = (router, app) => {
   router.put("/customers/:id", app.oauth.authorise(), customers.update);
   router.post("/customers", app.oauth.authorise(), customers.create);
 
+  const event_types = require("../controllers/event_types.controller.js");
+  router.get("/event_types", app.oauth.authorise(), event_types.findAll);
+  router.get("/event_types/:id", app.oauth.authorise(), event_types.findOne);
+  router.put("/event_types/:id", app.oauth.authorise(), event_types.update);
+  router.post("/event_types", app.oauth.authorise(), event_types.create);
+
+  
   return router;
 };

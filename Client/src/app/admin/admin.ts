@@ -19,3 +19,9 @@ export class Customer {
     createdAt: string;
     updatedAt: string;
 }
+export class EventType {
+    ID: number;
+    Name: string;
+    createdAt: string;
+    updatedAt: string;
+}
