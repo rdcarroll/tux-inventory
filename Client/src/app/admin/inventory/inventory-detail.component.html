@@ -21,27 +21,21 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Inventory Type</label>
                             <div class="col-md-8">
-                                <select [(ngModel)]="item.InvnetoryTypeID">
-                                    <option *ngFor="i of inventorytypes" value="i.ID">{{i.Name}}</option>
+                                <select class="form-control" [(ngModel)]="item.InventoryTypeID" name="InventoryType" required>
+                                    <option *ngFor="let i of inventorytypes" [value]="i.ID">{{i.Name}}</option>
                                  </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Description</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="Description" placeholder="" [(ngModel)]="item.Description" required>
+                                <input class="form-control" name="Description" placeholder="" [(ngModel)]="item.Description">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Cost</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="Cost" placeholder="" [(ngModel)]="item.Cost" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Address</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Address" placeholder="" [(ngModel)]="item.Address" required>
+                                <input type="number" class="form-control" name="Cost" placeholder="" [(ngModel)]="item.Cost" required>
                             </div>
                         </div>
 

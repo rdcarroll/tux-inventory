@@ -1,10 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 import { ApiClientService, Util } from '../../../common/core';
 import { InventoryItem } from '../admin';
 import { Router } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
     selector: 'inventoryitem-detail',
@@ -14,6 +15,8 @@ export class InventoryItemDetailComponent implements OnInit {
     
     item: InventoryItem;
     id: string;
+    inventories: any[];
+    statuses: any[];
 
     constructor(
         private ApiClient: ApiClientService,
@@ -25,15 +28,27 @@ export class InventoryItemDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
-        if (this.id === 'add') {
-            this.item = new InventoryItem();
-        }
-        else {
-            this.ApiClient.pGet("inventory_items/" + this.id, {}).pipe(take(1))
-                .subscribe(res => this.item = res);
-        }
+        this.getLookups().subscribe(res=>{
+            if (this.id === 'add') {
+                this.item = new InventoryItem();
+            }
+            else {
+                this.ApiClient.pGet("inventory_items/" + this.id, {}).pipe(take(1))
+                    .subscribe(res => this.item = res);
+            }
+        });
     }
 
+    getLookups(): Observable<any> {
+        return forkJoin([
+            this.ApiClient.pGet("inventory", {}).pipe(take(1)),
+            this.ApiClient.pGet("status_types", {}).pipe(take(1))])
+        .pipe(map((res: any) => {
+            this.inventories = res[0];
+            this.statuses = res[1];
+        }));
+    }
+    
     add(): void {
         this.ApiClient.pPost("inventory_items", {}, this.item).pipe(take(1))
             .subscribe(res => {

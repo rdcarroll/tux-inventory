@@ -37,6 +37,12 @@ module.exports = (router, app) => {
   router.put("/inventory_types/:id", app.oauth.authorise(), inventory_types.update);
   router.post("/inventory_types", app.oauth.authorise(), inventory_types.create);
   
+  const status_types = require("../controllers/status_types.controller.js");
+  router.get("/status_types", app.oauth.authorise(), status_types.findAll);
+  router.get("/status_types/:id", app.oauth.authorise(), status_types.findOne);
+  router.put("/status_types/:id", app.oauth.authorise(), status_types.update);
+  router.post("/status_types", app.oauth.authorise(), status_types.create);
+  
   // const packages = require("../controllers/packages.controller.js");
   // router.get("/packages", app.oauth.authorise(), packages.findAll);
   // router.get("/packages/:id", app.oauth.authorise(), packages.findOne);

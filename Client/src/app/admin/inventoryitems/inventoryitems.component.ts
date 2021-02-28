@@ -100,7 +100,7 @@ export class inventoryitemsComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/inventory_items', args[0].ID]);
+                this.router.navigate(['/admin/inventoryitems', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {

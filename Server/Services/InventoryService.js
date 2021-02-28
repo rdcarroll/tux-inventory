@@ -9,7 +9,7 @@ module.exports = {
 };
 async function getAll() {
     try {
-      return await Model.findAll();
+      return await Model.findAll({ include: ['InventoryType', 'InventoryItems'] });
     } catch (err) {
       throw err;
     }
