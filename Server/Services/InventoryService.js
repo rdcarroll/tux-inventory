@@ -16,7 +16,7 @@ async function getAll() {
 }
 async function getOne(id) {
     try {
-      return await Model.findByPk(id);
+      return await Model.findByPk(id,{ include: ['InventoryType', {model:db.inventory_items, as:'InventoryItems',include:['Status']}]});
     } catch (err) {
       throw err;
     }

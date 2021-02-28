@@ -35,7 +35,45 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Cost</label>
                             <div class="col-md-8">
-                                <input type="number" class="form-control" name="Cost" placeholder="" [(ngModel)]="item.Cost" required>
+                                <input matInput class="form-control" name="Cost" type="text" placeholder="Item Cost"
+                                [ngModel]="item.Cost | currency:'USD':'symbol':'2.2'"
+                                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="item.Cost=$event" />
+                                <!-- <input type="number" class="form-control" name="Cost" placeholder="" [(ngModel)]="item.Cost" required> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4 col-form-label">Inventory Model Items
+                                <a class="btn btn-default btn-sm"
+                                 routerLink="/admin/inventoryitems/add" 
+                                 [queryParams]="{inventory_id:item.ID}">
+                                 <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+                                </a></label>
+                            
+                            <div class="col-md-8">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Serial</th>
+                                            <th>Size</th>
+                                            <th>Status</th>
+                                            <td></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of item.InventoryItems">
+                                            <td>{{item.SerialNumber}}</td>
+                                            <td>{{item.Size}}</td>
+                                            <td>{{item.Status.Name}}</td>
+                                            <td>
+                                                <a class="btn btn-primary btn-xs"
+                                                [routerLink]="['/admin/inventoryitems',item.ID]" 
+                                                 [queryParams]="{inventory_id:item.ID}">
+                                                 <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 

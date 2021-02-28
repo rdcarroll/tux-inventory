@@ -33,5 +33,6 @@ db.inventory.belongsTo(db.inventory_types, {as:'InventoryType'});
 db.inventory_items.belongsTo(db.status_types, {as:'Status'});
 
 db.inventory.hasMany(db.inventory_items, { foreignKey:'InventoryID', as : 'InventoryItems' });
+db.inventory_items.belongsTo(db.inventory, {as:'Inventory'});
 
 module.exports = db;

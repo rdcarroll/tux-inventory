@@ -41,6 +41,10 @@ function getAccessToken(bearerToken, cbFunc) {
     tokenDB.getUserIDFromBearerToken(bearerToken, (userID) => {
         try {
             let user = userDB.getUserByID(userID, (err,data)=>{
+                if(err){
+                    cbFunc(err, null);
+                    return;
+                }
                 const accessToken = {
                     user: {
                         id: data.ID,

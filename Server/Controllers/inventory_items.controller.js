@@ -10,7 +10,7 @@ exports.create = async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error creating ${model_name}`
+      message: `Error creating ${model_name} : ${err.message}`
     });
   }
 };
@@ -23,7 +23,7 @@ exports.findAll = async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error retrieving ${model_name}s`
+      message: `Error retrieving ${model_name}s : ${err.message}`
     });
   }
 };
@@ -37,7 +37,7 @@ exports.findOne = async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error retrieving ${model_name}`
+      message: `Error retrieving ${model_name} : ${err.message}`
     });
   }
 };
@@ -52,7 +52,7 @@ exports.update = async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error updating ${model_name}.`
+      message: `Error updating ${model_name} : ${err.message}.`
     });
   }
 };

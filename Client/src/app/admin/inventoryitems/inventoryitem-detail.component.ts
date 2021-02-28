@@ -17,6 +17,8 @@ export class InventoryItemDetailComponent implements OnInit {
     id: string;
     inventories: any[];
     statuses: any[];
+    inventory_id: any;
+    backto: string[]=['/admin/inventoryitems'];
 
     constructor(
         private ApiClient: ApiClientService,
@@ -28,9 +30,13 @@ export class InventoryItemDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
+        this.inventory_id = this.route.snapshot.queryParams["inventory_id"];
+        if(this.inventory_id) this.backto = ['/admin/inventory',this.inventory_id];
         this.getLookups().subscribe(res=>{
             if (this.id === 'add') {
                 this.item = new InventoryItem();
+                this.item.InventoryID = this.inventory_id;
+                this.item.StatusID = 2;
             }
             else {
                 this.ApiClient.pGet("inventory_items/" + this.id, {}).pipe(take(1))
@@ -54,7 +60,7 @@ export class InventoryItemDetailComponent implements OnInit {
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'inventoryitems']);
+                this.router.navigate(this.backto);
                 this.util.alert("success", "Success Adding Inventory Item", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
@@ -64,7 +70,7 @@ export class InventoryItemDetailComponent implements OnInit {
     save(): void {
         this.ApiClient.pPut("inventory_items/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'inventoryitems']);
+                this.router.navigate(this.backto);
                 this.util.alert("success", "Success Saving Inventory Item", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");

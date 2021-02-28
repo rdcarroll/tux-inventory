@@ -9,14 +9,14 @@ module.exports = {
 };
 async function getAll() {
     try {
-      return await Model.findAll();
+      return await Model.findAll({ include: ['Inventory','Status'] });
     } catch (err) {
       throw err;
     }
 }
 async function getOne(id) {
     try {
-      return await Model.findByPk(id);
+      return await Model.findByPk(id,{ include: ['Inventory','Status'] });
     } catch (err) {
       throw err;
     }
