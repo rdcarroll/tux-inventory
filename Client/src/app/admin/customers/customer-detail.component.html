@@ -12,34 +12,112 @@
                 <div class="card-body">
 
                     <form>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">First Name</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="first" placeholder="" [(ngModel)]="item.FirstName" required>
+                        <div class="row">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">First Name</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="first" placeholder="" [(ngModel)]="item.FirstName" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Last Name</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="last" placeholder="" [(ngModel)]="item.LastName" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Last Name</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="last" placeholder="" [(ngModel)]="item.LastName" required>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Phone</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="Phone" placeholder="" [(ngModel)]="item.Phone" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Email</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="Email" placeholder="" [(ngModel)]="item.Email" required>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Email</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Email" placeholder="" [(ngModel)]="item.Email" required>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label">Address</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" name="Address" placeholder="" [(ngModel)]="item.Address" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Tickets
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ticket</th>
+                                                    <th>Balance</th>
+                                                    <th>Date</th>
+                                                    <th>Event</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let ticket of tickets">
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Phone</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Phone" placeholder="" [(ngModel)]="item.Phone" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Address</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Address" placeholder="" [(ngModel)]="item.Address" required>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Orders
+                                        <a class="btn btn-default btn-sm"
+                                         routerLink="/orders/add" 
+                                         [queryParams]="{customer_id:item.ID}">
+                                         <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-condensed">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order No.</th>
+                                                    <th>Pickup Date</th>
+                                                    <th>Status</th>
+                                                    <th>Event</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let order of orders">
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

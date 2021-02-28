@@ -5,8 +5,8 @@ export class Employee {
     LastName: string;
     FirstName: number;
     IsAdmin: boolean;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 export class Customer {
     ID: number;
@@ -16,14 +16,14 @@ export class Customer {
     Email: string;
     Phone: string;
     Address: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 export class EventType {
     ID: number;
     Name: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 export class Inventory {
     ID: number;
@@ -31,14 +31,14 @@ export class Inventory {
     Description: string;
     InventoryTypeID: number;
     Cost: number;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 export class InventoryType {
     ID: number;
     Name: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 export class InventoryItem {
     ID: number;
@@ -47,12 +47,24 @@ export class InventoryItem {
     Size: string;
     Barcode: string;
     SerialNumber: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 export class Package {
     ID: number;
     Name: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+export class Order {
+    ID: number;
+    CustomerID: number;
+    Customer:Customer;
+    EventID: number;
+    useDate: Date;
+    pickUpDate: Date;
+    returnDate: Date;
+    actualReturnDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
