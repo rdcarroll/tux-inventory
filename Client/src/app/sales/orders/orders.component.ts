@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Order } from '../admin';
-import { ApiClientService, Util, APIParms } from '../../common/core';
+import { Order } from '../sales';
+import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../common/shared';
+import { Column, Config } from '../../../common/shared';
 
 @Component({
     selector: 'my-orders',
@@ -100,7 +100,7 @@ export class OrdersComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/orders', args[0].ID]);
+                this.router.navigate(['/sales/orders', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {

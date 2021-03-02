@@ -49,5 +49,11 @@ module.exports = (router, app) => {
   // router.put("/packages/:id", app.oauth.authorise(), packages.update);
   // router.post("/packages", app.oauth.authorise(), packages.create);
 
+  const orders = require("../controllers/orders.controller.js");
+  router.get("/orders", app.oauth.authorise(), orders.findAll);
+  router.get("/orders/:id", app.oauth.authorise(), orders.findOne);
+  router.put("/orders/:id", app.oauth.authorise(), orders.update);
+  router.post("/orders", app.oauth.authorise(), orders.create);
+
   return router;
 };

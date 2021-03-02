@@ -56,15 +56,3 @@ export class Package {
     createdAt: Date;
     updatedAt: Date;
 }
-export class Order {
-    ID: number;
-    CustomerID: number;
-    Customer:Customer;
-    EventID: number;
-    useDate: Date;
-    pickUpDate: Date;
-    returnDate: Date;
-    actualReturnDate: Date;
-    createdAt: Date;
-    updatedAt: Date;
-}

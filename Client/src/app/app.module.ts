@@ -10,6 +10,7 @@ import { SharedModule } from './../common/shared/shared.module';
 import { HomeComponent } from './home/home.component';
 
 import { AdminModule } from './admin/admin.module';
+import { SalesModule } from './sales/sales.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { AdminModule } from './admin/admin.module';
         CoreModule,
         SharedModule, //needed here for app and home components
         AdminModule,
+        SalesModule,
         AppRoutingModule,
     ],
     declarations: [

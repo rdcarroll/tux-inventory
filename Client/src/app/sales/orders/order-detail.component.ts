@@ -1,11 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
+import * as moment from 'moment';
 
-import { ApiClientService, Util } from '../../common/core';
-import { Customer, Order } from '../admin';
+import { ApiClientService, Util } from '../../../common/core';
+import { Customer } from '../../admin';
+import { Order } from '../sales';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 @Component({
     selector: 'order-detail',
@@ -15,9 +18,9 @@ export class OrderDetailComponent implements OnInit {
     
     item: Order;
     id: string;
-    backto: string[]=['/orders'];
+    backto: string[]=['/sales/orders'];
     customer_id: any;
-    inventorytypes: any;
+    customers: any[];
     customer: Customer;
 
     constructor(
@@ -31,20 +34,20 @@ export class OrderDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
         this.customer_id = this.route.snapshot.queryParams["customer_id"];
-        if (this.id === 'add') {
-            this.item = new Order();
-        }
-        else {
-            this.ApiClient.pGet("orders/" + this.id, {}).pipe(take(1))
-                .subscribe(res => this.item = res);
-        }
-        if(this.customer_id){
-            this.backto = ['/admin/customers',this.customer_id];
-            this.item.CustomerID = this.customer_id;
-            this.getCustomerByID().subscribe(res=>{
-                this.item.Customer = res;
-            });
-        } 
+        this.getLookups().subscribe(res=>{
+            if (this.id === 'add') {
+                this.item = new Order();
+                this.item.createdAt = moment().toDate();
+                if(this.customer_id){
+                    this.backto = ['/admin/customers',this.customer_id];
+                    this.item.CustomerID = this.customer_id;
+                } 
+            }
+            else {
+                this.ApiClient.pGet("orders/" + this.id, {}).pipe(take(1))
+                    .subscribe(res => this.item = res);
+            }
+        });
     }
     getCustomerByID(): Observable<any> {
         return this.ApiClient.pGet(`customers/${this.customer_id}`, {}).pipe(take(1))
@@ -54,13 +57,13 @@ export class OrderDetailComponent implements OnInit {
     }
 
     getLookups(): Observable<any> {
-        return forkJoin([this.ApiClient.pGet("inventory_types", {}).pipe(take(1))])
+        return forkJoin([this.ApiClient.pGet("customers", {}).pipe(take(1))])
         .pipe(map((res: any) => {
-            this.inventorytypes = res[0];
+            this.customers = res[0];
         }));
     }
 
-    add(): void {
+    add(frm:any): void {
         this.ApiClient.pPost("orders", {}, this.item).pipe(take(1))
             .subscribe(res => {
                 this.item = res;
@@ -72,7 +75,7 @@ export class OrderDetailComponent implements OnInit {
             });
     }
 
-    save(): void {
+    save(frm:any): void {
         this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
                 this.router.navigate(this.backto);
@@ -80,6 +83,16 @@ export class OrderDetailComponent implements OnInit {
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
             });
+    }
+    useDateChanged(evt:Date): void {
+        let uDate = moment(evt);
+        this.item.useDate = evt;
+        this.item.pickUpDate = uDate.subtract(4,'days').toDate();
+        this.item.returnDate = uDate.add(4,'days').toDate();
+    }
+    actualReturnDateChanged(evt:Date): void {
+        let uDate = evt;
+        this.item.actualReturnDate = evt;
     }
 
 }
