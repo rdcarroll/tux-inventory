@@ -21,17 +21,23 @@ export class inventoryComponent implements OnInit {
             sortable: false
         },
         {
+            display: 'Description', //The text to display
+            variable: 'Description', //The name of the key that's apart of the data array
+            filter: 'text', //The type data type of the column (number, text, date, etc.)
+            sortable: false
+        },
+        {
             display: 'Type',
             variable: 'InventoryType.Name',
             filter: 'text',
             sortable: false
         },
-        {
-            display: 'Created Date',
-            variable: 'createdAt',
-            filter: 'date',
-            sortable: false
-        },
+        // {
+        //     display: 'Created Date',
+        //     variable: 'createdAt',
+        //     filter: 'date',
+        //     sortable: false
+        // },
         {
             filter: 'button',
             type: 'edit'
