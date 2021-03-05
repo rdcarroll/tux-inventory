@@ -4,74 +4,87 @@
     <div class="row">
 
         <div class="col-md-12">
-            <div class="card" *ngIf="item">
+            <div class="card" *ngIf="order">
                 <div class="card-header">
                     <my-backbutton class="float-right" [link]="backto"></my-backbutton>
                     <h3><span>{{id==='add'?"Create":"Update"}} </span>Order</h3>
                 </div>
                 <div class="card-body">
-
-                    <form #orderForm="ngForm">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Order Number</label>
-                                    <div class="col-md-8">
-                                        <span class="form-control-static">{{id!='add' ? item.ID : "TBD"}}</span>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Created On</label>
-                                    <div class="col-md-8">
-                                        <my-date [dateTime]="item.createdAt"  id="createdAt" name="createdAt" [readOnly]=true></my-date>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Customer Name</label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" [(ngModel)]="item.CustomerID" name="CustomerId" required ><!-- [disabled]="id!='add'" -->
-                                            <option *ngFor="let i of customers" [value]="i.ID">{{i.FullName}}</option>
-                                         </select>
-                                    </div>
+                    <mat-tab-group>
+                        <mat-tab label="Order">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form #orderForm="ngForm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Order Number</label>
+                                                    <div class="col-md-8">
+                                                        <span class="form-control-static">{{id!='add' ? order.ID : "TBD"}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Created On</label>
+                                                    <div class="col-md-8">
+                                                        <my-date [dateTime]="order.createdAt"  id="createdAt" name="createdAt" [readOnly]=true></my-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Customer Name</label>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control" [(ngModel)]="order.CustomerID" name="CustomerId" required ><!-- [disabled]="id!='add'" -->
+                                                            <option *ngFor="let i of customers" [value]="i.ID">{{i.FullName}}</option>
+                                                         </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Use Date</label>
+                                                    <div class="col-md-8">
+                                                        <my-date [dateTime]="order.useDate" (dateTimeChange)="useDateChanged($event)" id="useDate" name="useDate"></my-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Pick Up Date</label>
+                                                    <div class="col-md-8">
+                                                        <my-date [(dateTime)]="order.pickUpDate" id="pickUpDate" name="pickUpDate"></my-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Return Date</label>
+                                                    <div class="col-md-8">
+                                                        <my-date [(dateTime)]="order.returnDate" id="returnDate" name="returnDate"></my-date>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-4 col-form-label">Actual Return Date</label>
+                                                    <div class="col-md-8">
+                                                        <my-date [dateTime]="order.actualReturnDate" (dateTimeChange)="actualReturnDateChanged($event)" id="actualReturnDate" name="actualReturnDate"></my-date>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <div class="form-group row">
+                                            <div class="offset-sm-4 col-sm-8">
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-success" (click)="add(orderForm)" *ngIf="id==='add'">Create Order</button>
+                                                    <button type="button" class="btn btn-success" (click)="save(orderForm)" *ngIf="id!='add'">Update Order</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Use Date</label>
-                                    <div class="col-md-8">
-                                        <my-date [dateTime]="item.useDate" (dateTimeChange)="useDateChanged($event)" id="useDate" name="useDate"></my-date>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Pick Up Date</label>
-                                    <div class="col-md-8">
-                                        <my-date [(dateTime)]="item.pickUpDate" id="pickUpDate" name="pickUpDate"></my-date>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Return Date</label>
-                                    <div class="col-md-8">
-                                        <my-date [(dateTime)]="item.returnDate" id="returnDate" name="returnDate"></my-date>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-4 col-form-label">Actual Return Date</label>
-                                    <div class="col-md-8">
-                                        <my-date [dateTime]="item.actualReturnDate" (dateTimeChange)="actualReturnDateChanged($event)" id="actualReturnDate" name="actualReturnDate"></my-date>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="offset-sm-4 col-sm-8">
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-success" (click)="add(orderForm)" *ngIf="id==='add'">Create Order</button>
-                                    <button type="button" class="btn btn-success" (click)="save(orderForm)" *ngIf="id!='add'">Update Order</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                        </mat-tab>
+                        <mat-tab label="Items">
+                            <order-items [order]="order"></order-items>
+                        </mat-tab>
+                        <mat-tab label="List"> 
+                            
+                        </mat-tab>
+                      </mat-tab-group>
                 </div>
             </div>
         </div>

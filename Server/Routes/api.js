@@ -54,6 +54,8 @@ module.exports = (router, app) => {
   router.get("/orders/:id", app.oauth.authorise(), orders.findOne);
   router.put("/orders/:id", app.oauth.authorise(), orders.update);
   router.post("/orders", app.oauth.authorise(), orders.create);
+  
+  router.get("/orders/:id/order_items", app.oauth.authorise(), orders.findItems);
 
   return router;
 };

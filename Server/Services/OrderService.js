@@ -40,3 +40,10 @@ async function update(id,record) {
     throw err;
   }
 }
+async function getOrderItems(id) {
+    try {
+      return await Model.findAll();
+    } catch (err) {
+      throw err;
+    }
+}

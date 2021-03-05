@@ -16,7 +16,7 @@ import { NgForm } from '@angular/forms';
 })
 export class OrderDetailComponent implements OnInit {
     
-    item: Order;
+    order: Order;
     id: string;
     backto: string[]=['/sales/orders'];
     customer_id: any;
@@ -36,16 +36,16 @@ export class OrderDetailComponent implements OnInit {
         this.customer_id = this.route.snapshot.queryParams["customer_id"];
         this.getLookups().subscribe(res=>{
             if (this.id === 'add') {
-                this.item = new Order();
-                this.item.createdAt = moment().toDate();
+                this.order = new Order();
+                this.order.createdAt = moment().toDate();
                 if(this.customer_id){
                     this.backto = ['/admin/customers',this.customer_id];
-                    this.item.CustomerID = this.customer_id;
+                    this.order.CustomerID = this.customer_id;
                 } 
             }
             else {
                 this.ApiClient.pGet("orders/" + this.id, {}).pipe(take(1))
-                    .subscribe(res => this.item = res);
+                    .subscribe(res => this.order = res);
             }
         });
     }
@@ -64,10 +64,10 @@ export class OrderDetailComponent implements OnInit {
     }
 
     add(frm:any): void {
-        this.ApiClient.pPost("orders", {}, this.item).pipe(take(1))
+        this.ApiClient.pPost("orders", {}, this.order).pipe(take(1))
             .subscribe(res => {
-                this.item = res;
-                this.id = this.item.ID.toString();
+                this.order = res;
+                this.id = this.order.ID.toString();
                 this.router.navigate(this.backto);
                 this.util.alert("success", "Success Adding Order", false, { icon: 'check' }, true);
             }, (err) => {
@@ -76,7 +76,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
     save(frm:any): void {
-        this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
+        this.ApiClient.pPut("orders/" + this.id, {}, this.order).pipe(take(1))
             .subscribe(res => {
                 this.router.navigate(this.backto);
                 this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
@@ -86,13 +86,13 @@ export class OrderDetailComponent implements OnInit {
     }
     useDateChanged(evt:Date): void {
         let uDate = moment(evt);
-        this.item.useDate = evt;
-        this.item.pickUpDate = uDate.subtract(4,'days').toDate();
-        this.item.returnDate = uDate.add(4,'days').toDate();
+        this.order.useDate = evt;
+        this.order.pickUpDate = uDate.subtract(4,'days').toDate();
+        this.order.returnDate = uDate.add(4,'days').toDate();
     }
     actualReturnDateChanged(evt:Date): void {
         let uDate = evt;
-        this.item.actualReturnDate = evt;
+        this.order.actualReturnDate = evt;
     }
 
 }

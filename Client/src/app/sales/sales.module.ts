@@ -6,6 +6,8 @@ import { SalesRoutingModule } from './sales-routing.module';
 import { SalesComponent } from './sales.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderDetailComponent } from './orders/order-detail.component';
+import { OrderItemsComponent } from './orders/order-items.component';
+import { OrderItemEditComponent } from './orders/order-item-edit.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -17,7 +19,9 @@ import { OrderDetailComponent } from './orders/order-detail.component';
     declarations: [
         SalesComponent,
         OrdersComponent,
-        OrderDetailComponent
+        OrderDetailComponent,
+        OrderItemsComponent,
+        OrderItemEditComponent
     ]
 })
 export class SalesModule { }

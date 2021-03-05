@@ -61,27 +61,3 @@ exports.update = async (req, res) => {
 exports.delete = (req, res) => {
   
 };
-
-// Delete all Employees from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Employees
-exports.findAllPublished = (req, res) => {
-  
-};
-
-exports.findMe = async (req, res) => {
-  let response;
-  const userID = req.authedID;
-        try {
-          response = await model_service.getOne(userID);
-          res.json(response);
-        } catch (err) {
-          res.status(500).send({
-            message: `Error retrieving ${model_name}`
-          });
-        }
-};
-

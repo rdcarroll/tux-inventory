@@ -28,6 +28,7 @@ db.inventory_types = require("./inventory_types.js")(sequelize);
 db.status_types = require("./status_types.js")(sequelize);
 //db.packages = require("./packages.js")(sequelize);
 db.orders = require("./orders.js")(sequelize);
+db.order_items = require("./order_items.js")(sequelize);
 
 //db.inventory_types.hasMany(db.inventory);
 db.inventory.belongsTo(db.inventory_types, {as:'InventoryType'});

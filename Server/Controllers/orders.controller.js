@@ -1,4 +1,6 @@
 const model_service = require(`../Services/OrderService`);
+const orderitem_service = require(`../Services/OrderItemService`);
+
 const model_name = `Order`;
 
 // Create and Save a new Customer
@@ -62,26 +64,16 @@ exports.delete = (req, res) => {
   
 };
 
-// Delete all Employees from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Employees
-exports.findAllPublished = (req, res) => {
-  
-};
-
-exports.findMe = async (req, res) => {
+exports.findItems = async (req, res) => {
   let response;
-  const userID = req.authedID;
-        try {
-          response = await model_service.getOne(userID);
-          res.json(response);
-        } catch (err) {
-          res.status(500).send({
-            message: `Error retrieving ${model_name}`
-          });
-        }
+  const id = req.params.id;
+  try {
+    response = await orderitem_service.getAll(id);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}`
+    });
+  }
 };
 

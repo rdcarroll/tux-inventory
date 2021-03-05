@@ -62,16 +62,6 @@ exports.delete = (req, res) => {
   
 };
 
-// Delete all Employees from the database.
-exports.deleteAll = (req, res) => {
-  
-};
-
-// Find all published Employees
-exports.findAllPublished = (req, res) => {
-  
-};
-
 exports.findMe = async (req, res) => {
   let response;
   const userID = req.authedID;

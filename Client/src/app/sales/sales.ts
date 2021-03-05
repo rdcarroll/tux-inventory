@@ -12,3 +12,15 @@ export class Order {
     createdAt: Date;
     updatedAt: Date;
 }
+export class OrderItem {
+    ID: number;
+    OrderID: number;
+    CustomerID: number;
+    EmployeeID: number;
+    StatusID: number;
+    InventoryItemID: number;
+    createdAt: Date;
+    updatedAt: Date;
+    InventoryItem: {};
+    $$editing: boolean;
+}
