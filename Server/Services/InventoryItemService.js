@@ -30,7 +30,7 @@ async function getAll(query) {
 }
 async function getOne(query) {
     try {
-      let id = query.ID;
+      let id = query.where.ID;
       return await Model.findByPk(id,query);
     } catch (err) {
       throw err;
