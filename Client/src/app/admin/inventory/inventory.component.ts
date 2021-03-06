@@ -65,7 +65,8 @@ export class inventoryComponent implements OnInit {
     pageChange(): void {
 
         let q: APIParms = {
-            pageSize: this.config.pageSize, page: (this.config.page)
+            pageSize: this.config.pageSize, page: (this.config.page),
+            include:['InventoryType']
         }
 
         if (this.searchText && this.searchText.length > 0) q.q = this.searchText;

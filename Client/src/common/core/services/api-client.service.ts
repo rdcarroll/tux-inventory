@@ -81,7 +81,8 @@ export class ApiClientService {
         let avoidlist = ['mode', 'responseType'];
         var q = [];
         for (let key in params) {
-            if (avoidlist.indexOf(key) < 0) q.push(key + "=" + encodeURIComponent(params[key]));
+            if (key=='include') q.push(key + "=" + JSON.stringify(params[key]));
+            else if (avoidlist.indexOf(key) < 0) q.push(key + "=" + encodeURIComponent(params[key]));
         }
         if (q.length > 0) url += "?" + q.join("&");
         return url;
@@ -163,13 +164,9 @@ export interface OdataParms {
     cache?: boolean;
 }
 export interface APIParms {
-    show_type?: string;
-    wbsid?: string;
-    qs?: string;
     q?: string;
     Search?: string;
-    select?: string;
-    view?: string;
+    include?: any[];
     filter?: string;
     pageSize?: number;
     page?: number;

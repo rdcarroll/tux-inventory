@@ -16,6 +16,10 @@ function setUserFromToken (req,res,next){
     if(authorization){ 
         token = authorization.split(' ')[1] || "";
     tokenDB.getUserIDFromBearerToken(token, (userID) => {
+        // if(userID==null){ 
+        //     res.status(401).send({
+        //       message: 'Token Not Found'
+        //     });}
         req.authedID = userID ;
         next();
         });

@@ -1,3 +1,4 @@
+
 let userDB;
 let tokenDB;
 
@@ -39,23 +40,28 @@ function saveAccessToken(accessToken, clientID, expires, user, cbFunc) {
 
 function getAccessToken(bearerToken, cbFunc) {
     tokenDB.getUserIDFromBearerToken(bearerToken, (userID) => {
-        try {
-            let user = userDB.getUserByID(userID, (err,data)=>{
-                if(err){
-                    cbFunc(err, null);
-                    return;
-                }
-                const accessToken = {
-                    user: {
-                        id: data.ID,
-                        name: data.UserName,
-                        isAdmin:data.IsAdmin
-                    },
-                    expires: null,
-                };
         
-                cbFunc(userID === null, userID === null ? null : accessToken);
-            });
+        try {
+            //if(userID==null){ throw new Error('Token Not Found');}
+            if(userID==null){ cbFunc(new Error('Token Not Found'),null);}
+            else{
+                let user = userDB.getUserByID(userID, (err,data)=>{
+                    if(err){
+                        cbFunc(err, null);
+                        return;
+                    }
+                    const accessToken = {
+                        user: {
+                            id: data.ID,
+                            name: data.UserName,
+                            isAdmin:data.IsAdmin
+                        },
+                        expires: null,
+                    };
+            
+                    cbFunc(userID === null, userID === null ? null : accessToken);
+                });
+            }
         } catch (error) {
             cbFunc(error, null);
         }

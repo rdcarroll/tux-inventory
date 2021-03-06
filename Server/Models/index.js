@@ -32,7 +32,8 @@ db.order_items = require("./order_items.js")(sequelize);
 
 //db.inventory_types.hasMany(db.inventory);
 db.inventory.belongsTo(db.inventory_types, {as:'InventoryType'});
-db.inventory_items.belongsTo(db.status_types, {as:'Status'});
+//db.inventory_items.belongsTo(db.status_types, { foreignKey:'StatusID', as:'Status'});
+db.status_types.hasMany(db.inventory_items, { foreignKey:'StatusID', as:'Status'});
 
 db.inventory.hasMany(db.inventory_items, { foreignKey:'InventoryID', as : 'InventoryItems' });
 db.inventory_items.belongsTo(db.inventory, {as:'Inventory'});
