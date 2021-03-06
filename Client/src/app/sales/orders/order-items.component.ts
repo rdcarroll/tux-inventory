@@ -53,11 +53,10 @@ export class OrderItemsComponent implements OnInit {
             let tItem = new OrderItem();
             tItem.OrderID=this.order.ID;
             tItem.CustomerID=this.order.CustomerID;
-            tItem.StatusID=2;
             tItem.EmployeeID=this.user.Id;
             tItem.InventoryItem = {
-                Inventory:{InventoryType:{ID:invtype.ID,Name:invtype.Name}},
-                Price:0
+                StatusID:2,
+                Inventory:{ModelName:"",Price:0,InventoryType:{ID:invtype.ID,Name:invtype.Name}},
             }
             tList.push(tItem);
         }
@@ -72,12 +71,16 @@ export class OrderItemsComponent implements OnInit {
 
     btnClick(item:any,stype:string): void {
         switch(stype){
+            case 'close':
             case 'edit':{
                 let wasEditing = item.$$editing;
                 for (let _item of this.orderitems) {
                     _item.$$editing = false; 
                 }
                 item.$$editing=!wasEditing;
+                break;
+            }
+            case 'save':{
                 break;
             }
             case 'delete':{

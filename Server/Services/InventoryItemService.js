@@ -7,16 +7,31 @@ module.exports = {
     create: create,
     update: update
 };
-async function getAll() {
+// async function getAll() {
+//     try {
+//       return await Model.findAll({ include: ['Inventory','Status'] });
+//     } catch (err) {
+//       throw err;
+//     }
+// }
+// async function getOne(id) {
+//     try {
+//       return await Model.findByPk(id,{ include: ['Inventory','Status'] });
+//     } catch (err) {
+//       throw err;
+//     }
+// }
+async function getAll(query) {
     try {
-      return await Model.findAll({ include: ['Inventory','Status'] });
+      return await Model.findAll(query);
     } catch (err) {
       throw err;
     }
 }
-async function getOne(id) {
+async function getOne(query) {
     try {
-      return await Model.findByPk(id,{ include: ['Inventory','Status'] });
+      let id = query.ID;
+      return await Model.findByPk(id,query);
     } catch (err) {
       throw err;
     }

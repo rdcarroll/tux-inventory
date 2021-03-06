@@ -15,7 +15,8 @@
                                         <tr *ngFor="let item of orderitems">
                                             <ng-container *ngIf="item.$$editing; else not_editing">
                                                 <td colspan="7">
-                                                    <button (click)="btnClick(item,'edit')" class="btn btn-default btn-sm">Close</button>
+                                                    <button (click)="btnClick(item,'close')" class="btn btn-primary btn-sm float-right">Close</button>
+                                                    <button (click)="btnClick(item,'save')" class="btn btn-success btn-sm float-right">Save</button>
                                                     <order-item-edit [item]="item"></order-item-edit>
                                                 </td>
                                             </ng-container>

@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   let response;
   try {
-    response = await model_service.getAll();
+    response = await model_service.getAll(req.query);
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -32,8 +32,9 @@ exports.findAll = async (req, res) => {
 exports.findOne = async (req, res) => {
   let response;
   const id = req.params.id;
+  if(req.query.where)req.query.where['ID']=id;
   try {
-    response = await model_service.getOne(id);
+    response = await model_service.getOne(req.query);
     res.json(response);
   } catch (err) {
     res.status(500).send({

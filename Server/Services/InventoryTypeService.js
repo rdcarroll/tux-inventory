@@ -7,16 +7,17 @@ module.exports = {
     create: create,
     update: update
 };
-async function getAll() {
+async function getAll(query) {
     try {
-      return await Model.findAll();
+      return await Model.findAll(query);
     } catch (err) {
       throw err;
     }
 }
-async function getOne(id) {
+async function getOne(query) {
     try {
-      return await Model.findByPk(id);
+      let id = query.ID;
+      return await Model.findByPk(id,query);
     } catch (err) {
       throw err;
     }

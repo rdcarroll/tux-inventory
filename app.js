@@ -35,6 +35,10 @@ app.use("/auth", routes);
 
 const authmiddleware = require("./server/Security/auth.js")(tokenDB);
 app.use(authmiddleware.setUserFromToken);
+
+const queryService = require("./server/Services/queryService.js");
+app.use(queryService.setQuery);
+
 // Set our api routes
 const api = require('./server/routes/api')(express.Router(),app);
 app.use('/api', api);

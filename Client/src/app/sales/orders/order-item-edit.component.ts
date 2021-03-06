@@ -19,6 +19,10 @@ export class OrderItemEditComponent implements OnInit {
     @Input() item: any;
     inventory_types: any;
     inventory: any;
+    invtypeid: number;
+    invmodel: string;
+    statusid: number;
+    price: number;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -28,8 +32,8 @@ export class OrderItemEditComponent implements OnInit {
     ) { 
     }
 
-    changeInventoryType(){
-        this.getStyles(this.item.InventoryItem.Inventory.InventoryType.ID).subscribe(res=>{
+    changeInventoryType(inventoryTypeID:number){
+        this.getStyles(inventoryTypeID).subscribe(res=>{
             
         });
     }
@@ -44,40 +48,24 @@ export class OrderItemEditComponent implements OnInit {
         }));
     }
     getStyles(inventoryTypeID:number): Observable<any> {
-        return this.ApiClient.pGet(`inventory`, {'inventory_type':inventoryTypeID}).pipe(take(1))
+        let q = {filter:"InventoryTypeID|7",include:['InventoryType']}
+        return this.ApiClient.pGet(`inventory`, {'InventoryTypeID':inventoryTypeID}).pipe(take(1))
         .pipe(map((res: any) => {
             this.inventory = res;
         }));
     }
     ngOnInit(): void {
+        this.invtypeid = this.item.InventoryItem.Inventory.InventoryType.ID;
+        this.invmodel =  this.item.InventoryItem.Inventory.ModelName;
+        this.price = this.item.InventoryItem.Inventory.Price;
+        this.statusid =  this.item.InventoryItem.StatusID;
+
         this.getInventoryTypes().subscribe(res=>{
-            this.changeInventoryType();
-            // this.getOrderItems().subscribe(res=>{
-            //     if (res.length==0) {
-            //         this.setDefault();
-            //     }
-            //     else{
-            //         this.orderitems = res;
-            //     }
-            // });
+            this.changeInventoryType(this.invtypeid);
+            
         });
     }
-    setDefault() {
-        // let tList = [];
-        // for(const invtype of this.inventory_types){
-        //     let tItem = new OrderItem();
-        //     tItem.OrderID=this.order.ID;
-        //     tItem.CustomerID=this.order.CustomerID;
-        //     tItem.StatusID=2;
-        //     tItem.EmployeeID=this.user.Id;
-        //     tItem.InventoryItem = {
-        //         Inventory:{InventoryType:{ID:invtype.ID,Name:invtype.Name}},
-        //         Price:0
-        //     }
-        //     tList.push(tItem);
-        // }
-        // this.orderitems = tList;
-    }
+    
     save(frm:any): void {
         // this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
         //     .subscribe(res => {
