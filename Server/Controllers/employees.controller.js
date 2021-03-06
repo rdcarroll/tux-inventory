@@ -66,8 +66,9 @@ exports.delete = (req, res) => {
 exports.findMe = async (req, res) => {
   let response;
   const userID = req.authedID;
+  if(req.query.where)req.query.where['ID']=userID;
         try {
-          response = await model_service.getOne(userID);
+          response = await model_service.getOne(req.query);
           res.json(response);
         } catch (err) {
           res.status(500).send({
