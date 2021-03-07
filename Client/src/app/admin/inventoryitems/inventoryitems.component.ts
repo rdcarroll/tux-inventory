@@ -21,8 +21,8 @@ export class inventoryitemsComponent implements OnInit {
             sortable: false
         },
         {
-            display: 'Serial Number',
-            variable: 'SerialNumber',
+            display: 'SKU',
+            variable: 'Barcode',
             filter: 'text',
             sortable: false
         },
@@ -65,7 +65,8 @@ export class inventoryitemsComponent implements OnInit {
     pageChange(): void {
 
         let q: APIParms = {
-            pageSize: this.config.pageSize, page: (this.config.page)
+            pageSize: this.config.pageSize, page: (this.config.page),
+            include:['Inventory','Status']
         }
 
         if (this.searchText && this.searchText.length > 0) q.q = this.searchText;

@@ -15,9 +15,14 @@ function parsefilter(filter){
 function parseinclude(include){
     let marray = eval(include);
     marray.forEach(function (element,indx) {
-        if(Array.isArray(element)){
-            marray[indx] = { include: parseinclude(element)}
+      if(typeof element == 'object'){
+        for (const [key, value] of Object.entries(element)) {
+          marray[indx] = { association:key,include: parseinclude(value)}
         }
+      }
+      if(Array.isArray(element)){
+          marray[indx] = { include: parseinclude(element)}
+      }
     });
      if(marray.length) return marray;
      return null;

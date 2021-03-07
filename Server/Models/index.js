@@ -30,12 +30,17 @@ db.status_types = require("./status_types.js")(sequelize);
 db.orders = require("./orders.js")(sequelize);
 db.order_items = require("./order_items.js")(sequelize);
 
-//db.inventory_types.hasMany(db.inventory);
-db.inventory.belongsTo(db.inventory_types, {as:'InventoryType'});
-//db.inventory_items.belongsTo(db.status_types, { foreignKey:'StatusID', as:'Status'});
-db.status_types.hasMany(db.inventory_items, { foreignKey:'StatusID', as:'Status'});
+
+db.inventory_types.hasMany(db.inventory,  { foreignKey:'InventoryTypeID', as : 'Inventory'  });
+db.inventory.belongsTo(db.inventory_types, { foreignKey:'InventoryTypeID', as : 'InventoryType'  });
+
+db.status_types.hasMany(db.inventory_items,  { foreignKey:'StatusID', as : 'InventoryItems'  });
+db.inventory_items.belongsTo(db.status_types, { foreignKey:'StatusID', as : 'Status'  });
 
 db.inventory.hasMany(db.inventory_items, { foreignKey:'InventoryID', as : 'InventoryItems' });
-db.inventory_items.belongsTo(db.inventory, {as:'Inventory'});
+db.inventory_items.belongsTo(db.inventory, { foreignKey:'InventoryID', as : 'Inventory' });
+
+db.customers.hasMany(db.orders, {  foreignKey:'CustomerID', as : 'Orders' });
+db.orders.belongsTo(db.customers, { foreignKey:'CustomerID', as : 'Customer' });
 
 module.exports = db;

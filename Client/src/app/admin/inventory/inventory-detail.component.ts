@@ -32,7 +32,7 @@ export class InventoryDetailComponent implements OnInit {
                 this.item = new Inventory();
             }
             else {
-                let q = {include:['InventoryItems',['Status']]};
+                let q = {include:[{'InventoryItems':['Status']}]};
                 this.ApiClient.pGet("inventory/" + this.id, q).pipe(take(1))
                     .subscribe(res => this.item = res);
             }

@@ -22,7 +22,7 @@ export class OrdersComponent implements OnInit {
         },
         {
             display: 'Customer Name',
-            variable: 'Customer.LastName',
+            variable: 'Customer.FullName',
             filter: 'text',
             sortable: false
         },
@@ -59,7 +59,8 @@ export class OrdersComponent implements OnInit {
     pageChange(): void {
 
         let q: APIParms = {
-            pageSize: this.config.pageSize, page: (this.config.page)
+            pageSize: this.config.pageSize, page: (this.config.page),
+            include:['Customer']
         }
 
         if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
