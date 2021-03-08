@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("../Models");
 const Model = db.inventory_types;
 
 module.exports = {

@@ -5,12 +5,12 @@ const http = require('http');
 const bodyParser = require('body-parser');
 
 // Database imports
-const pgPool = require("./server/dataaccess/dbWrapper");
-const tokenDB = require("./server/DataAccess/tokenDB")(pgPool);
+const pgPool = require("./Server/DataAccess/dbWrapper");
+const tokenDB = require("./Server/DataAccess/tokenDB")(pgPool);
 const userDB = require("./Server/DataAccess/userDB")(pgPool);
 
 // OAuth imports
-const oAuthService = require("./server/Services/tokenService")(userDB, tokenDB);
+const oAuthService = require("./Server/Services/tokenService")(userDB, tokenDB);
 const oAuth2Server = require("node-oauth2-server");
 
 const app = express();
@@ -29,21 +29,21 @@ app.oauth = oAuth2Server({
   grants: ["password"],
   debug: true,
 });
-const authenticator = require("./server/security/authenticator")(userDB);
-const routes = require("./server/security/login")(express.Router(),app,authenticator);
+const authenticator = require("./Server/Security/authenticator")(userDB);
+const routes = require("./Server/Security/login")(express.Router(),app,authenticator);
 app.use("/auth", routes);
 
-const authmiddleware = require("./server/Security/auth.js")(tokenDB);
+const authmiddleware = require("./Server/Security/auth.js")(tokenDB);
 app.use(authmiddleware.setUserFromToken);
 
-const queryService = require("./server/Services/queryService.js");
+const queryService = require("./Server/Services/queryService.js");
 app.use(queryService.setQuery);
 
 // Set our api routes
-const api = require('./server/routes/api')(express.Router(),app);
+const api = require('./Server/Routes/api')(express.Router(),app);
 app.use('/api', api);
 
-// const db = require("./server/Models");
+// const db = require("./Server/Models");
 // const tokenService = require('./Server/Services/tokenService');
 //db.sequelize.sync();
 
