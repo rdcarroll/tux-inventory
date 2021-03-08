@@ -1,7 +1,8 @@
 {
-  "name": "myexpressapp",
-  "version": "0.0.0",
+  "name": "tuc-express",
+  "version": "0.0.1",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "start": "node ./bin/www",
     "serv": "node app.js",
@@ -21,7 +22,11 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "node-oauth2-server": "2.4.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
+  },
+  "devDependencies": {
+    "@angular/cli": "^9.1.13", "node-oauth2-server": "2.4.0",
     "@angular/animations": "9.1.4",
     "@angular/cdk": "9.2.2",
     "@angular/common": "9.1.4",
@@ -54,11 +59,6 @@
     "popper.js": "1.16.1",
     "rxjs": "~6.5.5",
     "zone.js": "~0.10.3",
-    "mysql2": "^2.2.5",
-    "sequelize": "^6.5.0"
-  },
-  "devDependencies": {
-    "@angular/cli": "^9.1.13",
     "@ngtools/webpack": "9.1.4",
     "@types/chart.js": "2.9.14",
     "@types/core-js": "^2.5.4",
