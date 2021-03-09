@@ -5,9 +5,8 @@ module.exports = {
     DB: "heroku_e3d2a7ef64f5b0e",
     dialect: "mysql",
     pool: {
-      max: 5,
+      max: 2,
       min: 0,
-      acquire: 30000,
       idle: 10000
     }
   };
