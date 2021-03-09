@@ -7,7 +7,7 @@ const dbConfig = require("./db.config.js");
 
 function query(queryString, cbFunc) {
     const pool = mysql.createPool({
-        connectionLimit : 100, //important
+        connectionLimit : 5, //important
         host     : dbConfig.HOST,
         user     : dbConfig.USER,
         password : dbConfig.PASSWORD,
