@@ -25,7 +25,7 @@ exports.findAll = async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error retrieving ${model_name}s`
+      message: `Error retrieving ${model_name}s:${err.message}`
     });
   }
 };
@@ -61,8 +61,17 @@ exports.update = async (req, res) => {
 };
 
 // Delete a Customer with the specified id in the request
-exports.delete = (req, res) => {
-  
+exports.delete = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  try {
+    response = await model_service.remove(id);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error deleting ${model_name}`
+    });
+  }
 };
 
 exports.findItems = async (req, res) => {
@@ -74,7 +83,7 @@ exports.findItems = async (req, res) => {
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error retrieving ${model_name}`
+      message: `Error retrieving ${model_name}:${err.message}`
     });
   }
 };

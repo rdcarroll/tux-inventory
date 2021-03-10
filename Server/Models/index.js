@@ -26,7 +26,8 @@ db.inventory = require("./inventory.js")(sequelize);
 db.inventory_items = require("./inventory_items.js")(sequelize);
 db.inventory_types = require("./inventory_types.js")(sequelize);
 db.status_types = require("./status_types.js")(sequelize);
-//db.packages = require("./packages.js")(sequelize);
+db.packages = require("./packages.js")(sequelize);
+db.package_inventory = require("./package_inventory.js")(sequelize);
 db.orders = require("./orders.js")(sequelize);
 db.order_items = require("./order_items.js")(sequelize);
 
@@ -42,5 +43,14 @@ db.inventory_items.belongsTo(db.inventory, { foreignKey:'InventoryID', as : 'Inv
 
 db.customers.hasMany(db.orders, {  foreignKey:'CustomerID', as : 'Orders' });
 db.orders.belongsTo(db.customers, { foreignKey:'CustomerID', as : 'Customer' });
+
+db.inventory_items.hasMany(db.order_items, {  foreignKey:'InventoryItemID', as : 'OrderItems' });
+db.order_items.belongsTo(db.inventory_items, { foreignKey:'InventoryItemID', as : 'InventoryItem' });
+
+db.packages.hasMany(db.package_inventory,  { foreignKey:'PackageID', as : 'PackageInventory'  });
+db.package_inventory.belongsTo(db.packages, { foreignKey:'PackageID', as : 'Package'  });
+
+db.inventory.hasMany(db.package_inventory,  { foreignKey:'InventoryID', as : 'PackageInventory'  });
+db.package_inventory.belongsTo(db.inventory, { foreignKey:'InventoryID', as : 'Inventory'  });
 
 module.exports = db;

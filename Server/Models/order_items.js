@@ -31,14 +31,14 @@ module.exports = sequelize => {
       comment: null,
       field: "OrderID"
     },
-    StatusID: {
-      type: DataTypes.INTEGER,
+    Confirmed: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "StatusID"
+      field: "Confirmed"
     },
     EmployeeID: {
       type: DataTypes.INTEGER,
@@ -48,6 +48,24 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "EmployeeID"
+    },
+    InventoryItemID: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "InventoryItemID"
+    },
+    Cost: {
+      type: DataTypes.DOUBLE,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Cost"
     }
   };
   const options = {

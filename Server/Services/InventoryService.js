@@ -7,22 +7,6 @@ module.exports = {
     create: create,
     update: update
 };
-// async function getAll(query) {
-//     try {
-//       return await Model.findAll(query);
-//     } catch (err) {
-//       throw err;
-//     }
-// }
-// async function getOne(id) {
-//     try {
-//       return await Model.findByPk(id,query);
-//       //return await Model.findByPk(id,{ include: ['InventoryType', {model:db.inventory_items, as:'InventoryItems',include:['Status']}]});
-//     } catch (err) {
-//       throw err;
-//     }
-// }
-
 async function getAll(query) {
   try {
     return await Model.findAll(query);

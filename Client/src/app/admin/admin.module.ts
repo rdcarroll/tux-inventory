@@ -18,6 +18,7 @@ import { InventoryTypeDetailComponent } from './inventorytypes/inventorytype-det
 import { packagesComponent } from './packages/packages.component';
 import { PackageDetailComponent } from './packages/package-detail.component';
 import { InventoryDetailComponent } from './inventory/inventory-detail.component';
+import { packageinventoryDetailComponent } from './packages/packageinventory-detail.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -41,7 +42,8 @@ import { InventoryDetailComponent } from './inventory/inventory-detail.component
         inventorytypesComponent,
         InventoryTypeDetailComponent,
         packagesComponent,
-        PackageDetailComponent
+        PackageDetailComponent,
+        packageinventoryDetailComponent
     ]
 })
 export class AdminModule { }

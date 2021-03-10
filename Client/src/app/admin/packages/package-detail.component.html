@@ -13,33 +13,9 @@
 
                     <form>
                         <div class="form-group row">
-                            <label class="col-md-4 col-form-label">First Name</label>
+                            <label class="col-md-4 col-form-label">Name</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="first" placeholder="" [(ngModel)]="item.FirstName" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Last Name</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="last" placeholder="" [(ngModel)]="item.LastName" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Email</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Email" placeholder="" [(ngModel)]="item.Email" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Phone</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Phone" placeholder="" [(ngModel)]="item.Phone" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-4 col-form-label">Address</label>
-                            <div class="col-md-8">
-                                <input class="form-control" name="Address" placeholder="" [(ngModel)]="item.Address" required>
+                                <input class="form-control" name="name" placeholder="" [(ngModel)]="item.Name" required>
                             </div>
                         </div>
 
@@ -52,6 +28,41 @@
                             </div>
                         </div>
                     </form>
+                    <div class="row">
+                        <label class="col-md-4 col-form-label">Package Model Styles
+                            <a class="btn btn-default btn-sm"
+                             routerLink="/admin/packageinventory/add" 
+                             [queryParams]="{package_id:item.ID}">
+                             <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+                            </a></label>
+                        
+                        <div class="col-md-8">
+                            <table class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Style</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <td></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let _item of item.PackageInventory">
+                                        <td>{{_item.Inventory.ModelName}}</td>
+                                        <td>{{_item.Inventory.Description}}</td>
+                                        <td>{{_item.Inventory.InventoryType.Name}}</td>
+                                        <td>
+                                            <a class="btn btn-primary btn-xs"
+                                            [routerLink]="['/admin/packageinventory',_item.ID]" 
+                                             [queryParams]="{inventory_id:_item.ID}">
+                                             <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

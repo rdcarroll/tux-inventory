@@ -5,7 +5,8 @@ module.exports = {
     getAll: getAll,
     getOne: getOne,
     create: create,
-    update: update
+    update: update,
+    remove: remove
 };
 async function getAll(query) {
     try {
@@ -37,6 +38,15 @@ async function update(id,record) {
         ID: id
       }
     });
+  } catch (err) {
+    throw err;
+  }
+}
+async function remove(id) {
+  try {
+    const model = await Model.findByPk(id);
+    return await model.destroy();
+    //TODO: redo ticket
   } catch (err) {
     throw err;
   }

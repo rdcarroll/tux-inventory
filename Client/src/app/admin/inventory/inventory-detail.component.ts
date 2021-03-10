@@ -50,7 +50,7 @@ export class InventoryDetailComponent implements OnInit {
         this.ApiClient.pPost("inventory", {}, this.item).pipe(take(1))
             .subscribe(res => {
                 this.item = res;
-                this.router.navigate(['/admin', 'inventory']);
+                this.router.navigate(['/admin/inventory', this.item.ID]);
                 this.util.alert("success", "Success Adding Inventory", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
