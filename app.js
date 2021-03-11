@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 
 // Database imports
 const pgPool = require("./Server/DataAccess/dbWrapper");
-const tokenDB = require("./Server/DataAccess/tokenDB")(pgPool);
-const userDB = require("./Server/DataAccess/userDB")(pgPool);
+const tokenDB = require("./Server/DataAccess/tokenDB2")();
+const userDB = require("./Server/DataAccess/userDB2")();
 
 // OAuth imports
 const oAuthService = require("./Server/Services/tokenService")(userDB, tokenDB);

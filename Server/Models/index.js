@@ -18,6 +18,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.access_token = require("./access_token.js")(sequelize);
 db.customers = require("./customers.js")(sequelize);
 db.employees = require("./employees.js")(sequelize);
 db.event_types = require("./event_types.js")(sequelize);
