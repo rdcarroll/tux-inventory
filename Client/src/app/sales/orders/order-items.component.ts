@@ -76,21 +76,43 @@ export class OrderItemsComponent implements OnInit {
             }
         }
     }
-    packageChanged(): void {
+    packageChanged(package_id:number): void {
         if (confirm("Items will be replaced with the items from this selected package. Continue?")) {
-        // this.ApiClient.pPut(`orders/${this.order.ID}/orderitems`, {}, this.order).pipe(take(1))
-        // .subscribe(res => {
-        //     this.util.alert("success", "Success Saving Order Items", false, { icon: 'check' }, true);
-        // }, (err) => {
-        //     this.util.handleError(err, "Error Saving");
-        // });
+        this.ApiClient.pPut(`orders/${this.order.ID}/order_items`, {package_id:package_id}, this.order).pipe(take(1))
+        .subscribe(res => {
+            this.getOrderItems().subscribe(res=>{
+                this.orderitems = res;
+            });
+            this.util.alert("success", "Success Replacing Order Items", false, { icon: 'check' }, true);
+        }, (err) => {
+            this.util.handleError(err, "Error Saving");
+        });
         }
     }
-    addItemClicked(): void {
-        
+    addItemClicked(): void {        
+        let nOrderItem:any = {
+            OrderID: this.order.ID,
+            CustomerID: this.order.CustomerID,
+            //EmployeeID: number;
+            Confirmed: 0,
+            InventoryItemID: null,
+            Cost: 0
+        }
+        this.ApiClient.pPost(`order_items`, {order_id:this.order.ID}, nOrderItem).pipe(take(1))
+    .subscribe(res => {
+        this.getOrderItems().subscribe(res=>{
+            this.orderitems = res;
+        });
+        this.util.alert("success", "Success Adding Order Item", false, { icon: 'check' }, true);
+    }, (err) => {
+        this.util.handleError(err, "Error Saving");
+    });
     }
 
     save(frm:any): void {
+        this.getOrderItems().subscribe(res=>{
+            this.orderitems = res;
+        });
         // this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
         //     .subscribe(res => {
         //         this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);

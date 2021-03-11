@@ -64,6 +64,8 @@ module.exports = (router, app) => {
   
   const order_items = require("../controllers/order_items.controller.js");
   router.get("/orders/:id/order_items", app.oauth.authorise(), orders.findItems);
+  router.put("/orders/:id/order_items", app.oauth.authorise(), orders.replaceItems);
+  router.post("/order_items", app.oauth.authorise(), order_items.create);
   router.delete("/order_items/:id", app.oauth.authorise(), order_items.delete);
 
   return router;

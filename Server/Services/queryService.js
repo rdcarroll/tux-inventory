@@ -33,7 +33,7 @@ exports.setQuery = async (req, res, next) => {
         let q = {where:{},include:[]};
         if(query.filter) q.where = parsefilter(query.filter);
         if(query.include) q.include = parseinclude(query.include);
-        req.query = q;
+        Object.assign(req.query, query, q);
         next();
     } catch (err) {
       res.status(500).send({

@@ -6,7 +6,8 @@ module.exports = {
     getOne: getOne,
     create: create,
     update: update,
-    remove: remove
+    remove: remove,
+    replace: replace
 };
 async function getAll(query) {
     try {
@@ -26,6 +27,11 @@ async function getOne(query) {
 
 async function create(record) {
   try {
+    //if we're adding a new item, grab first default pant
+    if(record['InventoryItemID']==null){
+      const model = await db.inventory_items.findAll({where:{InventoryID:158}});
+      record['InventoryItemID'] = model[0].ID;
+    }
     return await Model.create(record);
   } catch (err) {
     throw err;
@@ -46,6 +52,34 @@ async function remove(id) {
   try {
     const model = await Model.findByPk(id);
     return await model.destroy();
+    //TODO: redo ticket
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function replace(id,query) {
+  try {
+    const pacakge_id = query['package_id'];
+    const EmployeeID = query['EmployeeID'];
+    const packageInventory = await db.package_inventory.findAll({where:{PackageID:pacakge_id}, include:[{association:'Inventory',include:[{association:'InventoryItems',limit:1}]}]});
+    //TODO: look for inventory items without conflict as first choice
+    if(packageInventory.length>0){
+      const order = await db.orders.findByPk(id);
+      await db.order_items.destroy({where:query.where});
+      
+      for (const pi of packageInventory) {
+        await db.order_items.create({
+          OrderID:order.ID,
+          CustomerID:order.CustomerID,
+          Confirmed:0,
+          EmployeeID:EmployeeID,
+          InventoryItemID:pi.Inventory.InventoryItems[0].ID
+        });
+      }
+    }
+    return await db.order_items.findAll({where:query.where});
+    
     //TODO: redo ticket
   } catch (err) {
     throw err;

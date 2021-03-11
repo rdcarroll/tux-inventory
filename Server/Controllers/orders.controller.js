@@ -87,4 +87,18 @@ exports.findItems = async (req, res) => {
     });
   }
 };
+exports.replaceItems = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  if(req.query.where)req.query.where['OrderID']=id;
+  req.query['EmployeeID'] = req.user.id;
+  try {
+    response = await orderitem_service.replace(id,req.query);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}:${err.message}`
+    });
+  }
+};
 

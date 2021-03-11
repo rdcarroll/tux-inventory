@@ -5,6 +5,7 @@ const model_name = `OrderItem`;
 exports.create = async (req, res) => {
   let response;
   let nModel = req.body;
+  nModel['EmployeeID'] = req.user.id;
   try {
     response = await model_service.create(nModel);
     res.json(response);
@@ -71,3 +72,4 @@ exports.delete = async (req, res) => {
     });
   }
 };
+
