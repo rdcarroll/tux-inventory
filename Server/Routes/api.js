@@ -43,13 +43,13 @@ module.exports = (router, app) => {
   router.put("/status_types/:id", app.oauth.authorise(), status_types.update);
   router.post("/status_types", app.oauth.authorise(), status_types.create);
   
-  const packages = require("../controllers/packages.controller.js");
+  const packages = require("../Controllers/packages.controller.js");
   router.get("/packages", app.oauth.authorise(), packages.findAll);
   router.get("/packages/:id", app.oauth.authorise(), packages.findOne);
   router.put("/packages/:id", app.oauth.authorise(), packages.update);
   router.post("/packages", app.oauth.authorise(), packages.create);
 
-  const package_inventory = require("../controllers/package_inventory.controller.js");
+  const package_inventory = require("../Controllers/package_inventory.controller.js");
   router.get("/package_inventory", app.oauth.authorise(), package_inventory.findAll);
   router.get("/package_inventory/:id", app.oauth.authorise(), package_inventory.findOne);
   router.put("/package_inventory/:id", app.oauth.authorise(), package_inventory.update);
@@ -62,7 +62,7 @@ module.exports = (router, app) => {
   router.delete("/orders/:id", app.oauth.authorise(), orders.delete);
   router.post("/orders", app.oauth.authorise(), orders.create);
   
-  const order_items = require("../controllers/order_items.controller.js");
+  const order_items = require("../Controllers/order_items.controller.js");
   router.get("/orders/:id/order_items", app.oauth.authorise(), orders.findItems);
   router.put("/orders/:id/order_items", app.oauth.authorise(), orders.replaceItems);
   router.post("/order_items", app.oauth.authorise(), order_items.create);
