@@ -17,8 +17,9 @@ export class OrderItem {
     OrderID: number;
     CustomerID: number;
     EmployeeID: number;
-    StatusID: number;
+    Confirmed: number;
     InventoryItemID: number;
+    Cost: number;
     createdAt: Date;
     updatedAt: Date;
     InventoryItem: {};

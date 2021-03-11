@@ -48,8 +48,8 @@ export class OrderItemEditComponent implements OnInit {
         }));
     }
     getStyles(inventoryTypeID:number): Observable<any> {
-        let q = {filter:"InventoryTypeID|7",include:['InventoryType']}
-        return this.ApiClient.pGet(`inventory`, {'InventoryTypeID':inventoryTypeID}).pipe(take(1))
+        let q = {filter:`InventoryTypeID|${inventoryTypeID}`,include:['InventoryType']}
+        return this.ApiClient.pGet(`inventory`, q).pipe(take(1))
         .pipe(map((res: any) => {
             this.inventory = res;
         }));

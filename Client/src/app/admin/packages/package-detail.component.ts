@@ -29,7 +29,8 @@ export class PackageDetailComponent implements OnInit {
             this.item = new Package();
         }
         else {
-            this.ApiClient.pGet("packages/" + this.id, {}).pipe(take(1))
+            let q = {include:[{'PackageInventory':[{'Inventory':['InventoryType']}]}]};
+            this.ApiClient.pGet("packages/" + this.id, q).pipe(take(1))
                 .subscribe(res => this.item = res);
         }
     }

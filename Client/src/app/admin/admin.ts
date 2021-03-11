@@ -56,3 +56,10 @@ export class Package {
     createdAt: Date;
     updatedAt: Date;
 }
+export class PackageInventory {
+    ID: number;
+    InventoryID: number;
+    PackageID: number;
+    createdAt: Date;
+    updatedAt: Date;
+}

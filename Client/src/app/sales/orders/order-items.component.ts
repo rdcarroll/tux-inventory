@@ -20,6 +20,8 @@ export class OrderItemsComponent implements OnInit {
     orderitems: OrderItem[];
     inventory_types: InventoryType[];
     user: CurrentUser;
+    package_id: any;
+    packages: any[];
 
     constructor(
         private ApiClient: ApiClientService,
@@ -32,40 +34,23 @@ export class OrderItemsComponent implements OnInit {
 
 
     getOrderItems(): Observable<any> {
-        return this.ApiClient.pGet(`orders/${this.order.ID}/order_items`, {}).pipe(take(1));
+        let q = {include:[{'InventoryItem':[{'Inventory':['InventoryType']}]}]}
+        return this.ApiClient.pGet(`orders/${this.order.ID}/order_items`, q).pipe(take(1));
     }
     ngOnInit(): void {
         this.user = this.security.getUser();
         this.getLookups().subscribe(res=>{
             this.getOrderItems().subscribe(res=>{
-                if (res.length==0) {
-                    this.setDefault();
-                }
-                else{
-                    this.orderitems = res;
-                }
+                this.orderitems = res;
             });
         });
     }
-    setDefault() {
-        let tList = [];
-        for(const invtype of this.inventory_types){
-            let tItem = new OrderItem();
-            tItem.OrderID=this.order.ID;
-            tItem.CustomerID=this.order.CustomerID;
-            tItem.EmployeeID=this.user.Id;
-            tItem.InventoryItem = {
-                StatusID:2,
-                Inventory:{ModelName:"",Price:0,InventoryType:{ID:invtype.ID,Name:invtype.Name}},
-            }
-            tList.push(tItem);
-        }
-        this.orderitems = tList;
-    }
     getLookups(): Observable<any> {
-        return forkJoin([this.ApiClient.pGet("inventory_types", {}).pipe(take(1))])
+        return forkJoin([this.ApiClient.pGet("inventory_types", {}).pipe(take(1)),
+        this.ApiClient.pGet("packages", {}).pipe(take(1))])
         .pipe(map((res: any) => {
             this.inventory_types= res[0];
+            this.packages = res[1];
         }));
     }
 
@@ -84,18 +69,67 @@ export class OrderItemsComponent implements OnInit {
                 break;
             }
             case 'delete':{
+                if (confirm("Are you sure?")) {
+                    this.remove(item.ID)
+                }
                 break;
             }
         }
     }
+    packageChanged(package_id:number): void {
+        if (confirm("Items will be replaced with the items from this selected package. Continue?")) {
+        this.ApiClient.pPut(`orders/${this.order.ID}/order_items`, {package_id:package_id}, this.order).pipe(take(1))
+        .subscribe(res => {
+            this.getOrderItems().subscribe(res=>{
+                this.orderitems = res;
+            });
+            this.util.alert("success", "Success Replacing Order Items", false, { icon: 'check' }, true);
+        }, (err) => {
+            this.util.handleError(err, "Error Saving");
+        });
+        }
+    }
+    addItemClicked(): void {        
+        let nOrderItem:any = {
+            OrderID: this.order.ID,
+            CustomerID: this.order.CustomerID,
+            //EmployeeID: number;
+            Confirmed: 0,
+            InventoryItemID: null,
+            Cost: 0
+        }
+        this.ApiClient.pPost(`order_items`, {order_id:this.order.ID}, nOrderItem).pipe(take(1))
+    .subscribe(res => {
+        this.getOrderItems().subscribe(res=>{
+            this.orderitems = res;
+        });
+        this.util.alert("success", "Success Adding Order Item", false, { icon: 'check' }, true);
+    }, (err) => {
+        this.util.handleError(err, "Error Saving");
+    });
+    }
 
     save(frm:any): void {
+        this.getOrderItems().subscribe(res=>{
+            this.orderitems = res;
+        });
         // this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
         //     .subscribe(res => {
         //         this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
         //     }, (err) => {
         //         this.util.handleError(err, "Error Saving");
         //     });
+    }
+    remove(id: number): void {
+        this.ApiClient.pRemove("order_items/" + id, {}).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Order Item was successfully removed.", false, { icon: 'check' }, true);
+                this.getOrderItems().subscribe(res=>{
+                    this.orderitems = res;
+                });
+            }, (err) => {
+                this.util.handleError(err, "Error Removing");
+            });
     }
 
 }
