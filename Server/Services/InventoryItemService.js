@@ -1,11 +1,13 @@
 const db = require("../Models");
 const Model = db.inventory_items;
+const { Op } = require("sequelize");
 
 module.exports = {
     getAll: getAll,
     getOne: getOne,
     create: create,
-    update: update
+    update: update,
+    checkBooking:checkBooking
 };
 // async function getAll() {
 //     try {
@@ -53,5 +55,31 @@ async function update(id,record) {
     });
   } catch (err) {
     throw err;
+  }
+}
+
+
+async function checkBooking(orderid, items){
+  try {
+    for (const item of items) {
+      let order = await db.orders.findByPk(orderid);
+      const startDate = new Date(order.pickUpDate);
+      const endDate = new Date(order.returnDate);
+        let bookings = await db.order_items.findAll(
+          {
+            include:[{association:'Order'},{association:'InventoryItem'}],
+            where:{
+            [Op.and]: [
+              { InventoryItemID:item.ID },
+              { '$InventoryItem.Barcode$': { [Op.ne]:null } },
+              { '$Order.pickUpDate$': { [Op.lte]:endDate } },
+              {'$Order.returnDate$': { [Op.gte]: startDate } }
+            ]
+          }} );
+        item.overbooked=bookings.length>1;
+    }
+    return items;
+  } catch (error) {
+    throw error;
   }
 }

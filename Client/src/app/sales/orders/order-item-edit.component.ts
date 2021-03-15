@@ -71,7 +71,7 @@ export class OrderItemEditComponent implements OnInit {
         }));
     }
     getInventoryItems(inventoryID:number): Observable<any> {
-        let q = {filter:`InventoryID|${inventoryID}`}
+        let q = {filter:`InventoryID|${inventoryID}`,OrderID:this.item.OrderID}
         return this.ApiClient.pGet(`inventory_items`, q).pipe(take(1))
         .pipe(map((res: any) => {
             return this.inventory_items = res;
@@ -91,13 +91,21 @@ export class OrderItemEditComponent implements OnInit {
     }
     
     save(): void {
-            let nObject = {
-                orderid:this.item.ID,
-                invitemid :  this.invitemid,
-                price : this.price,
-                confirmed :  this.confirmed
+        let nObject = {
+            orderid:this.item.ID,
+            invitemid :  this.invitemid,
+            price : this.price,
+            confirmed :  this.confirmed
+        }
+        let invitem = this.inventory_items.filter(invitem => {  return invitem.ID == this.invitemid   })[0] || {};
+        if(invitem && invitem.overbooked){
+            if (confirm("The Inventory Item you selected seems to be booked for some of the dates in this Order. Save Anyway?")) {
+                this.itemChange.emit(nObject);
             }
+        }
+        else{
             this.itemChange.emit(nObject);
+        }
     }
     close(): void {
             this.closeEdit.emit(true);

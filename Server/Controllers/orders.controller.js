@@ -79,10 +79,12 @@ exports.findItems = async (req, res) => {
   let response;
   const id = req.params.id;
   if(req.query.where)req.query.where['OrderID']=id;
+  req.query['raw']=true;
+  req.query['nest']=true;
   try {
     response = await orderitem_service.getAll(req.query);
-    orderitem_service.checkBooking(response);
-    res.json(response);
+    let verified = await orderitem_service.checkBooking(response);
+    res.json(verified);
   } catch (err) {
     res.status(500).send({
       message: `Error retrieving ${model_name}:${err.message}`

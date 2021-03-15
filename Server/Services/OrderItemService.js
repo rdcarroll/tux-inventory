@@ -1,5 +1,6 @@
 const db = require("../Models");
 const Model = db.order_items;
+const { Op } = require("sequelize");
 
 module.exports = {
     getAll: getAll,
@@ -96,15 +97,19 @@ async function checkBooking(items){
       const startDate = new Date(order.pickUpDate);
       const endDate = new Date(order.returnDate);
         let bookings = await Model.findAll(
-          {where:
-            {$and:
-              {InventoryItemID:item.InventoryItemID,
-              '$Order.pickUpDate$': { $lte:endDate },
-              '$Order.returnDate$': { $gte: startDate }}
-            }
-          } );
-        let count = bookings.length;
+          {
+            include:[{association:'Order'},{association:'InventoryItem'}],
+            where:{
+            [Op.and]: [
+              { InventoryItemID:item.InventoryItemID },
+              { '$InventoryItem.Barcode$': { [Op.ne]:null } },
+              { '$Order.pickUpDate$': { [Op.lte]:endDate } },
+              {'$Order.returnDate$': { [Op.gte]: startDate } }
+            ]
+          }} );
+        item.overbooked=bookings.length>1;
     }
+    return items;
   } catch (error) {
     throw error;
   }

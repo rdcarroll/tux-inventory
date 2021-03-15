@@ -68,6 +68,13 @@ module.exports = (router, app) => {
   router.post("/order_items", app.oauth.authorise(), order_items.create);
   router.put("/order_items/:id", app.oauth.authorise(), order_items.update);
   router.delete("/order_items/:id", app.oauth.authorise(), order_items.delete);
+  
+  const order_tickets = require("../Controllers/order_tickets.controller.js");
+  router.get("/order_tickets", app.oauth.authorise(), order_tickets.findAll);
+  router.get("/order_tickets/:id", app.oauth.authorise(), order_tickets.findOne);
+  router.put("/order_tickets/:id", app.oauth.authorise(), order_tickets.update);
+  router.delete("/order_tickets/:id", app.oauth.authorise(), order_tickets.delete);
+  router.post("/order_tickets", app.oauth.authorise(), order_tickets.create);
 
   return router;
 };

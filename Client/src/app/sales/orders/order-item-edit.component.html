@@ -34,8 +34,8 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label">SKU</label>
             <div class="col-md-8">
-                <select class="form-control" [(ngModel)]="invitemid" (ngModelChange)="changeInventoryItem($event,false)" name="InventoryItemID" required >
-                    <option *ngFor="let i of inventory_items" [value]="i.ID">{{i.Size}} [{{i.Barcode}}]</option>
+                <select class="form-control" [(ngModel)]="invitemid" (ngModelChange)="changeInventoryItem()" name="InventoryItemID" required >
+                    <option *ngFor="let i of inventory_items" [value]="i.ID"><span *ngIf="i.overbooked">** </span>{{i.Size}} [{{i.Barcode}}]</option>
                  </select>
                 <!-- <my-typeahead [(myModel)]="invsku" [options]="inventory_items" [valueField]="'SKU'" [displayField]="'SKU'"></my-typeahead> -->
             </div>

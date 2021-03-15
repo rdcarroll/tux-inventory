@@ -18,6 +18,7 @@
                                         <th>Size</th>
                                         <th>Price</th>
                                         <th>Confirmed?</th>
+                                        <th>Overbooked?</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -37,6 +38,9 @@
                                                 <td>
                                                     <fa-icon *ngIf="item.Confirmed" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
                                                     <!-- <fa-icon *ngIf="!item.Confirmed" [icon]="['fas', 'times']" class="text-danger" size="xs"></fa-icon> -->
+                                                </td>
+                                                <td>
+                                                    <fa-icon *ngIf="item.overbooked" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-xs" (click)="btnClick(item,'edit');">
