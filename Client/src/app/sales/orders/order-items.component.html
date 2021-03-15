@@ -17,7 +17,7 @@
                                         <th>Description</th>
                                         <th>Size</th>
                                         <th>Price</th>
-                                        <th>Status</th>
+                                        <th>Confirmed?</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -25,11 +25,7 @@
                                         <tr *ngFor="let item of orderitems">
                                             <ng-container *ngIf="item.$$editing; else not_editing">
                                                 <td colspan="7">
-                                                    <div class="btn-group float-right" role="group">
-                                                        <button (click)="btnClick(item,'save')" class="btn btn-success btn-sm">Save</button>
-                                                        <button (click)="btnClick(item,'close')" class="btn btn-primary btn-sm">Close</button>
-                                                    </div>
-                                                    <order-item-edit [item]="item"></order-item-edit>
+                                                    <order-item-edit [item]="item" (itemChange)="save(item,$event)" (closeEdit)="btnClick(item,'close')"></order-item-edit>
                                                 </td>
                                             </ng-container>
                                             <ng-template #not_editing>
@@ -37,8 +33,11 @@
                                                 <td>{{item.InventoryItem.Inventory.ModelName}}</td>
                                                 <td>{{item.InventoryItem.Inventory.Description}}</td>
                                                 <td>{{item.InventoryItem.Size}}</td>
-                                                <td>{{item.InventoryItem.Inventory.Cost | currency}}</td>
-                                                <td></td>
+                                                <td>{{item.Cost | currency}}</td>
+                                                <td>
+                                                    <fa-icon *ngIf="item.Confirmed" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
+                                                    <!-- <fa-icon *ngIf="!item.Confirmed" [icon]="['fas', 'times']" class="text-danger" size="xs"></fa-icon> -->
+                                                </td>
                                                 <td>
                                                     <button class="btn btn-xs" (click)="btnClick(item,'edit');">
                                                         <fa-icon [icon]="['fas', 'edit']" class="text-info" size="xs" title="Edit"></fa-icon>

@@ -7,7 +7,8 @@ module.exports = {
     create: create,
     update: update,
     remove: remove,
-    replace: replace
+    replace: replace,
+    checkBooking:checkBooking
 };
 async function getAll(query) {
     try {
@@ -67,21 +68,44 @@ async function replace(id,query) {
     if(packageInventory.length>0){
       const order = await db.orders.findByPk(id);
       await db.order_items.destroy({where:query.where});
-      
+
       for (const pi of packageInventory) {
         await db.order_items.create({
           OrderID:order.ID,
           CustomerID:order.CustomerID,
           Confirmed:0,
+          Cost:pi.Inventory.Cost,
           EmployeeID:EmployeeID,
           InventoryItemID:pi.Inventory.InventoryItems[0].ID
         });
       }
     }
     return await db.order_items.findAll({where:query.where});
-    
+
     //TODO: redo ticket
   } catch (err) {
     throw err;
+  }
+}
+
+
+async function checkBooking(items){
+  try {
+    for (const item of items) {
+      let order = await db.orders.findByPk(item.OrderID);
+      const startDate = new Date(order.pickUpDate);
+      const endDate = new Date(order.returnDate);
+        let bookings = await Model.findAll(
+          {where:
+            {$and:
+              {InventoryItemID:item.InventoryItemID,
+              '$Order.pickUpDate$': { $lte:endDate },
+              '$Order.returnDate$': { $gte: startDate }}
+            }
+          } );
+        let count = bookings.length;
+    }
+  } catch (error) {
+    throw error;
   }
 }

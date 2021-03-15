@@ -1,9 +1,15 @@
-﻿<div class="row">
+﻿<div class="row"><div class="col-md-12">
+    <div class="btn-group float-right" role="group">
+        <button (click)="save()" class="btn btn-link btn-sm">Save</button>
+        <button (click)="close()" class="btn btn-link btn-sm">Close</button>
+    </div>
+</div></div>
+<div class="row">
     <div class="col-md-6">
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Type</label>
             <div class="col-md-8">
-                <select class="form-control" [(ngModel)]="invtypeid" (ngModelChange)=" changeInventoryType($event)" name="InventoryTypeID" required >
+                <select class="form-control" [(ngModel)]="invtypeid" (ngModelChange)="changeInventoryType($event,false)" name="InventoryTypeID" required >
                     <option *ngFor="let i of inventory_types" [value]="i.ID">{{i.Name}}</option>
                  </select>
             </div>
@@ -11,27 +17,42 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Style</label>
             <div class="col-md-8">
-                <my-typeahead [(myModel)]="invmodel" [options]="inventory" [valueField]="'ModelName'" [displayField]="'ModelName'"></my-typeahead>
+                <select class="form-control" [(ngModel)]="invmodelid" (ngModelChange)="changeInventory($event,false)" name="InventoryID" required >
+                    <option *ngFor="let i of inventory" [value]="i.ID">{{i.ModelName}}</option>
+                 </select>
+                <!-- <my-typeahead [(myModel)]="invmodelid" [options]="inventory" [valueField]="'ID'" [displayField]="'ModelName'"></my-typeahead> -->
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Description</label>
             <div class="col-md-8">
-                <span class="form-control-static">{{item.InventoryItem.Inventory.Description}}</span>
+                <span class="form-control-static">{{invmodeldesc}}</span>
             </div>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group row">
+            <label class="col-md-4 col-form-label">SKU</label>
+            <div class="col-md-8">
+                <select class="form-control" [(ngModel)]="invitemid" (ngModelChange)="changeInventoryItem($event,false)" name="InventoryItemID" required >
+                    <option *ngFor="let i of inventory_items" [value]="i.ID">{{i.Size}} [{{i.Barcode}}]</option>
+                 </select>
+                <!-- <my-typeahead [(myModel)]="invsku" [options]="inventory_items" [valueField]="'SKU'" [displayField]="'SKU'"></my-typeahead> -->
+            </div>
+        </div>
+        <div class="form-group row">
             <label class="col-md-4 col-form-label">Price</label>
             <div class="col-md-8">
-                <!-- <span class="form-control-static">{{id!='add' ? order.ID : "TBD"}}</span> -->
+                                <input matInput class="form-control" name="Cost" type="text" placeholder="Item Cost"
+                                [ngModel]="price | currency:'USD':'symbol':'2.2'"
+                                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="price=$event" />
+                <!-- <input class="form-control" name="price" placeholder="" [(ngModel)]="price" required> -->
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Confirmed?</label>
             <div class="col-md-8">
-                {{item.Confirmed}}
+                <input [(ngModel)]="confirmed" type="checkbox"/>
             </div>
         </div>
     </div>

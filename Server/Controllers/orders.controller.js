@@ -7,6 +7,7 @@ const model_name = `Order`;
 exports.create = async (req, res) => {
   let response;
   let nModel = req.body;
+  nModel['EmployeeID'] = req.user.id;
   try {
     response = await model_service.create(nModel);
     res.json(response);
@@ -80,6 +81,7 @@ exports.findItems = async (req, res) => {
   if(req.query.where)req.query.where['OrderID']=id;
   try {
     response = await orderitem_service.getAll(req.query);
+    orderitem_service.checkBooking(response);
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -101,4 +103,8 @@ exports.replaceItems = async (req, res) => {
     });
   }
 };
+
+function checkBooking(res){
+
+}
 

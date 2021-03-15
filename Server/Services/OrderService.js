@@ -35,9 +35,11 @@ async function create(record) {
         await db.order_items.create({
           OrderID:model.ID,
           CustomerID:model.CustomerID,
+          EmployeeID:record.EmployeeID,
+          InventoryItemID:dii.ID,
           StatusID:2,
-          EmployeeID:1,
-          InventoryItemID:dii.ID
+          Cost:0,
+          Confirmed:false
         });
       }
      }

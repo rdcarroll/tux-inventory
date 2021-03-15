@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -17,12 +17,19 @@ import { NgForm } from '@angular/forms';
 export class OrderItemEditComponent implements OnInit {
     
     @Input() item: any;
-    inventory_types: any;
-    inventory: any;
+    @Output() itemChange = new EventEmitter<object>();
+    @Output() closeEdit = new EventEmitter<boolean>();
+    inventory_types: any[];
+    inventory: any[];
+    inventory_items: any[];
     invtypeid: number;
-    invmodel: string;
-    statusid: number;
+    invmodelid: number;
+    invitemid: number;
     price: number;
+
+    statusid: number;
+    invmodeldesc: any;
+    confirmed: any;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -32,13 +39,22 @@ export class OrderItemEditComponent implements OnInit {
     ) { 
     }
 
-    changeInventoryType(inventoryTypeID:number){
-        this.getStyles(inventoryTypeID).subscribe(res=>{
-            
+    changeInventoryType(inventoryTypeID:number, initChild:boolean){
+         this.getInventory(inventoryTypeID).subscribe(res=>{
+            this.invmodelid = initChild?this.invmodelid : (res[0] ? res[0].ID : null);
+             this.changeInventory(this.invmodelid, initChild);
         });
     }
-    changeStyle(){
-
+    changeInventory(inventoryID:number, initChild:boolean){
+        let inv = this.inventory.filter(inv => {  return inv.ID == inventoryID   })[0] || {};
+        this.price = initChild ? this.price : inv.Cost;
+        this.invmodeldesc =  initChild ? this.invmodeldesc : inv.Description;
+         this.getInventoryItems(inventoryID).subscribe(res=>{
+            this.invitemid = initChild?this.invitemid : (res[0] ? res[0].ID : null);
+        });
+    }
+    changeInventoryItem(){
+        
     }
 
     getInventoryTypes(): Observable<any> {
@@ -47,32 +63,44 @@ export class OrderItemEditComponent implements OnInit {
             this.inventory_types = res;
         }));
     }
-    getStyles(inventoryTypeID:number): Observable<any> {
-        let q = {filter:`InventoryTypeID|${inventoryTypeID}`,include:['InventoryType']}
+    getInventory(inventoryTypeID:number): Observable<any> {
+        let q = {filter:`InventoryTypeID|${inventoryTypeID}`}
         return this.ApiClient.pGet(`inventory`, q).pipe(take(1))
         .pipe(map((res: any) => {
-            this.inventory = res;
+            return this.inventory = res;
+        }));
+    }
+    getInventoryItems(inventoryID:number): Observable<any> {
+        let q = {filter:`InventoryID|${inventoryID}`}
+        return this.ApiClient.pGet(`inventory_items`, q).pipe(take(1))
+        .pipe(map((res: any) => {
+            return this.inventory_items = res;
         }));
     }
     ngOnInit(): void {
         this.invtypeid = this.item.InventoryItem.Inventory.InventoryType.ID;
-        this.invmodel =  this.item.InventoryItem.Inventory.ModelName;
-        this.price = this.item.InventoryItem.Inventory.Price;
-        this.statusid =  this.item.InventoryItem.StatusID;
+        this.invmodelid =  this.item.InventoryItem.Inventory.ID;
+        this.invmodeldesc =  this.item.InventoryItem.Inventory.Description;
+        this.invitemid =  this.item.InventoryItem.ID;
+        this.price = this.item.Cost || 0;
+        this.confirmed =  this.item.Confirmed;
 
         this.getInventoryTypes().subscribe(res=>{
-            this.changeInventoryType(this.invtypeid);
-            
+            this.changeInventoryType(this.invtypeid, true);
         });
     }
     
-    save(frm:any): void {
-        // this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
-        //     .subscribe(res => {
-        //         this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
-        //     }, (err) => {
-        //         this.util.handleError(err, "Error Saving");
-        //     });
+    save(): void {
+            let nObject = {
+                orderid:this.item.ID,
+                invitemid :  this.invitemid,
+                price : this.price,
+                confirmed :  this.confirmed
+            }
+            this.itemChange.emit(nObject);
+    }
+    close(): void {
+            this.closeEdit.emit(true);
     }
 
 }

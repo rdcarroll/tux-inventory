@@ -66,6 +66,7 @@ module.exports = (router, app) => {
   router.get("/orders/:id/order_items", app.oauth.authorise(), orders.findItems);
   router.put("/orders/:id/order_items", app.oauth.authorise(), orders.replaceItems);
   router.post("/order_items", app.oauth.authorise(), order_items.create);
+  router.put("/order_items/:id", app.oauth.authorise(), order_items.update);
   router.delete("/order_items/:id", app.oauth.authorise(), order_items.delete);
 
   return router;

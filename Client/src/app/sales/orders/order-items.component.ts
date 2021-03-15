@@ -39,6 +39,7 @@ export class OrderItemsComponent implements OnInit {
     }
     ngOnInit(): void {
         this.user = this.security.getUser();
+        
         this.getLookups().subscribe(res=>{
             this.getOrderItems().subscribe(res=>{
                 this.orderitems = res;
@@ -109,16 +110,20 @@ export class OrderItemsComponent implements OnInit {
     });
     }
 
-    save(frm:any): void {
-        this.getOrderItems().subscribe(res=>{
-            this.orderitems = res;
-        });
-        // this.ApiClient.pPut("orders/" + this.id, {}, this.item).pipe(take(1))
-        //     .subscribe(res => {
-        //         this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
-        //     }, (err) => {
-        //         this.util.handleError(err, "Error Saving");
-        //     });
+    save(orderitem:OrderItem, frm:any): void {
+        orderitem.InventoryItemID = frm.invitemid;
+        orderitem.Cost = frm.price;
+        orderitem.Confirmed = frm.confirmed;
+        this.ApiClient.pPut("order_items/" + orderitem.ID, {}, orderitem).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
+                this.getOrderItems().subscribe(res=>{
+                    this.orderitems = res;
+                });
+            }, (err) => {
+                this.util.handleError(err, "Error Saving");
+            });
+
     }
     remove(id: number): void {
         this.ApiClient.pRemove("order_items/" + id, {}).pipe(take(1))
