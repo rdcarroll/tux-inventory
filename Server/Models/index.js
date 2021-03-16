@@ -31,6 +31,7 @@ db.package_inventory = require("./package_inventory.js")(sequelize);
 db.orders = require("./orders.js")(sequelize);
 db.order_items = require("./order_items.js")(sequelize);
 db.order_tickets = require("./order_tickets.js")(sequelize);
+db.company = require("./company.js")(sequelize);
 
 
 db.inventory_types.hasMany(db.inventory,  { foreignKey:'InventoryTypeID', as : 'Inventory'  });

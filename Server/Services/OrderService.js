@@ -28,6 +28,17 @@ async function getOne(query) {
 async function create(record) {
   try {
     const model = await Model.create(record);
+
+     //create new ticket
+     await db.order_tickets.create({
+      OrderID:model.ID,
+      SubTotal:0,
+      Total:0,
+      Tax:0,
+      Adjustment:0,
+      CustomerID:model.CustomerID,
+    });
+    //create default inv items list for order
     const dInv = await db.inventory.findAll({where:{ModelName:"default"}});
     for (const di of dInv) {
       const dInvItems = await db.inventory_items.findAll({limit:1, where:{InventoryID:di.ID}});
@@ -43,6 +54,7 @@ async function create(record) {
         });
       }
      }
+
     return model;
   } catch (err) {
     throw err;

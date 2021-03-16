@@ -1,4 +1,5 @@
 const model_service = require(`../Services/OrderItemService`);
+const orderticket_service = require(`../Services/OrderTicketService`);
 const model_name = `OrderItem`;
 
 // Create and Save a new Customer
@@ -8,6 +9,8 @@ exports.create = async (req, res) => {
   nModel['EmployeeID'] = req.user.id;
   try {
     response = await model_service.create(nModel);
+    //update ticket
+    await orderticket_service.syncOrder(nModel.OrderID);
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -51,6 +54,8 @@ exports.update = async (req, res) => {
   let uModel = req.body;
   try {
     response = await model_service.update(id, uModel);
+    //update ticket
+    await orderticket_service.syncOrder(uModel.OrderID);
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -65,6 +70,8 @@ exports.delete = async (req, res) => {
   const id = req.params.id;
   try {
     response = await model_service.remove(id);
+    //update ticket
+    await orderticket_service.syncOrder(response.OrderID);
     res.json(response);
   } catch (err) {
     res.status(500).send({

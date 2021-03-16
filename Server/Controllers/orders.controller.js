@@ -1,5 +1,6 @@
 const model_service = require(`../Services/OrderService`);
 const orderitem_service = require(`../Services/OrderItemService`);
+const orderticket_service = require(`../Services/OrderTicketService`);
 
 const model_name = `Order`;
 
@@ -10,6 +11,9 @@ exports.create = async (req, res) => {
   nModel['EmployeeID'] = req.user.id;
   try {
     response = await model_service.create(nModel);
+    //update ticket
+    await orderticket_service.syncOrder(response.ID);
+
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -61,12 +65,13 @@ exports.update = async (req, res) => {
   }
 };
 
-// Delete a Customer with the specified id in the request
+
 exports.delete = async (req, res) => {
   let response;
   const id = req.params.id;
   try {
     response = await model_service.remove(id);
+    //todo: remove/deactivate all child items
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -98,6 +103,8 @@ exports.replaceItems = async (req, res) => {
   req.query['EmployeeID'] = req.user.id;
   try {
     response = await orderitem_service.replace(id,req.query);
+    //update ticket
+    await orderticket_service.syncOrder(response.ID);
     res.json(response);
   } catch (err) {
     res.status(500).send({
@@ -105,8 +112,4 @@ exports.replaceItems = async (req, res) => {
     });
   }
 };
-
-function checkBooking(res){
-
-}
 
