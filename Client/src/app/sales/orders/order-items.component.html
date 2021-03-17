@@ -17,7 +17,7 @@
                                         <th>Description</th>
                                         <th>Size</th>
                                         <th>Price</th>
-                                        <th>Confirmed?</th>
+                                        <th>With Customer</th>
                                         <th>Overbooked?</th>
                                         <th></th>
                                     </tr>
@@ -25,7 +25,7 @@
                                 <tbody style="height:400px;">
                                         <tr *ngFor="let item of orderitems">
                                             <ng-container *ngIf="item.$$editing; else not_editing">
-                                                <td colspan="7">
+                                                <td colspan="8">
                                                     <order-item-edit [item]="item" (itemChange)="save(item,$event)" (closeEdit)="btnClick(item,'close')"></order-item-edit>
                                                 </td>
                                             </ng-container>

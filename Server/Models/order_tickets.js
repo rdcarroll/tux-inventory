@@ -58,6 +58,24 @@ module.exports = sequelize => {
       comment: null,
       field: "Total"
     },
+    Paid: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: false,
+      defaultValue: 0,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Paid"
+    },
+    Balance: {
+      type: DataTypes.DECIMAL(10,2),
+      allowNull: false,
+      defaultValue: 0,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Balance"
+    },
     Adjustment: {
       type: DataTypes.DECIMAL(10,2),
       allowNull: false,

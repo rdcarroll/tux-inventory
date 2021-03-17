@@ -93,5 +93,5 @@ exports.delete = async (req, res) => {
 async function syncOrderFromTicketID(ticketID){
   let orderID = 1;
   //update ticket
-  await orderticket_service.syncOrderByTicket(id);
+  await orderticket_service.syncOrderByTicket(ticketID);
 }

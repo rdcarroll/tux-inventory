@@ -57,3 +57,9 @@
         </div>
     </div>
 </div>
+<div class="row"><div class="col-md-12">
+    <div class="btn-group float-right" role="group">
+        <button *ngIf="statusid == 2" (click)="pickup()" class="btn btn-link btn-sm">Pickup</button>
+        <button *ngIf="statusid == 3" (click)="return()" class="btn btn-link btn-sm">Return</button>
+    </div>
+</div></div>

@@ -1,5 +1,6 @@
 
 const db = require("../Models");
+const order_tickets = require("../Models/order_tickets");
 const Model = db.order_tickets;
 
 module.exports = {
@@ -7,7 +8,8 @@ module.exports = {
     getOne: getOne,
     create: create,
     update: update,
-    syncOrder: syncOrder
+    syncOrder: syncOrder,
+    syncOrderByTicket: syncOrderByTicket
 };
 async function getAll(query) {
     try {
@@ -45,8 +47,12 @@ async function update(id,record) {
 }
 async function syncOrderByTicket(id) {
   try {
-    let orderTicket = await db.order_tickets.findAll({where: {ID: id}});
-    return await syncOrder(orderTicket.OrderID);
+    let orderTickets = await db.order_tickets.findAll({where: {ID: id}});
+    
+    for (const item of orderTickets) {
+      await syncOrder(item.OrderID);
+    }
+    return;
   } catch (err) {
     throw err;
   }
@@ -56,7 +62,6 @@ async function syncOrder(id) {
     let order = await db.orders.findByPk(id);
     let company = await db.company.findAll();
     let orderTickets = await db.order_tickets.findAll({where: {OrderID: order.ID }});
-    let orderItems = await db.order_items.findAll({where: {OrderID: order.ID }});
     let ot;
     if(orderTickets.length==0){
       //create new ticket
@@ -72,17 +77,24 @@ async function syncOrder(id) {
     else{
       ot = orderTickets[0];
     }
-    let subtotal=0;
-    for (const item of orderItems) {
-      subtotal += (item.Cost||0);
-    }
 
     //update ticket
-    let update = {Adjustment:0, Tax:0, SubTotal:0,Total:0};
+    let update = {Adjustment:0, Tax:0, SubTotal:0,Total:0, Paid:0};
+    let orderItems = await db.order_items.findAll({where: {OrderID: order.ID }});
+    for (const item of orderItems) {
+      update.SubTotal += (item.Cost||0);
+    }
     update.Adjustment = ot.Adjustment||0;
-    update.SubTotal = subtotal;
-    if(company.length>0) update.Tax = subtotal * (company[0].TaxRate||.10);
+    if(company.length>0) update.Tax = update.SubTotal * (company[0].TaxRate||.10);
+
     update.Total = update.SubTotal + update.Tax + update.Adjustment;
+
+    let ticketPayments = await db.ticket_payments.findAll({where: {TicketID: ot.ID }});
+    for (const item of ticketPayments) {
+      update.Paid += (item.Amount||0);
+    }
+
+    update.Balance = update.Total - update.Paid;
     
     return await Model.update(update, {
       where: {

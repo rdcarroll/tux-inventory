@@ -35,6 +35,8 @@ db.order_tickets = require("./order_tickets.js")(sequelize);
 db.company = require("./company.js")(sequelize);
 db.payment_reasons = require("./reasons.js")(sequelize);
 db.ticket_payments = require("./ticket_payments.js")(sequelize);
+db.inventory_item_actions = require("./inventory_item_actions.js")(sequelize);
+db.action_types = require("./action_types.js")(sequelize);
 
 
 db.inventory_types.hasMany(db.inventory,  { foreignKey:'InventoryTypeID', as : 'Inventory'  });
@@ -72,5 +74,8 @@ db.ticket_payments.belongsTo(db.order_tickets, { foreignKey:'TicketID', as : 'Or
 
 db.payment_reasons.hasMany(db.ticket_payments, {  foreignKey:'ReasonID', as : 'TicketPayments' });
 db.ticket_payments.belongsTo(db.payment_reasons, { foreignKey:'ReasonID', as : 'Reason' });
+
+db.inventory_items.hasMany(db.inventory_item_actions, {  foreignKey:'InventoryItemID', as : 'InventoryItemActions' });
+db.inventory_item_actions.belongsTo(db.inventory_items, { foreignKey:'InventoryItemID', as : 'InventoryItem' });
 
 module.exports = db;

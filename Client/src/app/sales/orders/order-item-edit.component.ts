@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+﻿import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -14,7 +14,7 @@ import { NgForm } from '@angular/forms';
     selector: 'order-item-edit',
     templateUrl: './order-item-edit.component.html'
 })
-export class OrderItemEditComponent implements OnInit {
+export class OrderItemEditComponent implements OnInit,OnChanges {
     
     @Input() item: any;
     @Output() itemChange = new EventEmitter<object>();
@@ -77,17 +77,20 @@ export class OrderItemEditComponent implements OnInit {
             return this.inventory_items = res;
         }));
     }
-    ngOnInit(): void {
+    ngOnChanges(): void {
         this.invtypeid = this.item.InventoryItem.Inventory.InventoryType.ID;
         this.invmodelid =  this.item.InventoryItem.Inventory.ID;
         this.invmodeldesc =  this.item.InventoryItem.Inventory.Description;
         this.invitemid =  this.item.InventoryItem.ID;
+        this.statusid =  this.item.InventoryItem.StatusID;
         this.price = this.item.Cost || 0;
         this.confirmed =  this.item.Confirmed;
 
         this.getInventoryTypes().subscribe(res=>{
             this.changeInventoryType(this.invtypeid, true);
         });
+    }
+    ngOnInit(): void {
     }
     
     save(): void {
@@ -109,6 +112,27 @@ export class OrderItemEditComponent implements OnInit {
     }
     close(): void {
             this.closeEdit.emit(true);
+    }
+    
+    pickup(): void {
+        this.ApiClient.pPut("order_items/" + this.item.ID + "/pickup", {}, {}).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Success Checking Out Item", false, { icon: 'check' }, true);
+                //this.itemChange.emit(res);
+                this.statusid =  this.item.InventoryItem.StatusID=3;
+            }, (err) => {
+                this.util.handleError(err, "Error Checking Out Item");
+            });
+    }
+    return(): void {
+        this.ApiClient.pPut("order_items/" + this.item.ID + "/return", {}, {}).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Success Returning Item", false, { icon: 'check' }, true);
+                //this.itemChange.emit(res);
+                this.statusid =  this.item.InventoryItem.StatusID=2;
+            }, (err) => {
+                this.util.handleError(err, "Error Returning Item");
+            });
     }
 
 }

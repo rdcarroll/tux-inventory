@@ -68,6 +68,8 @@ module.exports = (router, app) => {
   router.post("/order_items", app.oauth.authorise(), order_items.create);
   router.put("/order_items/:id", app.oauth.authorise(), order_items.update);
   router.delete("/order_items/:id", app.oauth.authorise(), order_items.delete);
+  router.put("/order_items/:id/pickup", app.oauth.authorise(), order_items.pickup);
+  router.put("/order_items/:id/return", app.oauth.authorise(), order_items.return);
   
   const order_tickets = require("../Controllers/order_tickets.controller.js");
   router.get("/order_tickets", app.oauth.authorise(), order_tickets.findAll);

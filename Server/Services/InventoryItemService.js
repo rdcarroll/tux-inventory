@@ -7,22 +7,11 @@ module.exports = {
     getOne: getOne,
     create: create,
     update: update,
-    checkBooking:checkBooking
+    checkBooking:checkBooking,
+    pickupitem:pickupitem,
+    returnitem:returnitem
 };
-// async function getAll() {
-//     try {
-//       return await Model.findAll({ include: ['Inventory','Status'] });
-//     } catch (err) {
-//       throw err;
-//     }
-// }
-// async function getOne(id) {
-//     try {
-//       return await Model.findByPk(id,{ include: ['Inventory','Status'] });
-//     } catch (err) {
-//       throw err;
-//     }
-// }
+
 async function getAll(query) {
     try {
       return await Model.findAll(query);
@@ -81,5 +70,43 @@ async function checkBooking(orderid, items){
     return items;
   } catch (error) {
     throw error;
+  }
+}
+
+async function pickupitem(id) {
+  try {
+    await db.inventory_item_actions.create({InventoryItemID:id,ActionID:3});
+    let record = {StatusID:3}
+    return await Model.update(record, {
+      where: {
+        ID: id
+      }
+    });
+  } catch (err) {
+    throw err;
+  }
+}
+async function returnitem(id) {
+  try {
+    await db.inventory_item_actions.create({InventoryItemID:id,ActionID:2});
+    let record = {StatusID:2}
+    return await Model.update(record, {
+      where: {
+        ID: id
+      }
+    });
+  } catch (err) {
+    throw err;
+  }
+}
+async function lostitem(id) {
+  try {
+    return await Model.update(record, {
+      where: {
+        ID: id
+      }
+    });
+  } catch (err) {
+    throw err;
   }
 }

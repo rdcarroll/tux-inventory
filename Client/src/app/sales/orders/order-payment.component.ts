@@ -51,7 +51,7 @@ export class OrderPaymentComponent implements OnInit, OnChanges  {
             }
         }));
     }
-    ngOnChanges(changes: SimpleChanges): void {
+    ngOnChanges(): void {
         if(this.ticketID){
             this.getTicketPayments(this.ticketID).subscribe(res=>{
                 
@@ -89,6 +89,8 @@ export class OrderPaymentComponent implements OnInit, OnChanges  {
                 .subscribe(res => {
                     this.util.alert("success", "Success Adding Payment", false, { icon: 'check' }, true);
                     this.paymentChange.emit(res);
+                    this.reasonid=null;
+                    this.amount=0;
                 }, (err) => {
                     this.util.handleError(err, "Error Saving");
                 });

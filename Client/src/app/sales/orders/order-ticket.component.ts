@@ -30,7 +30,6 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
     customername: any;
     createddate: any;
     ticketitems: any[];
-    orderitems: any;
 
 
     constructor(
@@ -46,7 +45,7 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
         let q = {include:[{'InventoryItem':[{'Inventory':['InventoryType']}]}]}
         return this.ApiClient.pGet(`orders/${OrderID}/order_items`, q).pipe(take(1))
         .pipe(map((res: any) => {
-            this.orderitems = res;
+            this.ticketitems = res;
         }));
     }
 
@@ -65,8 +64,8 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
                 this.tax = myticket.Tax || 0;
                 this.total = myticket.Total || 0;
                 this.adjustment = myticket.Adjustment || 0;
-                this.paid =  0;
-                this.balancedue = 0;
+                this.paid = myticket.Paid || 0;
+                this.balancedue = myticket.Balance || 0;
             }
         }));
     }
@@ -74,7 +73,7 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
         let orderID = this.order.ID;
         this.getOrderTickets(orderID).subscribe(res=>{
             this.getOrderItems(orderID).subscribe(res=>{
-                //         this.orderitems = res;
+                this.ticketitems = res;
             });
         });
     }
@@ -86,6 +85,7 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
     }
     
     paymentChanged(evt:any): void {
+        this.ticketnumber=null;
         this.ticketChange.emit(evt);
     }
     close(): void {

@@ -1,5 +1,6 @@
 const model_service = require(`../Services/OrderItemService`);
 const orderticket_service = require(`../Services/OrderTicketService`);
+const invitem_service = require(`../Services/InventoryItemService`);
 const model_name = `OrderItem`;
 
 // Create and Save a new Customer
@@ -76,6 +77,37 @@ exports.delete = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: `Error deleting ${model_name}`
+    });
+  }
+};
+
+exports.pickup = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  try {
+    let orderitem = await model_service.getOne({where:{ID:id}});
+    await model_service.update(id, {Confirmed:true});
+    response = await invitem_service.pickupitem(orderitem.InventoryItemID);
+
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error picking up ${model_name}.`
+    });
+  }
+};
+exports.return = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  try {
+    let orderitem = await model_service.getOne({where:{ID:id}});
+    await model_service.update(id, {Confirmed:false});
+    response = await invitem_service.returnitem(orderitem.InventoryItemID);
+
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error returning ${model_name}.`
     });
   }
 };
