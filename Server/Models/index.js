@@ -4,6 +4,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
+  dialectOptions: dbConfig.dialectOptions,
   operatorsAliases: 0,
   pool: {
     max: dbConfig.pool.max,
@@ -32,6 +33,8 @@ db.orders = require("./orders.js")(sequelize);
 db.order_items = require("./order_items.js")(sequelize);
 db.order_tickets = require("./order_tickets.js")(sequelize);
 db.company = require("./company.js")(sequelize);
+db.payment_reasons = require("./reasons.js")(sequelize);
+db.ticket_payments = require("./ticket_payments.js")(sequelize);
 
 
 db.inventory_types.hasMany(db.inventory,  { foreignKey:'InventoryTypeID', as : 'Inventory'  });
@@ -63,5 +66,11 @@ db.package_inventory.belongsTo(db.packages, { foreignKey:'PackageID', as : 'Pack
 
 db.inventory.hasMany(db.package_inventory,  { foreignKey:'InventoryID', as : 'PackageInventory'  });
 db.package_inventory.belongsTo(db.inventory, { foreignKey:'InventoryID', as : 'Inventory'  });
+
+db.order_tickets.hasMany(db.ticket_payments, {  foreignKey:'TicketID', as : 'TicketPayments' });
+db.ticket_payments.belongsTo(db.order_tickets, { foreignKey:'TicketID', as : 'OrderTicket' });
+
+db.payment_reasons.hasMany(db.ticket_payments, {  foreignKey:'ReasonID', as : 'TicketPayments' });
+db.ticket_payments.belongsTo(db.payment_reasons, { foreignKey:'ReasonID', as : 'Reason' });
 
 module.exports = db;

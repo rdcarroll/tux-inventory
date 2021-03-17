@@ -9,6 +9,7 @@ import { OrderDetailComponent } from './orders/order-detail.component';
 import { OrderItemsComponent } from './orders/order-items.component';
 import { OrderItemEditComponent } from './orders/order-item-edit.component';
 import { OrderTicketComponent } from './orders/order-ticket.component';
+import { OrderPaymentComponent } from './orders/order-payment.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -23,7 +24,8 @@ import { OrderTicketComponent } from './orders/order-ticket.component';
         OrderDetailComponent,
         OrderItemsComponent,
         OrderItemEditComponent,
-        OrderTicketComponent
+        OrderTicketComponent,
+        OrderPaymentComponent
     ]
 })
 export class SalesModule { }

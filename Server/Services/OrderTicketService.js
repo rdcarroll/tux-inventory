@@ -1,4 +1,4 @@
-const { collapseTextChangeRangesAcrossMultipleVersions } = require("typescript");
+
 const db = require("../Models");
 const Model = db.order_tickets;
 
@@ -43,6 +43,14 @@ async function update(id,record) {
     throw err;
   }
 }
+async function syncOrderByTicket(id) {
+  try {
+    let orderTicket = await db.order_tickets.findAll({where: {ID: id}});
+    return await syncOrder(orderTicket.OrderID);
+  } catch (err) {
+    throw err;
+  }
+}
 async function syncOrder(id) {
   try {
     let order = await db.orders.findByPk(id);
@@ -70,7 +78,8 @@ async function syncOrder(id) {
     }
 
     //update ticket
-    let update = {};
+    let update = {Adjustment:0, Tax:0, SubTotal:0,Total:0};
+    update.Adjustment = ot.Adjustment||0;
     update.SubTotal = subtotal;
     if(company.length>0) update.Tax = subtotal * (company[0].TaxRate||.10);
     update.Total = update.SubTotal + update.Tax + update.Adjustment;

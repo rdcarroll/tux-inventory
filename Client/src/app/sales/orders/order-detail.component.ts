@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -15,7 +15,8 @@ import { NgForm } from '@angular/forms';
     templateUrl: './order-detail.component.html'
 })
 export class OrderDetailComponent implements OnInit {
-    
+
+    @ViewChild('ticketTab') ticketTab: any;
     order: Order;
     id: string;
     backto: string[]=['/sales/orders'];
@@ -30,6 +31,12 @@ export class OrderDetailComponent implements OnInit {
         private router: Router
     ) { }
 
+    getOrder(id:string):  Observable<any> {
+        return this.ApiClient.pGet("orders/" + this.id, {}).pipe(take(1))
+        .pipe(map((res: any) => {
+            this.order = res;
+        }));
+    }
 
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
@@ -44,8 +51,8 @@ export class OrderDetailComponent implements OnInit {
                 } 
             }
             else {
-                this.ApiClient.pGet("orders/" + this.id, {}).pipe(take(1))
-                    .subscribe(res => this.order = res);
+                this.getOrder(this.id)
+                    .subscribe(res => {});
             }
         });
     }
@@ -93,6 +100,10 @@ export class OrderDetailComponent implements OnInit {
     actualReturnDateChanged(evt:Date): void {
         let uDate = evt;
         this.order.actualReturnDate = evt;
+    }
+    listChange(evt:any): void {
+        this.getOrder(this.id)
+            .subscribe(res => {});
     }
 
 }

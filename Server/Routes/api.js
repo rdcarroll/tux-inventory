@@ -75,6 +75,14 @@ module.exports = (router, app) => {
   router.put("/order_tickets/:id", app.oauth.authorise(), order_tickets.update);
   router.delete("/order_tickets/:id", app.oauth.authorise(), order_tickets.delete);
   router.post("/order_tickets", app.oauth.authorise(), order_tickets.create);
+  
+  const ticket_payments = require("../Controllers/ticket_payments.controller.js");
+  router.get("/payment_reasons", app.oauth.authorise(), ticket_payments.findAllReasons);
+  router.get("/ticket_payments", app.oauth.authorise(), ticket_payments.findAll);
+  router.get("/ticket_payments/:id", app.oauth.authorise(), ticket_payments.findOne);
+  router.put("/ticket_payments/:id", app.oauth.authorise(), ticket_payments.update);
+  router.delete("/ticket_payments/:id", app.oauth.authorise(), ticket_payments.delete);
+  router.post("/ticket_payments", app.oauth.authorise(), ticket_payments.create);
 
   return router;
 };

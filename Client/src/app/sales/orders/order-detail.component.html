@@ -79,10 +79,10 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Items">
-                            <order-items [order]="order"></order-items>
+                            <order-items [order]="order" (listChange)="listChange($event)"></order-items>
                         </mat-tab>
                         <mat-tab label="Ticket"> 
-                            <order-ticket [order]="order"></order-ticket>
+                            <order-ticket [order]="order" (ticketChange)="listChange($event)"></order-ticket>
                         </mat-tab>
                       </mat-tab-group>
                 </div>

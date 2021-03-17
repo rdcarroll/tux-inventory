@@ -1,4 +1,4 @@
-﻿import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+﻿import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -14,10 +14,10 @@ import { NgForm } from '@angular/forms';
     selector: 'order-ticket',
     templateUrl: './order-ticket.component.html'
 })
-export class OrderTicketComponent implements OnInit {
+export class OrderTicketComponent implements OnInit, OnChanges  {
     
     @Input() order: Order;
-    @Output() itemChange = new EventEmitter<object>();
+    @Output() ticketChange = new EventEmitter<object>();
     user: CurrentUser;
     order_tickets: any;
     subtotal:number;
@@ -30,6 +30,7 @@ export class OrderTicketComponent implements OnInit {
     customername: any;
     createddate: any;
     ticketitems: any[];
+    orderitems: any;
 
 
     constructor(
@@ -41,34 +42,51 @@ export class OrderTicketComponent implements OnInit {
     ) { 
     }
 
+    getOrderItems(OrderID:number): Observable<any> {
+        let q = {include:[{'InventoryItem':[{'Inventory':['InventoryType']}]}]}
+        return this.ApiClient.pGet(`orders/${OrderID}/order_items`, q).pipe(take(1))
+        .pipe(map((res: any) => {
+            this.orderitems = res;
+        }));
+    }
 
     getOrderTickets(OrderID:number): Observable<any> {
-        let q = {filter:`OrderID|${OrderID}`}
+        let q = {filter:`OrderID|${OrderID}`,include:['Customer']}
         return this.ApiClient.pGet(`order_tickets`, q).pipe(take(1))
         .pipe(map((res: any) => {
             if(res){
+                
                 let myticket = res[0] || {Customer:null};
+                this.ticketnumber = myticket.ID || "No Ticket Found";
+                this.customername = myticket.Customer.FullName || "No Customer Found";
+                this.createddate = myticket.createdAt || null;
+                
                 this.subtotal = myticket.SubTotal || 0;
                 this.tax = myticket.Tax || 0;
                 this.total = myticket.Total || 0;
                 this.adjustment = myticket.Adjustment || 0;
-                this.paid = myticket.SubTotal || 0;
-                this.balancedue = myticket.SubTotal || 0;
-                this.ticketnumber = myticket.ID || "No Ticket Found";
-                this.customername = myticket.Customer.Name || "No Ticket Found";
-                this.createddate = myticket.createdAt || null;
+                this.paid =  0;
+                this.balancedue = 0;
             }
         }));
     }
-    ngOnInit(): void {
-        this.user = this.security.getUser();
-        this.getOrderTickets(this.order.ID).subscribe(res=>{
-            
+    ngOnChanges(changes: SimpleChanges): void {
+        let orderID = this.order.ID;
+        this.getOrderTickets(orderID).subscribe(res=>{
+            this.getOrderItems(orderID).subscribe(res=>{
+                //         this.orderitems = res;
+            });
         });
     }
+    ngOnInit(): void {
+        this.user = this.security.getUser();
+        // this.getOrderTickets(this.order.ID).subscribe(res=>{
+            
+        // });
+    }
     
-    save(): void {
-        
+    paymentChanged(evt:any): void {
+        this.ticketChange.emit(evt);
     }
     close(): void {
         

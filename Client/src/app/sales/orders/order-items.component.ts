@@ -1,4 +1,4 @@
-﻿import { Component, Input, OnInit } from '@angular/core';
+﻿import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -14,9 +14,10 @@ import { NgForm } from '@angular/forms';
     selector: 'order-items',
     templateUrl: './order-items.component.html'
 })
-export class OrderItemsComponent implements OnInit {
+export class OrderItemsComponent implements OnInit, OnChanges {
     
     @Input() order: Order;
+    @Output() listChange = new EventEmitter<object>();
     orderitems: OrderItem[];
     inventory_types: InventoryType[];
     user: CurrentUser;
@@ -31,6 +32,13 @@ export class OrderItemsComponent implements OnInit {
         private router: Router
     ) { 
     }
+    ngOnChanges(changes: SimpleChanges): void {
+        this.getLookups().subscribe(res=>{
+            this.getOrderItems().subscribe(res=>{
+                this.orderitems = res;
+            });
+        });
+    }
 
 
     getOrderItems(): Observable<any> {
@@ -40,11 +48,11 @@ export class OrderItemsComponent implements OnInit {
     ngOnInit(): void {
         this.user = this.security.getUser();
         
-        this.getLookups().subscribe(res=>{
-            this.getOrderItems().subscribe(res=>{
-                this.orderitems = res;
-            });
-        });
+        // this.getLookups().subscribe(res=>{
+        //     this.getOrderItems().subscribe(res=>{
+        //         this.orderitems = res;
+        //     });
+        // });
     }
     getLookups(): Observable<any> {
         return forkJoin([this.ApiClient.pGet("inventory_types", {}).pipe(take(1)),
@@ -81,9 +89,10 @@ export class OrderItemsComponent implements OnInit {
         if (confirm("Items will be replaced with the items from this selected package. Continue?")) {
         this.ApiClient.pPut(`orders/${this.order.ID}/order_items`, {package_id:package_id}, this.order).pipe(take(1))
         .subscribe(res => {
-            this.getOrderItems().subscribe(res=>{
-                this.orderitems = res;
-            });
+            this.listChange.emit(res);
+            // this.getOrderItems().subscribe(res=>{
+            //     this.orderitems = res;
+            // });
             this.util.alert("success", "Success Replacing Order Items", false, { icon: 'check' }, true);
         }, (err) => {
             this.util.handleError(err, "Error Saving");
@@ -101,9 +110,10 @@ export class OrderItemsComponent implements OnInit {
         }
         this.ApiClient.pPost(`order_items`, {order_id:this.order.ID}, nOrderItem).pipe(take(1))
     .subscribe(res => {
-        this.getOrderItems().subscribe(res=>{
-            this.orderitems = res;
-        });
+        this.listChange.emit(res);
+        // this.getOrderItems().subscribe(res=>{
+        //     this.orderitems = res;
+        // });
         this.util.alert("success", "Success Adding Order Item", false, { icon: 'check' }, true);
     }, (err) => {
         this.util.handleError(err, "Error Saving");
@@ -117,9 +127,10 @@ export class OrderItemsComponent implements OnInit {
         this.ApiClient.pPut("order_items/" + orderitem.ID, {}, orderitem).pipe(take(1))
             .subscribe(res => {
                 this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
-                this.getOrderItems().subscribe(res=>{
-                    this.orderitems = res;
-                });
+                this.listChange.emit(res);
+                // this.getOrderItems().subscribe(res=>{
+                //     this.orderitems = res;
+                // });
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
             });
@@ -129,9 +140,10 @@ export class OrderItemsComponent implements OnInit {
         this.ApiClient.pRemove("order_items/" + id, {}).pipe(take(1))
             .subscribe(res => {
                 this.util.alert("success", "Order Item was successfully removed.", false, { icon: 'check' }, true);
-                this.getOrderItems().subscribe(res=>{
-                    this.orderitems = res;
-                });
+                this.listChange.emit(res);
+                // this.getOrderItems().subscribe(res=>{
+                //     this.orderitems = res;
+                // });
             }, (err) => {
                 this.util.handleError(err, "Error Removing");
             });

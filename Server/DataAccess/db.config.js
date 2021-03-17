@@ -4,6 +4,7 @@ module.exports = {
     PASSWORD: "admin",
     DB: "inventory",
     dialect: "mysql",
+    dialectOptions: { decimalNumbers: true },
     pool: {
       max: 2,
       min: 0,

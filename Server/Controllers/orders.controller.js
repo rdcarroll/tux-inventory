@@ -104,7 +104,7 @@ exports.replaceItems = async (req, res) => {
   try {
     response = await orderitem_service.replace(id,req.query);
     //update ticket
-    await orderticket_service.syncOrder(response.ID);
+    await orderticket_service.syncOrder(id);
     res.json(response);
   } catch (err) {
     res.status(500).send({
