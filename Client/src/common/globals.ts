@@ -6,7 +6,7 @@
 export const version: string = "0.0.1";   
 
 export const loginmodel = "forms";
-export const companyname = "ABC";
+export const companyname = "Bellario's";
 export const debugmode = __DEBUG_MODE__; //debug or live
 export const pdfroot = __PDF_ROOT__;
 export const anchor_target = __ANCHOR_TARGET__;

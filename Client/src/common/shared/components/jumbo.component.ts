@@ -8,7 +8,7 @@ import * as root from '../../globals';
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
-                        <img class="mr-auto" src="{{assetPath}}images/CorpLogo.png" style="height:80px;padding: 0px 0px 20px 0px;"/>
+                        <img class="mr-auto" src="{{assetPath}}images/CorpLog2.jpg" style="height:80px;padding: 0px 0px 20px 0px;"/>
                     </div>
                     <div class="col-md-4 text-center">
                         <h3>{{customTitle}}</h3>
