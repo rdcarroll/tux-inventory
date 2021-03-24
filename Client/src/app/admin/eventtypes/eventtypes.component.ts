@@ -56,7 +56,7 @@ export class eventtypesComponent implements OnInit {
             pageSize: this.config.pageSize, page: (this.config.page)
         }
 
-        if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'Name'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("event_types", q).pipe(finalize(() => this.util.loading(false, null)), take(1))

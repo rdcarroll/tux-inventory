@@ -8,17 +8,6 @@ export class Employee {
     createdAt: Date;
     updatedAt: Date;
 }
-export class Customer {
-    ID: number;
-    FullName: string;
-    LastName: string;
-    FirstName: number;
-    Email: string;
-    Phone: string;
-    Address: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
 export class EventType {
     ID: number;
     Name: string;

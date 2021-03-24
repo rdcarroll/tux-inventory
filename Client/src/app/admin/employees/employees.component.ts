@@ -62,7 +62,7 @@ export class EmployeesComponent implements OnInit {
             pageSize: this.config.pageSize, page: (this.config.page)
         }
 
-        if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'FirstName','LastName','UserName'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("employees", q).pipe(finalize(() => this.util.loading(false, null)), take(1))

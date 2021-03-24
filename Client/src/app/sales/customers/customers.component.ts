@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Customer } from '../admin';
+import { Customer } from '../sales';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -62,7 +62,7 @@ export class customersComponent implements OnInit {
             pageSize: this.config.pageSize, page: (this.config.page)
         }
 
-        if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'FirstName','LastName','Email','Phone'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("customers", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
@@ -100,7 +100,7 @@ export class customersComponent implements OnInit {
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
-                this.router.navigate(['/admin/customers', args[0].ID]);
+                this.router.navigate(['/sales/customers', args[0].ID]);
                 break;
             case "delete":
                 if (confirm("Are you sure?")) {

@@ -5,13 +5,17 @@ import { AuthGuard, AdminGuard } from '../../common/core';
 import { SalesComponent } from './sales.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderDetailComponent } from './orders/order-detail.component';
+import { customersComponent } from './customers/customers.component';
+import { CustomerDetailComponent } from './customers/customer-detail.component';
 
 const routes: Routes = [
     {
         path: 'sales', component: SalesComponent, canActivate: [AuthGuard, AdminGuard],
         children: [
             { path: 'orders', component: OrdersComponent },
-            { path: 'orders/:id', component: OrderDetailComponent } 
+            { path: 'orders/:id', component: OrderDetailComponent } ,
+            { path: 'customers', component: customersComponent },
+            { path: 'customers/:id', component: CustomerDetailComponent },
         ]
     }
 ];

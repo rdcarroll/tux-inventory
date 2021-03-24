@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 
 import { ApiClientService, Util } from '../../../common/core';
-import { Customer } from '../admin';
+import { Customer } from '../sales';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,7 +29,7 @@ export class CustomerDetailComponent implements OnInit {
             this.item = new Customer();
         }
         else {
-            this.ApiClient.pGet("customers/" + this.id, {include:['Orders']}).pipe(take(1))
+            this.ApiClient.pGet("customers/" + this.id, {include:['Orders','OrderTickets']}).pipe(take(1))
                 .subscribe(res => this.item = res);
         }
     }
@@ -39,7 +39,7 @@ export class CustomerDetailComponent implements OnInit {
             .subscribe(res => {
                 this.item = res;
                 this.id = this.item.ID.toString();
-                this.router.navigate(['/admin', 'customers', this.item.ID]);
+                this.router.navigate(['/sales', 'customers', this.item.ID]);
                 this.util.alert("success", "Success Adding Customer", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
@@ -49,7 +49,7 @@ export class CustomerDetailComponent implements OnInit {
     save(): void {
         this.ApiClient.pPut("customers/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'customers']);
+                this.router.navigate(['/sales', 'customers']);
                 this.util.alert("success", "Success Saving Customer", false, { icon: 'check' }, true);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");

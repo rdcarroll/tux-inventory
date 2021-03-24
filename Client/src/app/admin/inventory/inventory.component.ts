@@ -69,7 +69,7 @@ export class inventoryComponent implements OnInit {
             include:['InventoryType']
         }
 
-        if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'ModelName','Description'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("inventory", q).pipe(finalize(() => this.util.loading(false, null)), take(1))

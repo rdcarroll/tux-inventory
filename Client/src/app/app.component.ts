@@ -45,7 +45,8 @@ export class AppComponent implements OnInit {
         this.navs = [
             {
                 link: null, display: "Sales", condition: this.canUse.toString(), icon: "far file-alt", childnavs: [
-                    { link: "/sales/orders", display: "Orders", condition: this.canUse.toString(), icon: "far file", childnavs: [] }
+                    { link: "/sales/orders", display: "Orders", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
+                    { link: "/sales/customers", display: "Customers", condition: this.canUse.toString(), icon: "far user", childnavs: [] }
                   
                 ]
             },
@@ -58,7 +59,7 @@ export class AppComponent implements OnInit {
             {
                 link: null, display: "Admin", condition: this.canAdmin.toString(), icon: "fas wrench", childnavs: [
                     { link: "/admin/employees", display: "Employees", condition: this.canUse.toString(), icon: null, childnavs: [] },
-                    { link: "/admin/customers", display: "Customers", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    //{ link: "/admin/customers", display: "Customers", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/eventtypes", display: "EventTypes", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/inventorytypes", display: "InventoryTypes", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/inventory", display: "InventoryModels", condition: this.canUse.toString(), icon: null, childnavs: [] },

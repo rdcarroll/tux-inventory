@@ -71,6 +71,7 @@ async function syncOrder(id) {
        Total:0,
        Tax:0,
        Adjustment:0,
+       Balance:0,
        CustomerID:order.CustomerID,
      });
     }
@@ -79,12 +80,12 @@ async function syncOrder(id) {
     }
 
     //update ticket
-    let update = {Adjustment:0, Tax:0, SubTotal:0,Total:0, Paid:0};
+    let update = {Adjustment:0, Tax:0, SubTotal:0,Total:0, Paid:0, Balance:0};
     let orderItems = await db.order_items.findAll({where: {OrderID: order.ID }});
     for (const item of orderItems) {
       update.SubTotal += (item.Cost||0);
     }
-    update.Adjustment = ot.Adjustment||0;
+    update.Adjustment = parseFloat(ot.Adjustment)||0;
     if(company.length>0) update.Tax = update.SubTotal * (company[0].TaxRate||.10);
 
     update.Total = update.SubTotal + update.Tax + update.Adjustment;

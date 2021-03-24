@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card" *ngIf="item">
                 <div class="card-header">
-                    <my-backbutton class="float-right" [link]="['/admin/customers']"></my-backbutton>
+                    <my-backbutton class="float-right" [link]="['/sales/customers']"></my-backbutton>
                     <h3><span>{{id==='add'?"Create":"Update"}} </span>Customer</h3>
                 </div>
                 <div class="card-body">
@@ -74,14 +74,19 @@
                                             <thead>
                                                 <tr>
                                                     <th>Ticket</th>
-                                                    <th>Balance</th>
+                                                    <th>Order No.</th>
                                                     <th>Date</th>
-                                                    <th>Event</th>
+                                                    <th>Total</th>
+                                                    <th>Balance</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let ticket of tickets">
-
+                                                <tr *ngFor="let ticket of item.OrderTickets">
+                                                    <td><a class="btn btn-link" [routerLink]="['/sales/orders/',ticket.OrderID]"  [queryParams]="{customer_id:item.ID}">{{ticket.ID}}</a></td>
+                                                    <td>{{ticket.OrderID }}</td>
+                                                    <td>{{ticket.createdAt | date }}</td>
+                                                    <td>{{ticket.Total | currency:'USD':'symbol':'2.2'  }}</td>
+                                                    <td>{{ticket.Balance | currency:'USD':'symbol':'2.2'  }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -95,7 +100,7 @@
                                     <div class="card-header">
                                         Orders
                                         <a class="btn btn-default btn-sm"
-                                         routerLink="/orders/add" 
+                                         routerLink="/sales/orders/add" 
                                          [queryParams]="{customer_id:item.ID}">
                                          <fa-icon [icon]="['fas', 'plus']"></fa-icon>
                                         </a>
@@ -105,14 +110,19 @@
                                             <thead>
                                                 <tr>
                                                     <th>Order No.</th>
+                                                    <th>Created Date</th>
+                                                    <th>Use Date</th>
                                                     <th>Pickup Date</th>
-                                                    <th>Status</th>
-                                                    <th>Event</th>
+                                                    <th>Return Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let order of orders">
-                                                    
+                                                <tr *ngFor="let order of item.Orders">
+                                                    <td><a class="btn btn-link" [routerLink]="['/sales/orders/',order.ID]"  [queryParams]="{customer_id:item.ID}">{{order.ID}}</a></td>
+                                                    <td>{{order.createdAt | date }}</td>
+                                                    <td>{{order.useDate | date }}</td>
+                                                    <td>{{order.pickUpDate | date }}</td>
+                                                    <td>{{order.returnDate | date }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

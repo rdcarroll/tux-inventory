@@ -4,7 +4,7 @@ import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { ApiClientService, Util } from '../../../common/core';
-import { Customer } from '../../admin';
+import { Customer } from '../sales';
 import { Order } from '../sales';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
@@ -46,7 +46,7 @@ export class OrderDetailComponent implements OnInit {
                 this.order = new Order();
                 this.order.createdAt = moment().toDate();
                 if(this.customer_id){
-                    this.backto = ['/admin/customers',this.customer_id];
+                    this.backto = ['/sales/customers',this.customer_id];
                     this.order.CustomerID = this.customer_id;
                 } 
             }

@@ -1,3 +1,4 @@
+const Op = require('sequelize').Op;
 function parsefilter(filter){
  let marray = filter.split(",").map(function(item) {
     return item.split("|").map(function(_item) {
@@ -6,8 +7,9 @@ function parsefilter(filter){
   });
   let wh = {};
   marray.forEach(el => {
-    console.log(el[1]);
-      wh[el[0]] = eval(el[1]);
+    let rightside = el[1][0] == '!' ? {[Op.ne]:eval(el[1].substring(1))} : el[1];
+    
+      wh[el[0]] = eval(rightside);
   });
   if(Object.keys(wh).length) return wh;
   return {};
@@ -27,12 +29,31 @@ function parseinclude(include){
      if(marray.length) return marray;
      return null;
 }
+function parseq(qarray, qwhere){
+    let marray = eval(qarray);
+    let _s = marray[0];
+    let _or=[];
+    for(var i=0;i<marray.length;i++){
+      if (i > 0) {
+        var _m = {};
+        var _mindx = marray[i].indexOf('.') > -1 ? `$${marray[i]}$` : marray[i];
+        _m[_mindx] = { [Op.like]: `%${_s}%` };
+        _or.push(_m);
+      }
+    }
+     if(_or.length) {
+       if(Object.keys(qwhere).length>0)qwhere[Op.and] = {[Op.or]:_or};
+       else qwhere = {[Op.or]:_or};
+     }
+     return qwhere;
+}
 exports.setQuery = async (req, res, next) => {
     let query = req.query;
     try {
         let q = {where:{},include:[]};
         if(query.filter) q.where = parsefilter(query.filter);
         if(query.include) q.include = parseinclude(query.include);
+        if(query.qf) q.where = parseq(query.qf,q.where);
         Object.assign(req.query, query, q);
         next();
     } catch (err) {

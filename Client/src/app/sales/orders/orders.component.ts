@@ -63,7 +63,7 @@ export class OrdersComponent implements OnInit {
             include:['Customer']
         }
 
-        if (this.searchText && this.searchText.length > 0) q.q = this.searchText;
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'ID','Customer.LastName','Customer.Phone', 'Customer.Email'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("orders", q).pipe(finalize(() => this.util.loading(false, null)), take(1))

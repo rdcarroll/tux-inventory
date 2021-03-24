@@ -31,9 +31,11 @@
                                             <div class="form-group row">
                                                 <label class="col-md-4 col-form-label">Customer Name</label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control" [(ngModel)]="order.CustomerID" name="CustomerId" required ><!-- [disabled]="id!='add'" -->
+                                                    <!-- [disabled]="id!='add'" -->
+                                                    <!-- <select class="form-control" [(ngModel)]="order.CustomerID" name="CustomerId" required >
                                                         <option *ngFor="let i of customers" [value]="i.ID">{{i.FullName}}</option>
-                                                     </select>
+                                                     </select> -->
+                                                     <my-typeahead [(myModel)]="order.CustomerID" [options]="customers" [valueField]="'ID'" [displayField]="'FullName'"></my-typeahead>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,12 +78,12 @@
                                 </form>
                             </div>
                         </mat-tab>
-                        <mat-tab label="Items">
+                        <mat-tab label="Items" [disabled]="id==='add'">
                             <div class="col-md-12">
                                 <order-items [order]="order" (listChange)="listChange($event)"></order-items>
                             </div>
                         </mat-tab>
-                        <mat-tab label="Ticket"> 
+                        <mat-tab label="Ticket" [disabled]="id==='add'"> 
                             <div class="col-md-12">
                                 <order-ticket [order]="order" (ticketChange)="listChange($event)"></order-ticket>
                             </div>

@@ -4,7 +4,8 @@ import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { SecurityService, CurrentUser, ApiClientService, Util } from '../../../common/core';
-import { Customer, InventoryType } from '../../admin';
+import { InventoryType } from '../../admin';
+import { Customer } from '../sales';
 import { Order, OrderItem } from '../sales';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';

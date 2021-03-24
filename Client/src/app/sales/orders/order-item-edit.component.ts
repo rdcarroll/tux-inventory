@@ -4,7 +4,7 @@ import { map, take } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import {  ApiClientService, Util } from '../../../common/core';
-import { Customer, InventoryType } from '../../admin';
+import { Customer } from '../sales';
 import { Order, OrderItem } from '../sales';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
@@ -63,8 +63,9 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
             this.inventory_types = res;
         }));
     }
+    //models/styles
     getInventory(inventoryTypeID:number): Observable<any> {
-        let q = {filter:`InventoryTypeID|${inventoryTypeID}`}
+        let q = {filter:`InventoryTypeID|${inventoryTypeID},ModelName|!"default"`}
         return this.ApiClient.pGet(`inventory`, q).pipe(take(1))
         .pipe(map((res: any) => {
             return this.inventory = res;

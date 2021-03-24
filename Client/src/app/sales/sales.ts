@@ -1,5 +1,4 @@
-﻿import { Customer } from "../admin";
-
+﻿
 export class Order {
     ID: number;
     CustomerID: number;
@@ -24,4 +23,15 @@ export class OrderItem {
     updatedAt: Date;
     InventoryItem: {};
     $$editing: boolean;
+}
+export class Customer {
+    ID: number;
+    FullName: string;
+    LastName: string;
+    FirstName: number;
+    Email: string;
+    Phone: string;
+    Address: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
