@@ -23,6 +23,7 @@ db.access_token = require("./access_token.js")(sequelize);
 db.customers = require("./customers.js")(sequelize);
 db.employees = require("./employees.js")(sequelize);
 db.event_types = require("./event_types.js")(sequelize);
+db.events = require("./events.js")(sequelize);
 db.inventory = require("./inventory.js")(sequelize);
 db.inventory_items = require("./inventory_items.js")(sequelize);
 db.inventory_types = require("./inventory_types.js")(sequelize);
@@ -53,6 +54,9 @@ db.orders.belongsTo(db.customers, { foreignKey:'CustomerID', as : 'Customer' });
 
 db.inventory_items.hasMany(db.order_items, {  foreignKey:'InventoryItemID', as : 'OrderItems' });
 db.order_items.belongsTo(db.inventory_items, { foreignKey:'InventoryItemID', as : 'InventoryItem' });
+
+db.events.hasMany(db.orders, {  foreignKey:'EventID', as : 'Orders' });
+db.orders.belongsTo(db.events, { foreignKey:'EventID', as : 'Event' });
 
 db.orders.hasMany(db.order_items, {  foreignKey:'OrderID', as : 'OrderItems' });
 db.order_items.belongsTo(db.orders, { foreignKey:'OrderID', as : 'Order' });

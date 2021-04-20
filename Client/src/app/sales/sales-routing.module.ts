@@ -7,6 +7,8 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrderDetailComponent } from './orders/order-detail.component';
 import { customersComponent } from './customers/customers.component';
 import { CustomerDetailComponent } from './customers/customer-detail.component';
+import { eventsComponent } from './events/events.component';
+import { eventDetailComponent } from './events/event-detail.component';
 
 const routes: Routes = [
     {
@@ -16,6 +18,8 @@ const routes: Routes = [
             { path: 'orders/:id', component: OrderDetailComponent } ,
             { path: 'customers', component: customersComponent },
             { path: 'customers/:id', component: CustomerDetailComponent },
+            { path: 'events', component: eventsComponent },
+            { path: 'events/:id', component: eventDetailComponent },
         ]
     }
 ];

@@ -21,7 +21,16 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "EventName"
-    }
+    },
+    eventDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "eventDate"
+    },
   };
   const options = {
     tableName: "events",

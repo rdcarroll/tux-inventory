@@ -12,6 +12,8 @@ import { OrderTicketComponent } from './orders/order-ticket.component';
 import { OrderPaymentComponent } from './orders/order-payment.component';
 import { customersComponent } from './customers/customers.component';
 import { CustomerDetailComponent } from './customers/customer-detail.component';
+import { eventsComponent } from './events/events.component';
+import { eventDetailComponent } from './events/event-detail.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -30,6 +32,8 @@ import { CustomerDetailComponent } from './customers/customer-detail.component';
         OrderPaymentComponent,
         customersComponent,
         CustomerDetailComponent,
+        eventsComponent,
+        eventDetailComponent
     ]
 })
 export class SalesModule { }

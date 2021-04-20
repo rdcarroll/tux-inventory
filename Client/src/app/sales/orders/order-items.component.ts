@@ -24,6 +24,7 @@ export class OrderItemsComponent implements OnInit, OnChanges {
     user: CurrentUser;
     package_id: any;
     packages: any[];
+    total: number = 0;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -37,6 +38,7 @@ export class OrderItemsComponent implements OnInit, OnChanges {
         this.getLookups().subscribe(res=>{
             this.getOrderItems().subscribe(res=>{
                 this.orderitems = res;
+                this.orderitems.forEach((item)=>{this.total += item.Cost||0;});
             });
         });
     }
@@ -110,15 +112,15 @@ export class OrderItemsComponent implements OnInit, OnChanges {
             Cost: 0
         }
         this.ApiClient.pPost(`order_items`, {order_id:this.order.ID}, nOrderItem).pipe(take(1))
-    .subscribe(res => {
-        this.listChange.emit(res);
-        // this.getOrderItems().subscribe(res=>{
-        //     this.orderitems = res;
-        // });
-        this.util.alert("success", "Success Adding Order Item", false, { icon: 'check' }, true);
-    }, (err) => {
-        this.util.handleError(err, "Error Saving");
-    });
+            .subscribe(res => {
+                this.listChange.emit(res);
+                // this.getOrderItems().subscribe(res=>{
+                //     this.orderitems = res;
+                // });
+                this.util.alert("success", "Success Adding Order Item", false, { icon: 'check' }, true);
+            }, (err) => {
+                this.util.handleError(err, "Error Saving");
+            });
     }
 
     save(orderitem:OrderItem, frm:any): void {

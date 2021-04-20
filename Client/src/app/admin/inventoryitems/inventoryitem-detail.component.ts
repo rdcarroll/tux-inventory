@@ -50,7 +50,7 @@ export class InventoryItemDetailComponent implements OnInit {
             this.ApiClient.pGet("inventory", {include:['InventoryType']}).pipe(take(1)),
             this.ApiClient.pGet("status_types", {}).pipe(take(1))])
         .pipe(map((res: any) => {
-            this.inventories = res[0];
+            this.inventories = res[0].rows;
             this.statuses = res[1];
         }));
     }

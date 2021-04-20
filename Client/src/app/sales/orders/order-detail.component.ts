@@ -21,8 +21,10 @@ export class OrderDetailComponent implements OnInit {
     id: string;
     backto: string[]=['/sales/orders'];
     customer_id: any;
-    customers: any[];
     customer: Customer;
+    customers: any[];
+    events: any;
+    event_id: any;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -41,6 +43,7 @@ export class OrderDetailComponent implements OnInit {
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
         this.customer_id = this.route.snapshot.queryParams["customer_id"];
+        this.event_id = this.route.snapshot.queryParams["event_id"];
         this.getLookups().subscribe(res=>{
             if (this.id === 'add') {
                 this.order = new Order();
@@ -49,10 +52,21 @@ export class OrderDetailComponent implements OnInit {
                     this.backto = ['/sales/customers',this.customer_id];
                     this.order.CustomerID = this.customer_id;
                 } 
+                if(this.event_id){
+                    this.backto = ['/sales/events',this.event_id];
+                    this.order.EventID = this.event_id;
+                    this.eventChanged(this.event_id);
+                } 
             }
             else {
                 this.getOrder(this.id)
-                    .subscribe(res => {});
+                    .subscribe(res => {
+                        if(this.customer_id){
+                            this.backto = ['/sales/customers',this.customer_id];
+                        } 
+                        if(this.event_id){
+                            this.backto = ['/sales/events',this.event_id];
+                        } });
             }
         });
     }
@@ -64,9 +78,13 @@ export class OrderDetailComponent implements OnInit {
     }
 
     getLookups(): Observable<any> {
-        return forkJoin([this.ApiClient.pGet("customers", {}).pipe(take(1))])
+        return forkJoin([
+            this.ApiClient.pGet("customers", {}).pipe(take(1)),
+            this.ApiClient.pGet("events", {}).pipe(take(1))
+        ])
         .pipe(map((res: any) => {
             this.customers = res[0];
+            this.events = res[1];
         }));
     }
 
@@ -99,6 +117,12 @@ export class OrderDetailComponent implements OnInit {
     }
     actualReturnDateChanged(evt:Date): void {
         let uDate = evt;
+        this.order.actualReturnDate = evt;
+    }
+    eventChanged(evt:any): void {
+        let event_id = evt;
+        this.ApiClient.pGet("events/" + event_id, {}).pipe(take(1))
+            .subscribe(res => this.useDateChanged(res.eventDate));
         this.order.actualReturnDate = evt;
     }
     listChange(evt:any): void {

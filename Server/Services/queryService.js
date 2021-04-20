@@ -1,4 +1,8 @@
 const Op = require('sequelize').Op;
+const defaultPage = 1;
+const defaultPageSize = 100;
+
+//query fields
 function parsefilter(filter){
  let marray = filter.split(",").map(function(item) {
     return item.split("|").map(function(_item) {
@@ -14,6 +18,7 @@ function parsefilter(filter){
   if(Object.keys(wh).length) return wh;
   return {};
 }
+//include children
 function parseinclude(include){
     let marray = eval(include);
     marray.forEach(function (element,indx) {
@@ -29,6 +34,7 @@ function parseinclude(include){
      if(marray.length) return marray;
      return null;
 }
+//keyword search
 function parseq(qarray, qwhere){
     let marray = eval(qarray);
     let _s = marray[0];
@@ -50,10 +56,14 @@ function parseq(qarray, qwhere){
 exports.setQuery = async (req, res, next) => {
     let query = req.query;
     try {
-        let q = {where:{},include:[]};
+        let q = {where:{},include:[], limit:0, offset:0 };
         if(query.filter) q.where = parsefilter(query.filter);
         if(query.include) q.include = parseinclude(query.include);
         if(query.qf) q.where = parseq(query.qf,q.where);
+
+        q.limit = parseInt(query.pageSize) || defaultPageSize;
+        q.offset = ((parseInt(query.page)||defaultPage)-1) * q.limit;
+
         Object.assign(req.query, query, q);
         next();
     } catch (err) {

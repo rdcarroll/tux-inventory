@@ -24,8 +24,9 @@ exports.findAll = async (req, res) => {
       req.query['nest']=true;
     }
     response = await model_service.getAll(req.query);
-    let verified = req.query['OrderID'] ? await model_service.checkBooking(req.query['OrderID'], response) : response;
-    res.json(verified);
+    let verified = req.query['OrderID'] ? await model_service.checkBooking(req.query['OrderID'], response.rows) : response.rows;
+    response.rows = verified;
+    res.json(response);
   } catch (err) {
     res.status(500).send({
       message: `Error retrieving ${model_name}s : ${err.message}`

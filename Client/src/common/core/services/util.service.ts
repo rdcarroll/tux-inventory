@@ -8,8 +8,8 @@ export class Util {
     private alertSubject = new Subject<any>();
     private loadingSubject = new Subject<any>();
     private data: { [key: string]: any };
-    private pageSize: number = Math.pow(2, 31) - 1;
-    //private pageSize: number = 500;
+    private maxpageSize: number = Math.pow(2, 31) - 1;
+    private pageSize: number = 20;
 
     constructor() {
         this.data = {};
@@ -17,6 +17,9 @@ export class Util {
 
     PageSize(): number {
         return this.pageSize;
+    }
+    MaxPageSize(): number {
+        return this.maxpageSize;
     }
     setData(key: string, data: any) {
         this.data[key] = data;

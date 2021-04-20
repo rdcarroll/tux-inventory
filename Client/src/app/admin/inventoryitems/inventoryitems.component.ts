@@ -75,8 +75,8 @@ export class inventoryitemsComponent implements OnInit {
         this.ApiClient.pGet("inventory_items", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
-                    this.items = res;
-                    this.config.collectionSize = res.TotalCount;
+                    this.items = res.rows;
+                    this.config.collectionSize = res.count;
                 }, (err) => {
                     this.util.alert("error", err.statusText, false, null);
                 });

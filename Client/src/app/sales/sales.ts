@@ -35,3 +35,10 @@ export class Customer {
     createdAt: Date;
     updatedAt: Date;
 }
+export class Event {
+    ID: number;
+    EventName: string;
+    eventDate: Date;
+    createdAt: Date;
+    updatedAt: Date;
+}

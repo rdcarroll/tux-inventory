@@ -50,6 +50,8 @@ exports.update = async (req, res) => {
   let uModel = req.body;
   try {
     response = await model_service.update(id, uModel);
+    //update ticket
+    await model_service.syncOrderByTicket(id);
     res.json(response);
   } catch (err) {
     res.status(500).send({

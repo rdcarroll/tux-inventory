@@ -40,7 +40,7 @@ export class InventoryDetailComponent implements OnInit {
     }
 
     getLookups(): Observable<any> {
-        return forkJoin([this.ApiClient.pGet("inventory_types", {}).pipe(take(1))])
+        return forkJoin([this.ApiClient.pGet("inventory_types", {pageSize:this.util.MaxPageSize()}).pipe(take(1))])
         .pipe(map((res: any) => {
             this.inventorytypes = res[0];
         }));

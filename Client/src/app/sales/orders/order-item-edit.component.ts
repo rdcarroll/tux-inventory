@@ -58,24 +58,24 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     }
 
     getInventoryTypes(): Observable<any> {
-        return this.ApiClient.pGet(`inventory_types`, {}).pipe(take(1))
+        return this.ApiClient.pGet(`inventory_types`, {pageSize:this.util.MaxPageSize()}).pipe(take(1))
         .pipe(map((res: any) => {
             this.inventory_types = res;
         }));
     }
     //models/styles
     getInventory(inventoryTypeID:number): Observable<any> {
-        let q = {filter:`InventoryTypeID|${inventoryTypeID},ModelName|!"default"`}
+        let q = {filter:`InventoryTypeID|${inventoryTypeID},ModelName|!"default"`,pageSize:this.util.MaxPageSize()}
         return this.ApiClient.pGet(`inventory`, q).pipe(take(1))
         .pipe(map((res: any) => {
-            return this.inventory = res;
+            return this.inventory = res.rows;
         }));
     }
     getInventoryItems(inventoryID:number): Observable<any> {
-        let q = {filter:`InventoryID|${inventoryID}`,OrderID:this.item.OrderID}
+        let q = {filter:`InventoryID|${inventoryID}`,OrderID:this.item.OrderID,pageSize:this.util.MaxPageSize()}
         return this.ApiClient.pGet(`inventory_items`, q).pipe(take(1))
         .pipe(map((res: any) => {
-            return this.inventory_items = res;
+            return this.inventory_items = res.rows;
         }));
     }
     ngOnChanges(): void {

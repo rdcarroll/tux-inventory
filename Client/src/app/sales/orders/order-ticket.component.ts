@@ -74,7 +74,7 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
         let orderID = this.order.ID;
         this.getOrderTickets(orderID).subscribe(res=>{
             this.getOrderItems(orderID).subscribe(res=>{
-                this.ticketitems = res;
+                //this.ticketitems = res;
             });
         });
     }
@@ -93,4 +93,13 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
         
     }
 
+    adjustmentChanged(adjustment:number): void {
+        this.ApiClient.pPut("order_tickets/" + this.ticketnumber, {}, {Adjustment:adjustment}).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Success Saving Adjustment", false, { icon: 'check' }, true);
+                this.ticketChange.emit(res);
+            }, (err) => {
+                this.util.handleError(err, "Error Saving");
+            });
+    }
 }
