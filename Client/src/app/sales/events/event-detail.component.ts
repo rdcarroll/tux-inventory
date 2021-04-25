@@ -1,10 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { ApiClientService, Util } from '../../../common/core';
 import { Event } from '../sales';
 import { Router } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component({
     selector: 'event-detail',
@@ -14,6 +15,7 @@ export class eventDetailComponent implements OnInit {
     
     item: Event;
     id: string;
+    eventtypes: any;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -22,16 +24,24 @@ export class eventDetailComponent implements OnInit {
         private router: Router
     ) { }
 
+    getLookups(): Observable<any> {
+        return forkJoin([this.ApiClient.pGet("event_types", {pageSize:this.util.MaxPageSize()}).pipe(take(1))])
+        .pipe(map((res: any) => {
+            this.eventtypes = res[0];
+        }));
+    }
 
     ngOnInit(): void {
         this.id = this.route.snapshot.paramMap.get('id');
-        if (this.id === 'add') {
-            this.item = new Event();
-        }
-        else {
-            this.ApiClient.pGet("events/" + this.id, {include:[{'Orders':[{'OrderTickets':['Customer']}]}]}).pipe(take(1))
-                .subscribe(res => this.item = res);
-        }
+        this.getLookups().subscribe(res=>{
+            if (this.id === 'add') {
+                this.item = new Event();
+            }
+            else {
+                this.ApiClient.pGet("events/" + this.id, {include:[{'Orders':[{'OrderTickets':['Customer']}]}]}).pipe(take(1))
+                    .subscribe(res => this.item = res);
+            }
+        });
     }
 
     add(): void {

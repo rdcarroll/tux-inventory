@@ -32,12 +32,19 @@
     </div>
     <div class="col-md-6">
         <div class="form-group row">
-            <label class="col-md-4 col-form-label">SKU</label>
+            <label class="col-md-4 col-form-label">Size</label>
             <div class="col-md-8">
-                <select class="form-control" [(ngModel)]="invitemid" (ngModelChange)="changeInventoryItem()" name="InventoryItemID" required >
-                    <option *ngFor="let i of inventory_items" [value]="i.ID"><span *ngIf="i.overbooked">** </span>{{i.Size}} [{{i.Barcode}}]</option>
-                 </select>
+                <!-- <select class="form-control" [(ngModel)]="itemsize" (ngModelChange)="changeInventoryItem()" name="ItemSize" required >
+                    <option *ngFor="let i of inventory_itemsizes" [value]="i.ItemSize">
+                        <fa-icon [icon]="['fas', 'trash-alt']" class="text-danger" size="xs" title="Delete"></fa-icon>
+                        <p [ngClass]="{'text-danger':i.overbooked,'text-success':!i.overbooked}">{{i.ItemSize}}</p>{{i.ItemSize}}</option>
+                 </select> -->
                 <!-- <my-typeahead [(myModel)]="invsku" [options]="inventory_items" [valueField]="'SKU'" [displayField]="'SKU'"></my-typeahead> -->
+                    <mat-select class="form-control" placeholder="Item Size" [(ngModel)]="itemsize" (ngModelChange)="changeInventoryItem()" name="ItemSize" required>
+                        <mat-option *ngFor="let i of inventory_itemsizes" [value]="i.ItemSize">
+                            <p [ngClass]="{'text-danger':i.overbooked,'text-success':!i.overbooked}">{{i.ItemSize}}</p>
+                        </mat-option>
+                      </mat-select>
             </div>
         </div>
         <div class="form-group row">
@@ -50,18 +57,10 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-4 col-form-label">Out with Customer?</label>
-            <div class="col-md-8 form-control-plaintext">
-                {{item.Confirmed ? "Yes" : "No"}}
-                <!-- <fa-icon *ngIf="item.Confirmed" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
-                <fa-icon *ngIf="!item.Confirmed" [icon]="['fas', 'times']" class="text-danger" size="xs"></fa-icon> -->
+            <label class="col-md-4 col-form-label"></label>
+            <div class="col-md-8">
+                <my-inandout [orderid]="item.OrderID" [orderitemid]="item.ID"></my-inandout>
             </div>
         </div>
     </div>
 </div>
-<div class="row"><div class="col-md-12">
-    <div class="btn-group float-right" role="group">
-        <button *ngIf="statusid == 2" (click)="pickup()" class="btn btn-link btn-sm">Pickup</button>
-        <button *ngIf="statusid == 3" (click)="return()" class="btn btn-link btn-sm">Return</button>
-    </div>
-</div></div>

@@ -35,17 +35,19 @@ export class OrderItemsComponent implements OnInit, OnChanges {
     ) { 
     }
     ngOnChanges(changes: SimpleChanges): void {
-        this.getLookups().subscribe(res=>{
-            this.getOrderItems().subscribe(res=>{
-                this.orderitems = res;
-                this.orderitems.forEach((item)=>{this.total += item.Cost||0;});
+        if(this.order.ID){
+            this.getLookups().subscribe(res=>{
+                this.getOrderItems().subscribe(res=>{
+                    this.orderitems = res;
+                    this.orderitems.forEach((item)=>{this.total += item.Cost||0;});
+                });
             });
-        });
+        }
     }
 
 
     getOrderItems(): Observable<any> {
-        let q = {include:[{'InventoryItem':[{'Inventory':['InventoryType']}]}]}
+        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
         return this.ApiClient.pGet(`orders/${this.order.ID}/order_items`, q).pipe(take(1));
     }
     ngOnInit(): void {
@@ -65,7 +67,7 @@ export class OrderItemsComponent implements OnInit, OnChanges {
             this.packages = res[1];
         }));
     }
-
+ 
     btnClick(item:any,stype:string): void {
         switch(stype){
             case 'close':
@@ -89,17 +91,19 @@ export class OrderItemsComponent implements OnInit, OnChanges {
         }
     }
     packageChanged(package_id:number): void {
-        if (confirm("Items will be replaced with the items from this selected package. Continue?")) {
-        this.ApiClient.pPut(`orders/${this.order.ID}/order_items`, {package_id:package_id}, this.order).pipe(take(1))
-        .subscribe(res => {
-            this.listChange.emit(res);
-            // this.getOrderItems().subscribe(res=>{
-            //     this.orderitems = res;
-            // });
-            this.util.alert("success", "Success Replacing Order Items", false, { icon: 'check' }, true);
-        }, (err) => {
-            this.util.handleError(err, "Error Saving");
-        });
+        if(package_id){
+            if (confirm("Items will be replaced with the items from this selected package. Continue?")) {
+            this.ApiClient.pPut(`orders/${this.order.ID}/order_items`, {package_id:package_id}, this.order).pipe(take(1))
+            .subscribe(res => {
+                this.listChange.emit(res);
+                // this.getOrderItems().subscribe(res=>{
+                //     this.orderitems = res;
+                // });
+                this.util.alert("success", "Success Replacing Order Items", false, { icon: 'check' }, true);
+            }, (err) => {
+                this.util.handleError(err, "Error Saving");
+            });
+            }
         }
     }
     addItemClicked(): void {        
@@ -124,9 +128,10 @@ export class OrderItemsComponent implements OnInit, OnChanges {
     }
 
     save(orderitem:OrderItem, frm:any): void {
-        orderitem.InventoryItemID = frm.invitemid;
+        //orderitem.InventoryItemID = frm.invitemid;
+        orderitem.ItemSize = frm.itemsize;
         orderitem.Cost = frm.price;
-        orderitem.Confirmed = frm.confirmed;
+        //orderitem.Confirmed = frm.confirmed;
         this.ApiClient.pPut("order_items/" + orderitem.ID, {}, orderitem).pipe(take(1))
             .subscribe(res => {
                 this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);

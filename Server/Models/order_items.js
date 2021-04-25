@@ -31,6 +31,15 @@ module.exports = sequelize => {
       comment: null,
       field: "OrderID"
     },
+    InventoryID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "InventoryID"
+    },
     Confirmed: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
@@ -49,14 +58,14 @@ module.exports = sequelize => {
       comment: null,
       field: "EmployeeID"
     },
-    InventoryItemID: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+    ItemSize: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
-      field: "InventoryItemID"
+      field: "ItemSize"
     },
     Cost: {
       type: DataTypes.DOUBLE,
@@ -66,6 +75,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "Cost"
+    },
+    InventoryItemID: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "InventoryItemID"
     }
   };
   const options = {

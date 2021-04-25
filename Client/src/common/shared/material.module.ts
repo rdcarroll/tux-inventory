@@ -18,11 +18,12 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select'
 
 @NgModule({
     imports: [CommonModule, MatButtonModule, MatToolbarModule, MatNativeDateModule, MatIconModule, MatSidenavModule, MatListModule,
-        MatExpansionModule, MatDialogModule, MatTabsModule, MatDatepickerModule, MatInputModule, MatAutocompleteModule],
+        MatExpansionModule, MatDialogModule, MatTabsModule, MatDatepickerModule, MatInputModule, MatAutocompleteModule,MatSelectModule],
     exports: [CommonModule, MatButtonModule, MatToolbarModule, MatNativeDateModule, MatIconModule, MatSidenavModule, MatListModule,
-        MatExpansionModule, MatDialogModule, MatTabsModule, MatDatepickerModule, MatInputModule, MatAutocompleteModule],
+        MatExpansionModule, MatDialogModule, MatTabsModule, MatDatepickerModule, MatInputModule, MatAutocompleteModule,MatSelectModule],
 })
 export class CustomMaterialModule { }

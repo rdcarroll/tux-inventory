@@ -15,12 +15,21 @@ module.exports = sequelize => {
     },
     EventName: {
       type: DataTypes.STRING(45),
-      allowNull: true,
+      allowNull: false,
       defaultValue: null,
       primaryKey: false,
       autoIncrement: false,
       comment: null,
       field: "EventName"
+    },
+    EventTypeID: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "EventTypeID"
     },
     eventDate: {
       type: DataTypes.DATE,

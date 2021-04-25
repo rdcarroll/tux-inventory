@@ -16,7 +16,9 @@ export class OrderItem {
     OrderID: number;
     CustomerID: number;
     EmployeeID: number;
+    InventoryID: number;
     Confirmed: number;
+    ItemSize: string;
     InventoryItemID: number;
     Cost: number;
     createdAt: Date;
@@ -38,6 +40,7 @@ export class Customer {
 export class Event {
     ID: number;
     EventName: string;
+    EventTypeID: number;
     eventDate: Date;
     createdAt: Date;
     updatedAt: Date;

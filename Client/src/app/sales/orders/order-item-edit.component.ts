@@ -21,7 +21,7 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     @Output() closeEdit = new EventEmitter<boolean>();
     inventory_types: any[];
     inventory: any[];
-    inventory_items: any[];
+    inventory_itemsizes: any[];
     invtypeid: number;
     invmodelid: number;
     invitemid: number;
@@ -30,6 +30,7 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     statusid: number;
     invmodeldesc: any;
     confirmed: any;
+    itemsize: any;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -49,7 +50,7 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
         let inv = this.inventory.filter(inv => {  return inv.ID == inventoryID   })[0] || {};
         this.price = initChild ? this.price : inv.Cost;
         this.invmodeldesc =  initChild ? this.invmodeldesc : inv.Description;
-         this.getInventoryItems(inventoryID).subscribe(res=>{
+         this.getInventoryItemSizes(inventoryID).subscribe(res=>{
             this.invitemid = initChild?this.invitemid : (res[0] ? res[0].ID : null);
         });
     }
@@ -71,21 +72,22 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
             return this.inventory = res.rows;
         }));
     }
-    getInventoryItems(inventoryID:number): Observable<any> {
-        let q = {filter:`InventoryID|${inventoryID}`,OrderID:this.item.OrderID,pageSize:this.util.MaxPageSize()}
-        return this.ApiClient.pGet(`inventory_items`, q).pipe(take(1))
+    getInventoryItemSizes(inventoryID:number): Observable<any> {
+        let q = {pageSize:this.util.MaxPageSize(),OrderItemID:this.item.ID}
+        return this.ApiClient.pGet(`inventory/${inventoryID}/sizes`, q).pipe(take(1))
         .pipe(map((res: any) => {
-            return this.inventory_items = res.rows;
+            return this.inventory_itemsizes = res;
         }));
     }
     ngOnChanges(): void {
-        this.invtypeid = this.item.InventoryItem.Inventory.InventoryType.ID;
-        this.invmodelid =  this.item.InventoryItem.Inventory.ID;
-        this.invmodeldesc =  this.item.InventoryItem.Inventory.Description;
-        this.invitemid =  this.item.InventoryItem.ID;
-        this.statusid =  this.item.InventoryItem.StatusID;
+        this.invtypeid = this.item.Inventory.InventoryType.ID;
+        this.invmodelid =  this.item.Inventory.ID;
+        this.invmodeldesc =  this.item.Inventory.Description;
+        //this.invitemid =  this.item.InventoryItem.ID;
+        this.itemsize = this.item.ItemSize;
+        //this.statusid =  this.item.InventoryItem.StatusID;
         this.price = this.item.Cost || 0;
-        this.confirmed =  this.item.Confirmed;
+        //this.confirmed =  this.item.Confirmed;
 
         this.getInventoryTypes().subscribe(res=>{
             this.changeInventoryType(this.invtypeid, true);
@@ -99,11 +101,12 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
             orderid:this.item.ID,
             invitemid :  this.invitemid,
             price : this.price,
-            confirmed :  this.confirmed
+            confirmed :  this.confirmed,
+            itemsize : this.itemsize
         }
-        let invitem = this.inventory_items.filter(invitem => {  return invitem.ID == this.invitemid   })[0] || {};
-        if(invitem && invitem.overbooked){
-            if (confirm("The Inventory Item you selected seems to be booked for some of the dates in this Order. Save Anyway?")) {
+        let invitemsize = this.inventory_itemsizes.filter(invitemsize => {  return invitemsize.ItemSize == this.itemsize   })[0] || {};
+        if(invitemsize && invitemsize.overbooked){
+            if (confirm("The Inventory Size you selected seems to be overbooked for some of the dates in this Order. Save Anyway?")) {
                 this.itemChange.emit(nObject);
             }
         }
@@ -114,26 +117,4 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     close(): void {
             this.closeEdit.emit(true);
     }
-    
-    pickup(): void {
-        this.ApiClient.pPut("order_items/" + this.item.ID + "/pickup", {}, {}).pipe(take(1))
-            .subscribe(res => {
-                this.util.alert("success", "Success Checking Out Item", false, { icon: 'check' }, true);
-                //this.itemChange.emit(res);
-                this.statusid =  this.item.InventoryItem.StatusID=3;
-            }, (err) => {
-                this.util.handleError(err, "Error Checking Out Item");
-            });
-    }
-    return(): void {
-        this.ApiClient.pPut("order_items/" + this.item.ID + "/return", {}, {}).pipe(take(1))
-            .subscribe(res => {
-                this.util.alert("success", "Success Returning Item", false, { icon: 'check' }, true);
-                //this.itemChange.emit(res);
-                this.statusid =  this.item.InventoryItem.StatusID=2;
-            }, (err) => {
-                this.util.handleError(err, "Error Returning Item");
-            });
-    }
-
 }

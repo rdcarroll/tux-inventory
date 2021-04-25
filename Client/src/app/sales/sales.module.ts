@@ -14,6 +14,7 @@ import { customersComponent } from './customers/customers.component';
 import { CustomerDetailComponent } from './customers/customer-detail.component';
 import { eventsComponent } from './events/events.component';
 import { eventDetailComponent } from './events/event-detail.component';
+import { inandoutComponent } from './inandout/inandout.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -33,7 +34,8 @@ import { eventDetailComponent } from './events/event-detail.component';
         customersComponent,
         CustomerDetailComponent,
         eventsComponent,
-        eventDetailComponent
+        eventDetailComponent,
+        inandoutComponent
     ]
 })
 export class SalesModule { }

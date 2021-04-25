@@ -71,12 +71,14 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
         }));
     }
     ngOnChanges(changes: SimpleChanges): void {
-        let orderID = this.order.ID;
-        this.getOrderTickets(orderID).subscribe(res=>{
-            this.getOrderItems(orderID).subscribe(res=>{
-                //this.ticketitems = res;
+        if(this.order.ID){
+            let orderID = this.order.ID;
+            this.getOrderTickets(orderID).subscribe(res=>{
+                this.getOrderItems(orderID).subscribe(res=>{
+                    //this.ticketitems = res;
+                });
             });
-        });
+        }
     }
     ngOnInit(): void {
         this.user = this.security.getUser();

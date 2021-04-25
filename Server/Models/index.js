@@ -49,6 +49,9 @@ db.inventory_items.belongsTo(db.status_types, { foreignKey:'StatusID', as : 'Sta
 db.inventory.hasMany(db.inventory_items, { foreignKey:'InventoryID', as : 'InventoryItems' });
 db.inventory_items.belongsTo(db.inventory, { foreignKey:'InventoryID', as : 'Inventory' });
 
+db.inventory.hasMany(db.order_items, { foreignKey:'InventoryID', as : 'OrderItems' });
+db.order_items.belongsTo(db.inventory, { foreignKey:'InventoryID', as : 'Inventory' });
+
 db.customers.hasMany(db.orders, {  foreignKey:'CustomerID', as : 'Orders' });
 db.orders.belongsTo(db.customers, { foreignKey:'CustomerID', as : 'Customer' });
 

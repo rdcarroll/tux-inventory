@@ -119,11 +119,11 @@ export class OrderDetailComponent implements OnInit {
         let uDate = evt;
         this.order.actualReturnDate = evt;
     }
-    eventChanged(evt:any): void {
+    eventChanged(evt:number): void {
         let event_id = evt;
         this.ApiClient.pGet("events/" + event_id, {}).pipe(take(1))
             .subscribe(res => this.useDateChanged(res.eventDate));
-        this.order.actualReturnDate = evt;
+        this.order.EventID = event_id;
     }
     listChange(evt:any): void {
         this.getOrder(this.id)

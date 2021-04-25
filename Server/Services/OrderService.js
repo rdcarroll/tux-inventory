@@ -46,8 +46,10 @@ async function create(record) {
         await db.order_items.create({
           OrderID:model.ID,
           CustomerID:model.CustomerID,
-          EmployeeID:record.EmployeeID,
-          InventoryItemID:dii.ID,
+          EmployeeID:record.EmployeeID, 
+          InventoryID:di.ID,
+          //InventoryItemID:dii.ID,
+          ItemSize: dii.Size,
           StatusID:2,
           Cost:0,
           Confirmed:false
@@ -74,10 +76,19 @@ async function update(id,record) {
 async function remove(id) {
   try {
     const orderItemsModel = db.order_items;
-    const model = await Model.findByPk(id);
+    const ticketModel = db.order_tickets;
+    const paymentModel = db.ticket_payments;
+
+    const order = await Model.findByPk(id);
+    const tickets = await ticketModel.findAll({where:{OrderID:order.ID}});
+
+    for (const t of tickets) {
+      const tpModels = await paymentModel.destroy({where:{TicketID:t.ID}});
+    }
     //remove child elements
-    const oiModels = await orderItemsModel.destroy({where:{OrderID:model.ID}});
-    return await model.destroy();
+    const oiModels = await orderItemsModel.destroy({where:{OrderID:order.ID}});
+    const otModels = await ticketModel.destroy({where:{OrderID:order.ID}});
+    return await order.destroy();
   } catch (err) {
     throw err;
   }

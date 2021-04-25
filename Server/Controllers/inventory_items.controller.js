@@ -1,7 +1,8 @@
 const model_service = require(`../Services/InventoryItemService`);
+const orderitem_service = require(`../Services/OrderItemService`);
 const model_name = `InventoryItem`;
 
-// Create and Save a new Customer
+// Create and Save a new Record
 exports.create = async (req, res) => {
   let response;
   let nModel = req.body;
@@ -15,7 +16,7 @@ exports.create = async (req, res) => {
   }
 };
 
-// Retrieve all Employees from the database.
+// Retrieve all Records from the database
 exports.findAll = async (req, res) => {
   let response;
   try {
@@ -34,7 +35,7 @@ exports.findAll = async (req, res) => {
   }
 };
 
-// Find a single Employee with an id
+// Find a single Record with an ID
 exports.findOne = async (req, res) => {
   let response;
   const id = req.params.id;
@@ -49,7 +50,7 @@ exports.findOne = async (req, res) => {
   }
 };
 
-// Update a Customer by the id in the request
+// Update a Record by the ID in the request
 exports.update = async (req, res) => {
   let response;
   const id = req.params.id;
@@ -60,6 +61,27 @@ exports.update = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: `Error updating ${model_name} : ${err.message}.`
+    });
+  }
+};
+
+exports.findSizes = async (req, res) => {
+  let response;
+  const id = req.params.id; //inventory id
+  const OrderItemID = req.query.OrderItemID; //order id
+  if(req.query.where)req.query.where['InventoryID']=id;
+  try {
+    let uResponse = [];
+    //get unique sizes for inventory model
+    response = await model_service.getAllSizes(req.query);
+    for (const item of response) {
+      uResponse.push({ItemSize:item.Size,overbooked:false, ID:OrderItemID});
+    }
+    let verified = await orderitem_service.checkBooking(uResponse);
+    res.json(verified);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}:${err.message}`
     });
   }
 };

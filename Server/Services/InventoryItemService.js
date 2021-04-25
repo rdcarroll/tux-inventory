@@ -9,7 +9,8 @@ module.exports = {
     update: update,
     checkBooking:checkBooking,
     pickupitem:pickupitem,
-    returnitem:returnitem
+    returnitem:returnitem,
+    getAllSizes:getAllSizes
 };
 
 async function getAll(query) {
@@ -48,6 +49,13 @@ async function update(id,record) {
 }
 
 
+async function getAllSizes(query) {
+  try {
+    return await Model.findAll({Attributes: ['InventoryID', 'Size'], group: ['InventoryID', 'Size'], where:query.where});
+  } catch (err) {
+    throw err;
+  }
+}
 async function checkBooking(orderid, items){
   try {
     for (const item of items) {

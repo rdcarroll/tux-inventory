@@ -30,8 +30,8 @@
                                                 </td>
                                             </ng-container>
                                             <ng-template #not_editing>
-                                                <td>{{item.InventoryItem.Inventory.InventoryType.Name}}</td>
-                                                <ng-container *ngIf="item.InventoryItem.Inventory.ModelName=='default'; else not_default">
+                                                <td>{{item.Inventory.InventoryType.Name}}</td>
+                                                <ng-container *ngIf="item.Inventory.ModelName=='default'; else not_default">
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -42,9 +42,9 @@
                                                     </td>
                                                 </ng-container>
                                                 <ng-template #not_default>
-                                                    <td>{{item.InventoryItem.Inventory.ModelName}}</td>
-                                                    <td>{{item.InventoryItem.Inventory.Description}}</td>
-                                                    <td>{{item.InventoryItem.Size}}</td>
+                                                    <td>{{item.Inventory.ModelName}}</td>
+                                                    <td>{{item.Inventory.Description}}</td>
+                                                    <td>{{item.ItemSize}}</td>
                                                     <td>{{item.Cost | currency}}</td>
                                                     <td>
                                                         <fa-icon *ngIf="item.Confirmed" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
@@ -70,4 +70,4 @@
                                             <td colspan="3"></td>
                                         </tr>
                                 </tbody>
-                            </table>
+                            </table> 

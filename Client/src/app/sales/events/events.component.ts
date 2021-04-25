@@ -21,8 +21,8 @@ export class eventsComponent implements OnInit {
             sortable: false
         },
         {
-            display: 'Created Date',
-            variable: 'createdAt',
+            display: 'Event Date',
+            variable: 'eventDate',
             filter: 'date',
             sortable: false
         },

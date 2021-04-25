@@ -1,7 +1,7 @@
 const model_service = require(`../Services/CustomerService`);
 const model_name = `Customer`;
 
-// Create and Save a new Customer
+// Create and Save a new Record
 exports.create = async (req, res) => {
   let response;
   let nModel = req.body;
@@ -15,7 +15,7 @@ exports.create = async (req, res) => {
   }
 };
 
-// Retrieve all Employees from the database.
+// Retrieve all Records from the database
 exports.findAll = async (req, res) => {
   let response;
   try {
@@ -28,7 +28,7 @@ exports.findAll = async (req, res) => {
   }
 };
 
-// Find a single Employee with an id
+// Find a single Record with an ID
 exports.findOne = async (req, res) => {
   let response;
   const id = req.params.id;
@@ -43,7 +43,7 @@ exports.findOne = async (req, res) => {
   }
 };
 
-// Update a Customer by the id in the request
+// Update a Record by the ID in the request
 exports.update = async (req, res) => {
   let response;
   const id = req.params.id;

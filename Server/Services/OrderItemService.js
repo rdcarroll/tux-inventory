@@ -30,9 +30,8 @@ async function getOne(query) {
 async function create(record) {
   try {
     //if we're adding a new item, grab first default pant
-    if(record['InventoryItemID']==null){
-      const model = await db.inventory_items.findAll({where:{InventoryID:158}});
-      record['InventoryItemID'] = model[0].ID;
+    if(record['ItemSize']==null){
+      record['ItemSize'] = "00";
     }
     return await Model.create(record);
   } catch (err) {
@@ -77,37 +76,51 @@ async function replace(id,query) {
           Confirmed:0,
           Cost:pi.Inventory.Cost,
           EmployeeID:EmployeeID,
-          InventoryItemID:pi.Inventory.InventoryItems[0].ID
+          InventoryID:pi.Inventory.ID,
+          ItemSize:pi.Inventory.InventoryItems[0].Size||""
         });
       }
     }
     return await db.order_items.findAll({where:query.where});
-
+ 
     //TODO: redo ticket
   } catch (err) {
     throw err;
   }
 }
 
-
+//item has OrderItem ID and ItemSize, at least
+//count matching sizes for inventory model
+//count how many are checked out over time period
 async function checkBooking(items){
   try {
     for (const item of items) {
-      let order = await db.orders.findByPk(item.OrderID);
-      const startDate = new Date(order.pickUpDate);
-      const endDate = new Date(order.returnDate);
-        let bookings = await Model.findAll(
+      //get the order from the actual order item
+      let order_item = await db.order_items.findByPk(item.ID,{include:['Order']});
+      const startDate = new Date(order_item.Order.pickUpDate);
+      const endDate = new Date(order_item.Order.returnDate);
+        let available = await db.inventory_items.findAll(
           {
-            include:[{association:'Order'},{association:'InventoryItem'}],
             where:{
             [Op.and]: [
-              { InventoryItemID:item.InventoryItemID },
-              { '$InventoryItem.Barcode$': { [Op.ne]:null } },
-              { '$Order.pickUpDate$': { [Op.lte]:endDate } },
-              {'$Order.returnDate$': { [Op.gte]: startDate } }
+              { InventoryID:order_item.InventoryID },
+              { Size: item.ItemSize },
+              // { '$Order.pickUpDate$': { [Op.lte]:endDate } },
+              // {'$Order.returnDate$': { [Op.gte]: startDate } }
             ]
           }} );
-        item.overbooked=bookings.length>1;
+          let bookings = await Model.findAll(
+            {
+              include:[{association:'Order'}],
+              where:{
+              [Op.and]: [
+                { InventoryID:order_item.InventoryID },
+                { ItemSize: item.ItemSize },
+                { '$Order.pickUpDate$': { [Op.lte]:endDate } },
+                {'$Order.returnDate$': { [Op.gte]: startDate } }
+              ]
+            }} );
+        item.overbooked=(available.length - bookings.length) < 0;
     }
     return items;
   } catch (error) {
