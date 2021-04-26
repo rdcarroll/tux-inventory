@@ -59,7 +59,7 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label"></label>
             <div class="col-md-8">
-                <my-inandout [orderid]="item.OrderID" [orderitemid]="item.ID"></my-inandout>
+                <my-inandout [orderid]="item.OrderID" [orderitemid]="item.ID" [pickingup]="item.InventoryItemID==null" (closeEdit)="close()"></my-inandout>
             </div>
         </div>
     </div>

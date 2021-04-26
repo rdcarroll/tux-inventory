@@ -17,7 +17,8 @@
                                         <th>Description</th>
                                         <th>Size</th>
                                         <th>Price</th>
-                                        <th>With Customer</th>
+                                        <th>Picked Up</th>
+                                        <th>Returned</th>
                                         <th>Overbooked?</th>
                                         <th></th>
                                     </tr>
@@ -25,7 +26,7 @@
                                 <tbody style="height:400px;">
                                         <tr *ngFor="let item of orderitems">
                                             <ng-container *ngIf="item.$$editing; else not_editing">
-                                                <td colspan="8">
+                                                <td colspan="9">
                                                     <order-item-edit [item]="item" (itemChange)="save(item,$event)" (closeEdit)="btnClick(item,'close')"></order-item-edit>
                                                 </td>
                                             </ng-container>
@@ -36,20 +37,18 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td>{{item.Cost | currency}}</td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </ng-container>
                                                 <ng-template #not_default>
                                                     <td>{{item.Inventory.ModelName}}</td>
                                                     <td>{{item.Inventory.Description}}</td>
                                                     <td>{{item.ItemSize}}</td>
                                                     <td>{{item.Cost | currency}}</td>
-                                                    <td>
-                                                        <fa-icon *ngIf="item.Confirmed" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
-                                                        <!-- <fa-icon *ngIf="!item.Confirmed" [icon]="['fas', 'times']" class="text-danger" size="xs"></fa-icon> -->
-                                                    </td>
+                                                    <td>{{item.pickedupDate | date}}</td>
+                                                    <td>{{item.returnedDate | date}}</td>
                                                     <td>
                                                         <fa-icon *ngIf="item.overbooked" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
                                                     </td>
@@ -67,7 +66,7 @@
                                         <tr>
                                             <td colspan="4" class="text-right">Total</td>
                                             <td>{{total | currency}}</td>
-                                            <td colspan="3"></td>
+                                            <td colspan="4"></td>
                                         </tr>
                                 </tbody>
                             </table> 

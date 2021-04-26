@@ -6,6 +6,8 @@
         <div class="col-md-12">
             <div class="card" *ngIf="order">
                 <div class="card-header">
+                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [pickingup]="true" (closeEdit)="close()"></my-inandout>
+                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [pickingup]="false" (closeEdit)="close()"></my-inandout>
                     <my-backbutton class="float-right" [link]="backto"></my-backbutton>
                     <h3><span>{{id==='add'?"Create Order":("Order " + order.ID)}}</span></h3>
                 </div>

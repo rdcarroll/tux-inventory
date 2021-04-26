@@ -21,6 +21,8 @@ export class OrderItem {
     ItemSize: string;
     InventoryItemID: number;
     Cost: number;
+    pickedupDate: Date;
+    returedDate: Date;
     createdAt: Date;
     updatedAt: Date;
     InventoryItem: {};

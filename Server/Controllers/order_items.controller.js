@@ -84,10 +84,13 @@ exports.delete = async (req, res) => {
 exports.pickup = async (req, res) => {
   let response;
   const id = req.params.id;
+  const now = new Date();
+  let uModel = req.body;
+  uModel.pickedupDate = now;
   try {
-    let orderitem = await model_service.getOne({where:{ID:id}});
-    await model_service.update(id, {Confirmed:true});
-    response = await invitem_service.pickupitem(orderitem.InventoryItemID);
+    response = await model_service.update(id, uModel);
+    //await model_service.update(id, {Confirmed:true});
+    let dpickup = await invitem_service.pickupitem(response.InventoryItemID);
 
     res.json(response);
   } catch (err) {
@@ -99,10 +102,13 @@ exports.pickup = async (req, res) => {
 exports.return = async (req, res) => {
   let response;
   const id = req.params.id;
+  const now = new Date();
+  let uModel = req.body;
+  uModel.returnedDate = now;
   try {
-    let orderitem = await model_service.getOne({where:{ID:id}});
-    await model_service.update(id, {Confirmed:false});
-    response = await invitem_service.returnitem(orderitem.InventoryItemID);
+    response = await model_service.update(id, uModel);
+    //await model_service.update(id, {Confirmed:false});
+    let dreturn = await invitem_service.returnitem(response.InventoryItemID);
 
     res.json(response);
   } catch (err) {
