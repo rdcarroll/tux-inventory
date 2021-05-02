@@ -9,6 +9,8 @@ import { Order } from '../sales';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ShowOrderDialog } from './reports/show-order.modal';
 
 @Component({
     selector: 'order-detail',
@@ -30,11 +32,12 @@ export class OrderDetailComponent implements OnInit {
         private ApiClient: ApiClientService,
         private route: ActivatedRoute,
         private util: Util,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) { }
 
     getOrder(id:string):  Observable<any> {
-        return this.ApiClient.pGet("orders/" + this.id, {}).pipe(take(1))
+        return this.ApiClient.pGet("orders/" + this.id, {include:['Customer']}).pipe(take(1))
         .pipe(map((res: any) => {
             this.order = res;
         }));
@@ -130,4 +133,11 @@ export class OrderDetailComponent implements OnInit {
             .subscribe(res => {});
     }
 
+    print(id:number): void {
+        const dialogRef = this.dialog.open(ShowOrderDialog, {
+                width:'250px',data:{id:id},disableClose:true
+        });
+        dialogRef.afterClosed().subscribe(res=>{});
+
+    }
 }

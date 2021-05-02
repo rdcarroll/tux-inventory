@@ -94,5 +94,11 @@ module.exports = (router, app) => {
   router.delete("/ticket_payments/:id", app.oauth.authorise(), ticket_payments.delete);
   router.post("/ticket_payments", app.oauth.authorise(), ticket_payments.create);
 
+  const companies = require("../Controllers/companies.controller.js");
+  router.get("/companies", app.oauth.authorise(), companies.findAll);
+  router.get("/companies/:id", app.oauth.authorise(), companies.findOne);
+  router.put("/companies/:id", app.oauth.authorise(), companies.update);
+  router.post("/companies", app.oauth.authorise(), companies.create);
+
   return router;
 };

@@ -52,7 +52,7 @@ import { BackButtonComponent } from './components/backbutton/backbutton.componen
 import { SaveQueryDirective } from './directives/save-query.directive';
 import { AlertFixedComponent } from './components/alert-fixed.component';
 import { PopstateComponent } from './components/popstate.component';
-import { htmldiffComponent } from './components/htmldiff/htmldiff.component';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 
 
@@ -63,14 +63,16 @@ import { htmldiffComponent } from './components/htmldiff/htmldiff.component';
         ReactiveFormsModule,
         CustomMaterialModule,
         //CustomAngularEditorModule,
-        HttpClientModule, AngularEditorModule,
+        HttpClientModule, 
+        AngularEditorModule,
         //MatTableModule,
         NgbModule,
         RouterModule,
         FontAwesomeModule,
         MomentModule,
         EditorModule,
-        ScrollingModule
+        ScrollingModule,
+        NgxBarcodeModule
     ],
     declarations: [
         LoginComponent,
@@ -101,8 +103,7 @@ import { htmldiffComponent } from './components/htmldiff/htmldiff.component';
         sanitizeHtmlPipe,
         PendingApproveDialog,
         AcknowledgeDialog,
-        BackButtonComponent,
-        htmldiffComponent
+        BackButtonComponent
     ],
     providers: [
         { provide: TINYMCE_SCRIPT_SRC, useValue: 'dist/tinymce/tinymce.min.js' }
@@ -144,7 +145,7 @@ import { htmldiffComponent } from './components/htmldiff/htmldiff.component';
         FontAwesomeModule,
         ScrollingModule,
         BackButtonComponent,
-        htmldiffComponent
+        NgxBarcodeModule
     ],
     entryComponents: [PendingApproveDialog, AcknowledgeDialog]
 })

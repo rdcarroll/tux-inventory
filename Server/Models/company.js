@@ -31,6 +31,42 @@ module.exports = sequelize => {
       comment: null,
       field: "Address"
     },
+    City: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "City"
+    },
+    State: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "State"
+    },
+    Email: {
+      type: DataTypes.STRING(100),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Email"
+    },
+    Phone: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Phone"
+    },
     TaxRate: {
       type: DataTypes.DOUBLE,
       allowNull: true,

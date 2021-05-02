@@ -20,6 +20,7 @@
                 <th>Style</th>
                 <th>Description</th>
                 <th>Size</th>
+                <th>Pickup Date</th>
                 <th>SKU</th>
             </tr>
           </thead>
@@ -29,7 +30,8 @@
                 <td>{{item.Inventory.ModelName}}</td>
                 <td>{{item.Inventory.Description}}</td>
                 <td>{{item.ItemSize}}</td>
-                <td style="max-width: 200px;" *ngIf="!item.pickedupDate">
+                <td>{{item.pickedupDate | date}}</td>
+                <td style="max-width: 100px;" *ngIf="!item.pickedupDate">
                     <input class="form-control" name="first" placeholder="" [(ngModel)]="item.InventoryItem.Barcode" (blur)="pickupBlur(item,$event)">
                     <div *ngIf="item.notfound" class="text-alert">The barcode does not match an Inventory Item for the model and size selected, and has not been saved.</div>
                 </td>
@@ -59,6 +61,8 @@
                 <th>Style</th>
                 <th>Description</th>
                 <th>Size</th>
+                <th>Pickup Date</th>
+                <th>Return Date</th>
                 <th>SKU</th>
                 <th>Return SKU</th>
             </tr>
@@ -69,8 +73,10 @@
                 <td>{{item.Inventory.ModelName}}</td>
                 <td>{{item.Inventory.Description}}</td>
                 <td>{{item.ItemSize}}</td>
+                <td>{{item.pickedupDate | date}}</td>
+                <td>{{item.returnedDate | date}}</td>
                 <td>{{item.InventoryItem?.Barcode}}</td>
-                <td style="max-width: 200px;" *ngIf="!item.returnedDate">
+                <td style="max-width: 100px;" *ngIf="!item.returnedDate">
                     <input class="form-control" name="returnbarcode" placeholder="" [(ngModel)]="item.returnbarcode" (blur)="returnBlur(item,$event)">
                     <div *ngIf="item.notfound" class="text-alert">The barcode does not match the Inventory Item checkedout, and has not been saved.</div>
                 </td>

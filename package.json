@@ -21,13 +21,13 @@
     "build:clean": "del-cli \"Client/src/**/*.js.map\" \"Client/src/**/*.js\" \"Client/src/**/*.ngsummary.json\" \"Client/src/**/*.metadata.json\" \"Client/src/**/**/*.ngfactory.ts\" \"Client/src/**/*.ngstyle.ts\" \"Client/src/**/*.shim.ts\""
   },
   "dependencies": {
-    "debug": "~2.6.9",
-    "node-oauth2-server": "2.4.0",
     "core-js": "~2.5",
+    "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "mysql2": "^2.2.5",
+    "node-oauth2-server": "2.4.0",
     "sequelize": "^6.5.0"
   },
   "devDependencies": {
@@ -63,6 +63,7 @@
     "popper.js": "1.16.1",
     "rxjs": "~6.5.5",
     "zone.js": "~0.10.3",
+    "ngx-barcode": "^0.3.0",
     "@ngtools/webpack": "9.1.4",
     "@types/chart.js": "2.9.14",
     "@types/core-js": "^2.5.4",

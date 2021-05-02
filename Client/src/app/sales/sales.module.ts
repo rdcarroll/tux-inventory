@@ -15,6 +15,8 @@ import { CustomerDetailComponent } from './customers/customer-detail.component';
 import { eventsComponent } from './events/events.component';
 import { eventDetailComponent } from './events/event-detail.component';
 import { inandoutComponent } from './inandout/inandout.component';
+import { OrderPrintComponent } from './orders/reports/order-print.component';
+import { ShowOrderDialog } from './orders/reports/show-order.modal';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -35,7 +37,10 @@ import { inandoutComponent } from './inandout/inandout.component';
         CustomerDetailComponent,
         eventsComponent,
         eventDetailComponent,
-        inandoutComponent
-    ]
+        inandoutComponent,
+        OrderPrintComponent,
+        ShowOrderDialog
+    ],
+    entryComponents: [ShowOrderDialog]
 })
 export class SalesModule { }

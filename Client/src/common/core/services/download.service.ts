@@ -70,9 +70,10 @@ export class DownloadService {
         });
 
         //replace company logo with inline base64
-        $clone.find("img[src*='company_logo.jpg']").each(function (index) {
+        $clone.find("img[src*='CorpLog2.jpg']").each(function (index) {
             var base64logo = root.base64Logo;
-            $(this).replaceWith("<img src='" + base64logo + "' />");
+            let style = $(this).attr('style');
+            $(this).replaceWith(`<img src="${base64logo}" style="${style}" />`);
         });
 
         //remove hidden elements
@@ -173,8 +174,25 @@ export class DownloadService {
             //util.alerts.warning("Your browser does not currently support client-side pdf downloads.");
         }
     }
-    print() {
-
+    printToBrowser(title: string, obj: any) {
+        title = title || "AppFile"
+        let fileName = title.replace(/ /g, '_') + '.html';
+        try {
+            this.http.get('dist/ngApp.css', { responseType: 'text' }).subscribe(data => {
+                let fullhtml = this.getHtmlBody(data as 'string', obj, true);
+                var file = new Blob([fullhtml], { type: 'text/html' });
+                var fileURL = URL.createObjectURL(file);
+                var win = window.open();
+                win.document.title = "PCS";
+                win.document.write('<iframe src="' + fileURL + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>')
+               
+                //window.open(`data:text/html;charset=utf-8,${fullhtml}`);
+            });
+        }
+        catch (e) {
+            //util.alerts.warning("Your browser does not currently support client-side pdf downloads.");
+            alert("print failed")
+        }
     }
     fileFromURI(path: string) {
 

@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
         this.user = this.security.getUser();
         this.canAdmin = this.security.hasAccess(this.security.Access.Admin);
         this.canUse = this.security.hasAccess(this.security.Access.User);
+       let company_id = '1';
         this.navs = [
             {
                 link: null, display: "Sales", condition: this.canUse.toString(), icon: "far file-alt", childnavs: [
@@ -52,7 +53,8 @@ export class AppComponent implements OnInit {
             },
             {
                 link: null, display: "Reports", condition: this.canUse.toString(), icon: "far file-alt", childnavs: [
-                    { link: "/reports/inventory_status", display: "Inventory Status", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
+                    //{ link: "/reports/itemhistory", display: "Item History", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
+                    { link: "/reports/currentlyout", display: "Items with Customers", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
                   
                 ]
             },
@@ -65,6 +67,7 @@ export class AppComponent implements OnInit {
                     { link: "/admin/inventory", display: "InventoryModels", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/inventoryitems", display: "InventoryItems", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/packages", display: "Packages", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    { link: "/admin/companies/"+company_id, display: "Company", condition: this.canUse.toString(), icon: null, childnavs: [] },
           ]
             }
         ];

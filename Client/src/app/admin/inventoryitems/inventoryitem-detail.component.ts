@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { take, map } from 'rxjs/operators';
 
@@ -6,6 +6,7 @@ import { ApiClientService, Util } from '../../../common/core';
 import { InventoryItem } from '../admin';
 import { Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'inventoryitem-detail',
@@ -19,12 +20,15 @@ export class InventoryItemDetailComponent implements OnInit {
     statuses: any[];
     inventory_id: any;
     backto: string[]=['/admin/inventoryitems'];
+    InventoryItemActions: any[];
+    @ViewChild("dialogRef") dialogRef: TemplateRef<any>;
 
     constructor(
         private ApiClient: ApiClientService,
         private route: ActivatedRoute,
         private util: Util,
-        private router: Router
+        private router: Router,
+        private dialog: MatDialog
     ) { }
 
 
@@ -77,4 +81,13 @@ export class InventoryItemDetailComponent implements OnInit {
             });
     }
 
+    getItemActions(): void {
+        this.ApiClient.pGet("inventory_items/" + this.id, {include:[{'InventoryItemActions':['Action']}]}).pipe(take(1))
+            .subscribe(res =>{
+                const dialogRef = this.dialog.open(this.dialogRef, {
+                        width:'600px',data:{actionitems:res.InventoryItemActions},disableClose:false
+                });
+                dialogRef.afterClosed().subscribe(res=>{});
+            } );
+    }
 }
