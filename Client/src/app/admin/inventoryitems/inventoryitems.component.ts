@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { InventoryItem } from '../admin';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
@@ -121,4 +121,6 @@ export class inventoryitemsComponent implements OnInit {
         this.searchText = this.route.snapshot.queryParamMap.get('keyword') || '';
         this.pageChange();
     }
+
+    
 }

@@ -20,6 +20,7 @@ import { PackageDetailComponent } from './packages/package-detail.component';
 import { InventoryDetailComponent } from './inventory/inventory-detail.component';
 import { packageinventoryDetailComponent } from './packages/packageinventory-detail.component';
 import { CompanyDetailComponent } from './company/company-detail.component';
+import { BusinessInandoutComponent } from './inventoryitems/inandout/inandout.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -45,7 +46,8 @@ import { CompanyDetailComponent } from './company/company-detail.component';
         packagesComponent,
         PackageDetailComponent,
         packageinventoryDetailComponent,
-        CompanyDetailComponent
+        CompanyDetailComponent,
+         BusinessInandoutComponent
     ]
 })
 export class AdminModule { }
