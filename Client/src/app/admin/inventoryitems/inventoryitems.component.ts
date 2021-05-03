@@ -69,7 +69,7 @@ export class inventoryitemsComponent implements OnInit {
             include:['Inventory','Status']
         }
 
-        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'Barcode','Size','Inventory.ModelName'];
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'Barcode','Size','Inventory.ModelName','Status.Name'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("inventory_items", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
@@ -123,7 +123,7 @@ export class inventoryitemsComponent implements OnInit {
     }
 
     close(): void {
-        //this.closeEdit.emit(true);
+        this.pageChange();
     }
     
 }
