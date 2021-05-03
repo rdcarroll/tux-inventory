@@ -14,8 +14,11 @@ export class BusinessInandoutComponent {
     @Output() itemChange = new EventEmitter<object>();
     @Output() closeEdit = new EventEmitter<boolean>();
     dialogRef: any;
-    status_types: any;
+    status_types: any[];
     status_type: any;
+    barcode: any;
+    invitem: any;
+    inventory_items: any[];
 
 
     constructor(
@@ -27,14 +30,25 @@ export class BusinessInandoutComponent {
     ) {
     }
 
-    getOrderItems(): Observable<any> {
+    getStatusTypes(): Observable<any> {
         return this.ApiClient.pGet(`status_types`, {}).pipe(take(1),map((res: any) => {
             this.status_types = res;
         }));
     }
+    getInventoryItem(): Observable<any> {
+        return this.ApiClient.pGet("inventory_items", {filter:`barcode|'${this.barcode}'`}).pipe(take(1),map((res: any) => {
+            this.invitem = res.rows[0];
+        }));
+    }
+    addInventoryItem(id:number): Observable<any> {
+        return this.ApiClient.pGet(`inventory_items/${id}`, {include:['Inventory']}).pipe(take(1),map((res: any) => {
+            this.inventory_items.push(res);
+        }));
+    }
     
     pickup(template: TemplateRef<any>) {
-        this.getOrderItems().subscribe(res => {
+        this.inventory_items = [];
+        this.getStatusTypes().subscribe(res => {
             this.dialogRef = this.dialog.open(template, {
               width: '80%'
             });
@@ -46,14 +60,22 @@ export class BusinessInandoutComponent {
         });
       }
     save(): void {
-        // this.ApiClient.pPut(`order_items/${orderitem.ID}/${action}`, {}, orderitem).pipe(take(1))
-        //     .subscribe(res => {
-        //         this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
-        //         this.getOrderItems(this.orderid).subscribe(res=>{
-        //         });
-        //     }, (err) => {
-        //         this.util.handleError(err, "Error Saving");
-        //     });
+        this.getInventoryItem()
+            .subscribe(
+                (res) => {
+                    if(this.invitem){
+                        this.ApiClient.pPost(`inventory_items/${this.invitem.ID}/actions`, {}, {status_type:this.status_type}).pipe(take(1))
+                            .subscribe(res => {
+                                this.util.alert("success", "Success Saving Action", false, { icon: 'check' }, false);
+                                this.addInventoryItem(this.invitem.ID).subscribe((result: any) => {
+                                  });
+                            }, (err) => {
+                                this.util.handleError(err, "Error Saving");
+                            });
+                    }
+                }, (err) => {
+                    this.util.alert("error", err.statusText, false, null);
+                });
 
     }
 }

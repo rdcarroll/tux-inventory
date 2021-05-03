@@ -122,5 +122,8 @@ export class inventoryitemsComponent implements OnInit {
         this.pageChange();
     }
 
+    close(): void {
+        //this.closeEdit.emit(true);
+    }
     
 }

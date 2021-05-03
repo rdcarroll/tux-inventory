@@ -10,6 +10,7 @@ module.exports = {
     checkBooking:checkBooking,
     pickupitem:pickupitem,
     returnitem:returnitem,
+    actionitem:actionitem,
     getAllSizes:getAllSizes
 };
 
@@ -38,11 +39,12 @@ async function create(record) {
 }
 async function update(id,record) {
   try {
-    return await Model.update(record, {
+    let updated = await Model.update(record, {
       where: {
         ID: id
       }
     });
+    return updated;
   } catch (err) {
     throw err;
   }
@@ -107,8 +109,10 @@ async function returnitem(id) {
     throw err;
   }
 }
-async function lostitem(id) {
+async function actionitem(id, status) {
   try {
+    await db.inventory_item_actions.create({InventoryItemID:id,ActionID:status});
+    let record = {StatusID:status}
     return await Model.update(record, {
       where: {
         ID: id

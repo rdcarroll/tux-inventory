@@ -86,4 +86,20 @@ exports.findSizes = async (req, res) => {
   }
 };
 
+exports.addAction = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  let uModel = req.body;
+  try {
+    actionres = await model_service.actionitem(id, uModel.status_type);
+    if(req.query.where)req.query.where['ID']=id;
+    response = await model_service.getOne(req.query);
+    res.json(response);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error updating ${model_name} : ${err.message}.`
+    });
+  }
+};
+
 
