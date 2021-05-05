@@ -25,6 +25,7 @@ async function getOne(query) {
 
 async function create(record) {
   try {
+    record.Password = "123456";
     return await Model.create(record);
   } catch (err) {
     throw err;

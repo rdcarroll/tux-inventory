@@ -99,9 +99,10 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     save(): void {
         let nObject = {
             orderid:this.item.ID,
-            invitemid :  this.invitemid,
+            invmodelid: this.invmodelid,
+            //invitemid :  this.invitemid,
             price : this.price,
-            confirmed :  this.confirmed,
+            //confirmed :  this.confirmed,
             itemsize : this.itemsize
         }
         let invitemsize = this.inventory_itemsizes.filter(invitemsize => {  return invitemsize.ItemSize == this.itemsize   })[0] || {};

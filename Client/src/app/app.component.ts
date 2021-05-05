@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
             {
                 link: null, display: "Reports", condition: this.canUse.toString(), icon: "far file-alt", childnavs: [
                     //{ link: "/reports/itemhistory", display: "Item History", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
-                    { link: "/reports/currentlyout", display: "Items with Customers", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
+                    { link: "/reports/currentlyout", display: "Inventory Status Report", condition: this.canUse.toString(), icon: "far file", childnavs: [] },
                   
                 ]
             },

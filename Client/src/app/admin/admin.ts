@@ -3,6 +3,7 @@ export class Employee {
     ID: number;
     FullName: string;
     LastName: string;
+    UserName: string;
     FirstName: number;
     IsAdmin: boolean;
     createdAt: Date;

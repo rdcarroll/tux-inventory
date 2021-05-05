@@ -38,6 +38,7 @@ export class OrderItemsComponent implements OnInit, OnChanges {
         if(this.order.ID){
             this.getLookups().subscribe(res=>{
                 this.getOrderItems().subscribe(res=>{
+                    this.total=0;
                     this.orderitems = res;
                     this.orderitems.forEach((item)=>{this.total += item.Cost||0;});
                 });
@@ -111,8 +112,8 @@ export class OrderItemsComponent implements OnInit, OnChanges {
             OrderID: this.order.ID,
             CustomerID: this.order.CustomerID,
             //EmployeeID: number;
-            Confirmed: 0,
-            InventoryItemID: null,
+            //Confirmed: 0,
+            //InventoryItemID: null,
             Cost: 0
         }
         this.ApiClient.pPost(`order_items`, {order_id:this.order.ID}, nOrderItem).pipe(take(1))
@@ -129,6 +130,7 @@ export class OrderItemsComponent implements OnInit, OnChanges {
 
     save(orderitem:OrderItem, frm:any): void {
         //orderitem.InventoryItemID = frm.invitemid;
+        orderitem.InventoryID = frm.invmodelid;
         orderitem.ItemSize = frm.itemsize;
         orderitem.Cost = frm.price;
         //orderitem.Confirmed = frm.confirmed;
