@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "launch",
             "type": "node",
             "request": "launch",
-            "name": "Launch via NPM",
+            "cwd": "${workspaceRoot}",
             "runtimeExecutable": "npm",
             "runtimeArgs": [
                 "start"
@@ -18,7 +19,7 @@
             ]
         },
         {
-            "name": "Launch via NPM",
+            "name": "dev",
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceRoot}",
