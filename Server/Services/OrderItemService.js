@@ -31,7 +31,7 @@ async function create(record) {
   try {
     //if we're adding a new item, grab first default 
     const dInv = await db.inventory_items.findAll({where:{"$Inventory.ModelName$":"default"}, limit:1, include:['Inventory']});
-    record.InventoryID = dInv[0].ID;
+    record.InventoryID = dInv[0].InventoryID;
     record.ItemSize = "";
     record.Confirmed = false;
     
