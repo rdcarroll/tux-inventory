@@ -4,7 +4,7 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "start": "SET \"NODE_ENV=production\"  && node app.js",
+    "start": "node app.js",
     "serv": "node app.js",
     "start-dev": "SET \"NODE_ENV=development\"",
     "start-prod": "SET \"NODE_ENV=production\"",
