@@ -5,7 +5,7 @@
             <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarTogglerMain" aria-controls="navbarTogglerMain" [attr.aria-expanded]="!isCollapsed" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-                <a class="navbar-brand"  routerLink="/landing">{{title}}</a>
+                <a class="navbar-brand"  routerLink="/landing">{{company?.Name}}</a>
         </div>
         <div class="collapse navbar-collapse" id="navbarTogglerMain" [ngbCollapse]="isCollapsed">
             <ul class="navbar-nav mr-auto navbar-right" *ngIf="canUse">
@@ -43,14 +43,14 @@
 </nav>-->
 
 <nav class="navbar ettp-primary ettp-seperate-top hide-on-print">
-    <p style="font-size: 17px; padding-top: 0px; margin: 0px auto 20px auto; color: #bbb; text-align: center;">
-        For support please contact the {{title}} Systems Group:<br/>
+    <p *ngIf="company" style="font-size: 17px; padding-top: 0px; margin: 0px auto 20px auto; color: #bbb; text-align: center;">
+        For support please contact {{company.Name}}:<br/>
         <!--<i class="fa fa-envelope icon-white"></i>-->
         <fa-icon [icon]="['fas', 'envelope']"></fa-icon>
-        <a href="mailto:test@test.com?subject={{title}} Systems Support" style="color: #bbb;"> {{title}} Systems Group</a> <br/>
-        Or the following phone numbers:<br/>
-        <fa-icon [icon]="['fas', 'phone-alt']"></fa-icon> 865-241-6882 <br/>
-        {{title}} V4.00
+        <a href="mailto:{{company.Email}}?subject={{company.Name}} Systems Support" style="color: #bbb;"> {{company.Name}} Systems Support</a> <br/>
+        Or the following phone number:<br/>
+        <fa-icon [icon]="['fas', 'phone-alt']"></fa-icon> {{company.Phone}} <br/>
+        {{company.Name}} V4.00
     </p>
 </nav>
  

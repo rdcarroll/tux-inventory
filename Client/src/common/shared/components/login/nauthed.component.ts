@@ -8,7 +8,7 @@ import * as root from '../../../globals';
 
 export class NauthedComponent implements OnInit {
     link: string;
-    title = `Unauthorized to use ${root.companyname}`;
+    title = `Unauthorized to use ${root.appname}`;
     constructor() {}
 
 

@@ -10,7 +10,7 @@ import * as root from '../common/globals';
     templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-    title = root.companyname;
+    title = root.appname;
     user: CurrentUser;
     navs: any[];
     navName: string;
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     canApprove: boolean;
     canAdmin: boolean;
     public isCollapsed:boolean = true;
+    company: any;
 
     constructor(private security: SecurityService, private router: Router,
         private ApiClient: ApiClientService, private util: Util) {
@@ -82,8 +83,21 @@ export class AppComponent implements OnInit {
         // }));
     }
     
+    getCompany(): void {
+        if(this.security.isAuthenticated()){
+            this.ApiClient.pGet("Companies", {}).pipe(take(1))
+                .subscribe(res => {
+                    this.company = res[0];
+                    this.title = `${this.company.Name} ${this.title}`;
+                    this.util.setData('company',res[0]);
+                }, (err) => {
+                    //this.util.handleError(err, "Error getting company info");
+                });
+        }
+    }
     ngOnInit() {
         this.setNav();
+        this.getCompany();
         //if user message is updated, check it for authZ
         this.security.getUserMessage().subscribe(user => {
             if (!user) {
@@ -91,6 +105,7 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['/nauthed']);
             }
             else {
+                this.getCompany();
                 this.security.authZ();
             }
         });

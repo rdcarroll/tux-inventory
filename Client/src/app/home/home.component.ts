@@ -2,6 +2,7 @@
 
 import { Config } from '../../common/shared';
 import * as root from '../../common/globals';
+import { Util } from '../../common/core';
 
 @Component({
     selector: 'my-home',
@@ -15,8 +16,10 @@ export class HomeComponent implements OnInit {
     upcoming_events: any;
     downloadpath: string;
     anchor_target: any;
+    title:string = ""
 
     constructor(
+        private util: Util
     ) {
         this.upcoming_events = [];
         this.downloadpath = '/dist';
@@ -34,6 +37,8 @@ export class HomeComponent implements OnInit {
 
     ngOnInit(): void {
         this.getLogList();
+        let company = this.util.getData('company');
+        this.title = `Welcome to ${company.Name} Management System`
     }
 
 }

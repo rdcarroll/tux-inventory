@@ -35,27 +35,32 @@ export class EmployeeDetailComponent implements OnInit {
     }
 
     add(): void {
-            this.ApiClient.pPost("register", {mode:'auth'}, {UserName:this.item.UserName,Password:"123456"}).pipe(take(1))
-                .subscribe(res => {
-                    // this.ApiClient.pPost("employees", {}, this.item).pipe(take(1))
-                    //     .subscribe(res => {
-                    //         this.item = res;
-                    //         this.id = this.item.ID.toString();
-                    //         this.router.navigate(['/admin', 'employees', this.item.ID]);
-                    //         this.util.alert("success", "Success Adding Employee", false, { icon: 'check' }, true);
-                    //     }, (err) => {
-                    //         this.util.handleError(err, "Error Adding");
-                    //     });
-                }, (err) => {
-                    this.util.handleError(err, "Error Adding");
-                });
+        this.ApiClient.pPost("register", {mode:'auth'}, {UserName:this.item.UserName,Password:"doesntmatter"}).pipe(take(1))
+            .subscribe(res => {
+                this.ApiClient.pPost("employees", {}, this.item).pipe(take(1))
+                    .subscribe(res => {
+                        this.item = res;
+                        this.router.navigate(['/admin', 'employees', this.item.ID]);
+                        this.util.alert("success", "Success Adding Employee", false, { icon: 'check' }, true);
+                    }, (err) => {
+                        this.util.handleError(err, "Error Adding");
+                    });
+            }, (err) => {
+                this.util.handleError(err, "Error assigning default password");
+            });
     }
 
     save(): void {
+        let pwd = this.item.Password;
         this.ApiClient.pPut("employees/" + this.id, {}, this.item).pipe(take(1))
             .subscribe(res => {
-                this.router.navigate(['/admin', 'employees']);
-                this.util.alert("success", "Success Saving Employee", false, { icon: 'check' }, true);
+                this.ApiClient.pPost("update", {mode:'auth'}, {UserName:this.item.UserName,Password:pwd}).pipe(take(1))
+                    .subscribe(res => {
+                        this.router.navigate(['/admin', 'employees']);
+                        this.util.alert("success", "Success Saving Employee", false, { icon: 'check' }, true);
+                    }, (err) => {
+                        this.util.handleError(err, "Error assigning password");
+                    });
             }, (err) => {
                 this.util.handleError(err, "Error Saving");
             });

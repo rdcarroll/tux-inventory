@@ -25,7 +25,7 @@ async function getOne(query) {
 
 async function create(record) {
   try {
-    record.Password = "123456";
+    delete record.Password;
     return await Model.create(record);
   } catch (err) {
     throw err;
@@ -33,6 +33,7 @@ async function create(record) {
 }
 async function update(id,record) {
   try {
+    delete record.Password;
     return await Model.update(record, {
       where: {
         ID: id

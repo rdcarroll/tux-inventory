@@ -6,6 +6,7 @@ export class Employee {
     UserName: string;
     FirstName: number;
     IsAdmin: boolean;
+    Password: string;
     createdAt: Date;
     updatedAt: Date;
 }

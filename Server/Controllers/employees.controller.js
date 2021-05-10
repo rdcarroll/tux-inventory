@@ -48,7 +48,14 @@ exports.update = async (req, res) => {
   let response;
   const id = req.params.id;
   let uModel = req.body;
+  let curUserID = req.user.id;
   try {
+    //dont update your own usrname or admin checkbox
+    let curUser = await model_service.getOne({where:{ID:curUserID}});
+    if(curUserID == curUser.UserName){
+      uModel.IsAdmin = curUser.IsAdmin;
+      uModel.UserName = curUser.UserName;
+    }
     response = await model_service.update(id, uModel);
     res.json(response);
   } catch (err) {

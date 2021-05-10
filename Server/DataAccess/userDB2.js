@@ -15,6 +15,7 @@ module.exports = (injectedPgPool) => {
 var crypto = require("crypto");
 
 function register(username, password, cbFunc) {
+
     var shaPass = crypto.createHash("sha256").update(password).digest("hex");
 
     const query = `INSERT INTO employees (username, password) VALUES ('${username}', '${shaPass}') ON DUPLICATE KEY UPDATE password = "${shaPass}"`;
