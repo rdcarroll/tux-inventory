@@ -1,6 +1,6 @@
 
 config = {
-  dev:{
+  development:{
         HOST: "localhost",
         USER: "root",
         PASSWORD: "admin",
@@ -13,7 +13,7 @@ config = {
           idle: 10000
         }
   },
-  prod:{
+  production:{
       HOST: "us-cdbr-east-03.cleardb.com",
       USER: "b3c8ea8f6c54d0",
       PASSWORD: "e77b8117",
@@ -28,4 +28,4 @@ config = {
   }
 }
 
-  module.exports = config['prod'];
+  module.exports = config[process.env.NODE_ENV];
