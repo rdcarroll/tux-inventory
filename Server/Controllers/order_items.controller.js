@@ -81,21 +81,21 @@ exports.delete = async (req, res) => {
   }
 };
 
-exports.pickup = async (req, res) => {
+exports.pull = async (req, res) => {
   let response;
   const id = req.params.id;
   const now = new Date();
   let uModel = req.body;
-  uModel.pickedupDate = now;
+  uModel.pulledDate = now;
   try {
     response = await model_service.update(id, uModel);
     //await model_service.update(id, {Confirmed:true});
-    let dpickup = await invitem_service.pickupitem(response.InventoryItemID);
+    let dpull = await invitem_service.pullitem(uModel.InventoryItemID);
 
     res.json(response);
   } catch (err) {
     res.status(500).send({
-      message: `Error picking up ${model_name}.`
+      message: `Error pulling ${model_name}.`
     });
   }
 };
@@ -105,10 +105,19 @@ exports.return = async (req, res) => {
   const now = new Date();
   let uModel = req.body;
   uModel.returnedDate = now;
+  let oInventoryItemID = uModel.InventoryItemID;
   try {
+
+    //either return to shelf, or return as order item
+    if(req.query.remove){
+      uModel.InventoryItemID=null;
+      uModel.pickedupDate=null;
+      uModel.pulledDate=null;
+      uModel.returnedDate=null;
+    }
+    
     response = await model_service.update(id, uModel);
-    //await model_service.update(id, {Confirmed:false});
-    let dreturn = await invitem_service.returnitem(response.InventoryItemID);
+    let dreturn = await invitem_service.returnitem(oInventoryItemID);
 
     res.json(response);
   } catch (err) {

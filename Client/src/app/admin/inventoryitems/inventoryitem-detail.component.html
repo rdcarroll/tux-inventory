@@ -67,7 +67,7 @@
     Historical Actions for this Inventory Item
     <table class="table table-bordered">
         <tr *ngFor="let item of data.actionitems">
-            <td>{{item.createdAt |  date}}</td>
+            <td>{{item.createdAt |  date: "short"}}</td>
             <td>{{item.Action.Name}}</td>
         </tr>
     </table>

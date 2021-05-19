@@ -8,7 +8,7 @@ module.exports = {
     create: create,
     update: update,
     checkBooking:checkBooking,
-    pickupitem:pickupitem,
+    pullitem:pullitem,
     returnitem:returnitem,
     actionitem:actionitem,
     getAllSizes:getAllSizes
@@ -83,10 +83,10 @@ async function checkBooking(orderid, items){
   }
 }
 
-async function pickupitem(id) {
+async function pullitem(id) {
   try {
-    await db.inventory_item_actions.create({InventoryItemID:id,ActionID:3});
-    let record = {StatusID:3}
+    await db.inventory_item_actions.create({InventoryItemID:id,ActionID:6});
+    let record = {StatusID:6}
     return await Model.update(record, {
       where: {
         ID: id

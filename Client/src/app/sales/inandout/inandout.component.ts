@@ -12,14 +12,16 @@ import { identifierModuleUrl } from '@angular/compiler';
     templateUrl: './inandout.component.html'
 })
 export class inandoutComponent implements OnInit {
-    @Input() pickingup : boolean = true;
+    @Input() mode : string = "pull";
     @Input() orderid : number;
     @Input() orderitemid : number;
     @Output() itemChange = new EventEmitter<object>();
     @Output() closeEdit = new EventEmitter<boolean>();
     dialogRef: any;
-    order_items: any;
+    order_items: any[];
     order: any;
+    hasItemsToPickup: boolean;
+    hasItemsToReturn: boolean;
 
 
     constructor(
@@ -39,11 +41,14 @@ export class inandoutComponent implements OnInit {
     }
     getOrder(orderid:number): Observable<any> {
         let q = {include:['Customer']}
-        return this.ApiClient.pGet(`orders/${orderid}`, q).pipe(take(1));
+        return this.ApiClient.pGet(`orders/${orderid}`, q).pipe(take(1),map((res: any) => {
+            this.order = res;
+        }));
     }
     
-    save(orderitem:OrderItem, action:string): void {
-        this.ApiClient.pPut(`order_items/${orderitem.ID}/${action}`, {}, orderitem).pipe(take(1))
+    save(orderitem:OrderItem, action:string, parms?:any): void {
+        parms = parms || {};
+        this.ApiClient.pPut(`order_items/${orderitem.ID}/${action}`, parms, orderitem).pipe(take(1))
             .subscribe(res => {
                 this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
                 this.getOrderItems(this.orderid).subscribe(res=>{
@@ -53,9 +58,8 @@ export class inandoutComponent implements OnInit {
             });
 
     }
-    pickup(template: TemplateRef<any>) {
+    pull(template: TemplateRef<any>) {
         this.getOrder(this.orderid).subscribe(res=>{
-            this.order = res;
             this.getOrderItems(this.orderid).subscribe(res=>{
                 this.dialogRef = this.dialog.open(template, {
                   width: '80%'
@@ -66,7 +70,7 @@ export class inandoutComponent implements OnInit {
             });
         });
       }
-      pickupBlur(item:any,evt:any) {
+      pullBlur(item:any,evt:any) {
           let newbarcode = evt.target.value;
           item.notfound = false;
           if(newbarcode && item.InventoryItemID==null){
@@ -80,7 +84,7 @@ export class inandoutComponent implements OnInit {
                     let ii = res.rows.filter((invitem:any) => {  return invitem.Barcode == newbarcode   })[0] || {};
                     item.InventoryItemID = ii.ID;
                     item.notfound = false;
-                    this.save(item,'pickup');
+                    this.save(item,'pull');
                 }
             });
           }
@@ -91,10 +95,36 @@ export class inandoutComponent implements OnInit {
           }
           
         }
+
+        
+    pickup(template: TemplateRef<any>) {
+        this.getOrder(this.orderid).subscribe(res=>{
+            this.getOrderItems(this.orderid).subscribe(res=>{
+                this.hasItemsToPickup = this.order_items.some((ele)=>ele.pulledDate!=null);
+                this.dialogRef = this.dialog.open(template, {
+                  width: '80%'
+                });
+                this.dialogRef.afterClosed().subscribe((result: any) => {
+                    this.closeEdit.emit(true);
+                  });
+            });
+        });``
+      }
+      pickupSave() {
+        this.ApiClient.pPut(`orders/${this.orderid}/pickup`, {}, {}).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Success Picking Up Order", false, { icon: 'check' }, true);
+                this.closeEdit.emit(true);
+            }, (err) => {
+                this.util.handleError(err, "Error Picking Up Order");
+            });
+        }
+
+
     return(template: TemplateRef<any>) {
         this.getOrder(this.orderid).subscribe(res=>{
-            this.order = res;
             this.getOrderItems(this.orderid).subscribe(res=>{
+                this.hasItemsToReturn = this.order_items.some((ele)=>ele.pulledDate!=null);
                 this.dialogRef = this.dialog.open(template, {
                   width: '80%'
                 });
@@ -108,11 +138,23 @@ export class inandoutComponent implements OnInit {
           item.notfound=false;
         let returnbarcode = evt.target.value;
         if(returnbarcode && item.InventoryItem && item.InventoryItem.Barcode == returnbarcode){
-            this.save(item,'return');
+            if(item.pickedupDate){
+                this.save(item,'return');
+            }
+            else{
+                if (confirm("This item has not been picked up yet. Do you want to return it to the shelf?")) {
+                    this.save(item,'return',{remove:true});
+                }
+                else{
+                    item.returnbarcode = null;
+                }
+            }
         }
         else if(returnbarcode && item.InventoryItem && item.InventoryItem.Barcode != returnbarcode){
             item.notfound=true;
         }
+
+ 
         }
 
     ngOnChanges(): void {

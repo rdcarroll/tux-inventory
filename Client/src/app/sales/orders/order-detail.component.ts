@@ -114,9 +114,9 @@ export class OrderDetailComponent implements OnInit {
     }
     useDateChanged(evt:Date): void {
         let uDate = moment(evt);
-        this.order.useDate = evt;
-        this.order.pickUpDate = uDate.subtract(4,'days').toDate();
-        this.order.returnDate = uDate.add(4,'days').toDate();
+        this.order.useDate = uDate.toDate();
+        this.order.pickUpDate = uDate.clone().subtract(4,'days').toDate();
+        this.order.returnDate = uDate.clone().add(4,'days').toDate();
     }
     actualReturnDateChanged(evt:Date): void {
         let uDate = evt;

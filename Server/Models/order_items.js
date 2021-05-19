@@ -102,6 +102,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "returnedDate"
+    },
+    pulledDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "pulledDate"
     }
   };
   const options = {

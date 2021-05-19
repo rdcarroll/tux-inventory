@@ -67,9 +67,10 @@ module.exports = (router, app) => {
   const orders = require("../Controllers/orders.controller.js");
   router.get("/orders", app.oauth.authorise(), orders.findAll);
   router.get("/orders/:id", app.oauth.authorise(), orders.findOne);
+  router.post("/orders", app.oauth.authorise(), orders.create);
   router.put("/orders/:id", app.oauth.authorise(), orders.update);
   router.delete("/orders/:id", app.oauth.authorise(), orders.delete);
-  router.post("/orders", app.oauth.authorise(), orders.create);
+  router.put("/orders/:id/pickup", app.oauth.authorise(), orders.pickup);
   
   const order_items = require("../Controllers/order_items.controller.js");
   router.get("/orders/:id/order_items", app.oauth.authorise(), orders.findItems);
@@ -77,7 +78,7 @@ module.exports = (router, app) => {
   router.post("/order_items", app.oauth.authorise(), order_items.create);
   router.put("/order_items/:id", app.oauth.authorise(), order_items.update);
   router.delete("/order_items/:id", app.oauth.authorise(), order_items.delete);
-  router.put("/order_items/:id/pickup", app.oauth.authorise(), order_items.pickup);
+  router.put("/order_items/:id/pull", app.oauth.authorise(), order_items.pull);
   router.put("/order_items/:id/return", app.oauth.authorise(), order_items.return);
   
   const order_tickets = require("../Controllers/order_tickets.controller.js");

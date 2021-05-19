@@ -113,3 +113,18 @@ exports.replaceItems = async (req, res) => {
   }
 };
 
+exports.pickup = async (req, res) => {
+  let response;
+  const id = req.params.id;
+  if(req.query.where)req.query.where['OrderID']=id;
+  try {
+    orderItems = await orderitem_service.getAll(req.query);
+    
+    res.json(orderItems);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}:${err.message}`
+    });
+  }
+};
+

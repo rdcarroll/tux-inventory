@@ -84,8 +84,9 @@ export class InventoryItemDetailComponent implements OnInit {
     getItemActions(): void {
         this.ApiClient.pGet("inventory_items/" + this.id, {include:[{'InventoryItemActions':['Action']}]}).pipe(take(1))
             .subscribe(res =>{
+                let orderedItems = res.InventoryItemActions.sort((first:any, second:any) => first.createdAt > second.createdAt);
                 const dialogRef = this.dialog.open(this.dialogRef, {
-                        width:'600px',data:{actionitems:res.InventoryItemActions},disableClose:false
+                        width:'600px',data:{actionitems:orderedItems},disableClose:false
                 });
                 dialogRef.afterClosed().subscribe(res=>{});
             } );

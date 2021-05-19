@@ -6,8 +6,10 @@
         <div class="col-md-12">
             <div class="card" *ngIf="order">
                 <div class="card-header">
-                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [pickingup]="true" (closeEdit)="close()"></my-inandout>
-                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [pickingup]="false" (closeEdit)="close()"></my-inandout>
+                    <button type="button" class="btn btn-info float-right space-left" (click)="print(id)" *ngIf="id!='add'">Print</button>
+                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'return'" (closeEdit)="close()"></my-inandout>
+                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pickup'" (closeEdit)="close()"></my-inandout>
+                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pull'" (closeEdit)="close()"></my-inandout>
                     <my-backbutton class="float-right" [link]="backto"></my-backbutton>
                     <h3>
                         <span *ngIf="id==='add'">Create Order</span>
@@ -69,12 +71,12 @@
                                                     <my-date [(dateTime)]="order.returnDate" id="returnDate" name="returnDate"></my-date>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <!-- <div class="form-group row">
                                                 <label class="col-md-4 col-form-label">Actual Return Date</label>
                                                 <div class="col-md-8">
                                                     <my-date [dateTime]="order.actualReturnDate" (dateTimeChange)="actualReturnDateChanged($event)" id="actualReturnDate" name="actualReturnDate"></my-date>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
             
@@ -83,7 +85,6 @@
                                             <div class="btn-group" role="group">
                                                 <button type="button" class="btn btn-success" (click)="add(orderForm)" *ngIf="id==='add'">Create Order</button>
                                                 <button type="button" class="btn btn-success" (click)="save(orderForm)" *ngIf="id!='add'">Update Order</button>
-                                                <button type="button" class="btn btn-primary" (click)="print(id)" *ngIf="id!='add'">Print Order</button>
                                             </div>
                                         </div>
                                     </div>
