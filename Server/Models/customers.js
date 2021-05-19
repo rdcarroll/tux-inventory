@@ -66,6 +66,42 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "Address"
+    },
+    City: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "City"
+    },
+    State: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "State"
+    },
+    Zipcode: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Zipcode"
+    },
+    Birthdate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Birthdate"
     }
   };
   const options = {

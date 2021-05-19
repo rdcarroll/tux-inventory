@@ -39,6 +39,7 @@ db.ticket_payments = require("./ticket_payments.js")(sequelize);
 db.inventory_item_actions = require("./inventory_item_actions.js")(sequelize);
 db.action_types = require("./action_types.js")(sequelize);
 db.companies = require("./company.js")(sequelize);
+db.customer_sizes = require("./customer_sizes.js")(sequelize);
 
 
 db.inventory_types.hasMany(db.inventory,  { foreignKey:'InventoryTypeID', as : 'Inventory'  });
@@ -70,6 +71,9 @@ db.order_tickets.belongsTo(db.orders, { foreignKey:'OrderID', as : 'Order' });
 
 db.customers.hasMany(db.order_tickets, {  foreignKey:'CustomerID', as : 'OrderTickets' });
 db.order_tickets.belongsTo(db.customers, { foreignKey:'CustomerID', as : 'Customer' });
+
+db.customers.hasMany(db.customer_sizes, {  foreignKey:'CustomerID', as : 'CustomerSizes' });
+db.customer_sizes.belongsTo(db.customers, { foreignKey:'CustomerID', as : 'Customer' });
 
 db.packages.hasMany(db.package_inventory,  { foreignKey:'PackageID', as : 'PackageInventory'  });
 db.package_inventory.belongsTo(db.packages, { foreignKey:'PackageID', as : 'Package'  });

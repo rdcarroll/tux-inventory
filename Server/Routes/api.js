@@ -101,5 +101,10 @@ module.exports = (router, app) => {
   router.put("/companies/:id", app.oauth.authorise(), companies.update);
   router.post("/companies", app.oauth.authorise(), companies.create);
 
+
+  
+  const maintenance = require("../Controllers/maintenance.controller.js");
+  router.get("/importcustomers",  maintenance.importcustomers);
+
   return router;
 };

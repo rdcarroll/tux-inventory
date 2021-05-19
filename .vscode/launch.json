@@ -5,11 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "launch",
+            "name": "localdb",
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "runtimeExecutable": "npm",
+            "env":{"NODE_ENV":"development"},
+            "console": "integratedTerminal",
             "runtimeArgs": [
                 "start"
             ],
@@ -19,15 +21,19 @@
             ]
         },
         {
-            "name": "dev",
+            "name": "herokudb",
             "type": "node",
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "runtimeExecutable": "npm",
+            "env":{"NODE_ENV":"production"},
             "runtimeArgs": [
-                "run-script", "serv"
+                "start"
             ],
-            "port": 5858
+            "port": 9229,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
         }
     ]
 }
