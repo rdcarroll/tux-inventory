@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const db = require("../Models");
-const { isEmptyBindingElement } = require('typescript');
+
 const customers = db.customers;
 const customer_sizes = db.customer_sizes;
 
