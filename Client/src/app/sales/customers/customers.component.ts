@@ -68,8 +68,8 @@ export class customersComponent implements OnInit {
         this.ApiClient.pGet("customers", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
-                    this.items = res;
-                    this.config.collectionSize = res.TotalCount;
+                    this.items = res.rows;
+                    this.config.collectionSize = res.count;
                 }, (err) => {
                     this.util.alert("error", err.statusText, false, null);
                 });

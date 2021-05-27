@@ -18,6 +18,14 @@ function parsefilter(filter){
   if(Object.keys(wh).length) return wh;
   return {};
 }
+//include fields
+function parsefields(select){
+  let marray = select.split(",").map(function(item) {
+         return item.trim();
+   });
+     if(marray.length) return marray;
+     return null;
+}
 //include children
 function parseinclude(include){
     let marray = eval(include);
@@ -58,6 +66,7 @@ exports.setQuery = async (req, res, next) => {
     try {
         let q = {where:{},include:[], limit:0, offset:0 };
         if(query.filter) q.where = parsefilter(query.filter);
+        if(query.select) q.attributes = parsefields(query.select);
         if(query.include) q.include = parseinclude(query.include);
         if(query.qf) q.where = parseq(query.qf,q.where);
 

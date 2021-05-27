@@ -61,7 +61,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6"></div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="col-md-4 col-form-label"></label>
+                                    <div class="col-md-8">
+                                        <my-sizes *ngIf="item.ID" class="float-right space-left" [customerid]="item.ID" (closeEdit)="close()"></my-sizes>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row" *ngIf="item.OrderTickets">
                             <div class="col-md-12">

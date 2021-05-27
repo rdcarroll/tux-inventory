@@ -124,7 +124,6 @@ module.exports = sequelize => {
   };
   const options = {
     tableName: "customer_sizes",
-    timestamps: false,
     comment: "",
     indexes: []
   };

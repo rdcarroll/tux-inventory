@@ -82,11 +82,11 @@ export class OrderDetailComponent implements OnInit {
 
     getLookups(): Observable<any> {
         return forkJoin([
-            this.ApiClient.pGet("customers", {}).pipe(take(1)),
+            this.ApiClient.pGet("customers", {pageSize:this.util.MaxPageSize(), select:"ID,FirstName,LastName,FullName"}).pipe(take(1)),
             this.ApiClient.pGet("events", {}).pipe(take(1))
         ])
         .pipe(map((res: any) => {
-            this.customers = res[0];
+            this.customers = res[0].rows;
             this.events = res[1];
         }));
     }

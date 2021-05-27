@@ -17,6 +17,7 @@ import { eventDetailComponent } from './events/event-detail.component';
 import { inandoutComponent } from './inandout/inandout.component';
 import { OrderPrintComponent } from './orders/reports/order-print.component';
 import { ShowOrderDialog } from './orders/reports/show-order.modal';
+import { sizesComponent } from './sizes/sizes.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -38,6 +39,7 @@ import { ShowOrderDialog } from './orders/reports/show-order.modal';
         eventsComponent,
         eventDetailComponent,
         inandoutComponent,
+        sizesComponent,
         OrderPrintComponent,
         ShowOrderDialog
     ],

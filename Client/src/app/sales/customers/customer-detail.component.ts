@@ -29,7 +29,7 @@ export class CustomerDetailComponent implements OnInit {
             this.item = new Customer();
         }
         else {
-            this.ApiClient.pGet("customers/" + this.id, {include:['Orders']}).pipe(take(1)) //,'OrderTickets'
+            this.ApiClient.pGet("customers/" + this.id, {include:['Orders','CustomerSizes']}).pipe(take(1)) //,'OrderTickets'
                 .subscribe(res => this.item = res);
         }
     }
