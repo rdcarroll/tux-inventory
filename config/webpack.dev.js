@@ -47,7 +47,9 @@ module.exports = webpackMerge(commonConfig, {
             __ANCHOR_TARGET__: JSON.stringify("_self"),
             __DEBUG_MODE__: JSON.stringify("dev"),
             __PDF_ROOT__: JSON.stringify("https://wsdev.ettp.gov/pdf/o"),
-            __SITE_URL__: JSON.stringify("http://pcsdev2.ettp.gov")
+            __SITE_URL__: JSON.stringify("http://pcsdev2.ettp.gov"),
+            __UID__: JSON.stringify("KC1"),
+            __PWD__: JSON.stringify("Happy123")
         })
     ]
 });

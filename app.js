@@ -13,6 +13,8 @@ const userDB = require("./Server/DataAccess/userDB2")(pgPool);
 const oAuthService = require("./Server/Services/tokenService")(userDB, tokenDB);
 const oAuth2Server = require("node-oauth2-server");
 
+const loggingService = require("./Server/Services/loggingService");
+
 const app = express();
 
 
@@ -38,6 +40,9 @@ app.use(authmiddleware.setUserFromToken);
 
 const queryService = require("./Server/Services/queryService.js");
 app.use(queryService.setQuery);
+
+//log all calls
+app.use(loggingService.logQuery);
 
 // Set our api routes
 const api = require('./Server/Routes/api')(express.Router(),app);

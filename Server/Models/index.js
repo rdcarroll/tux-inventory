@@ -34,12 +34,13 @@ db.orders = require("./orders.js")(sequelize);
 db.order_items = require("./order_items.js")(sequelize);
 db.order_tickets = require("./order_tickets.js")(sequelize);
 db.company = require("./company.js")(sequelize);
-db.payment_reasons = require("./reasons.js")(sequelize);
+db.payment_reasons = require("./reasons.js")(sequelize)
 db.ticket_payments = require("./ticket_payments.js")(sequelize);
 db.inventory_item_actions = require("./inventory_item_actions.js")(sequelize);
 db.action_types = require("./action_types.js")(sequelize);
 db.companies = require("./company.js")(sequelize);
 db.customer_sizes = require("./customer_sizes.js")(sequelize);
+db.logs = require("./logs.js")(sequelize);
 
 
 db.inventory_types.hasMany(db.inventory,  { foreignKey:'InventoryTypeID', as : 'Inventory'  });

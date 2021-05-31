@@ -102,6 +102,10 @@ module.exports = (router, app) => {
   router.put("/companies/:id", app.oauth.authorise(), companies.update);
   router.post("/companies", app.oauth.authorise(), companies.create);
 
+  const logs = require("../Controllers/logs.controller.js");
+  router.get("/logs", app.oauth.authorise(), logs.findAll);
+  router.get("/logs/:id", app.oauth.authorise(), logs.findOne);
+  router.post("/logs", app.oauth.authorise(), logs.create);
 
   
   const maintenance = require("../Controllers/maintenance.controller.js");
