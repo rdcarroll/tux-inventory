@@ -6,6 +6,7 @@ module.exports = (injectedPgPool) => {
 
     return {
         register: register,
+        updateUser:updateUser,
         getUser: getUser,
         isValidUser: isValidUser,
         getUserByID: getUserByID
@@ -28,6 +29,20 @@ function getUser(username, password, cbFunc) {
 
     Model.findAll({where:{username:username, password:shaPass}})
    .then(function(response) {
+       cbFunc(false,response[0]);
+     }).catch(function (err) {
+        // handle error;
+        cbFunc(err, false);
+      });
+}
+function updateUser(id, record, cbFunc) {
+
+  Model.update(record, {
+    where: {
+      ID: id
+    }
+  })   
+  .then(function(response) {
        cbFunc(false,response[0]);
      }).catch(function (err) {
         // handle error;

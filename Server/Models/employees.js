@@ -66,6 +66,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "IsAdmin"
+    },
+    IsSuperAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "IsSuperAdmin"
     }
   };
   const options = {

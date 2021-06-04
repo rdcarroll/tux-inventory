@@ -1,5 +1,6 @@
 // Get dependencies
 const express = require('express');
+const cron = require('node-cron');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -17,6 +18,10 @@ const loggingService = require("./Server/Services/loggingService");
 
 const app = express();
 
+// Schedule tasks to be run on the server.
+cron.schedule('0 5 * * *', function() {
+  loggingService.prune();
+});
 
 // Parsers for POST data
 app.use(bodyParser.json());

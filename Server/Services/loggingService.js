@@ -9,7 +9,7 @@ exports.logQuery = (req, res, next) => {
           Action:req.method,
           User:userid,
           Source:"test",
-          Data:req.url
+          Data:req.url.substring(0,100)
         }
         Model.create(record);
         next();
@@ -20,3 +20,9 @@ exports.logQuery = (req, res, next) => {
       // });
     }
   };
+  exports.prune = () => {
+    console.log('prunning logs');
+    db.sequelize
+    .query('CALL prune_logs ()')
+    .then(v=>console.log("done"));
+    };

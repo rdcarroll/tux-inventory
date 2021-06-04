@@ -18,5 +18,6 @@
     StaffAugFlag: boolean;
     Title: string;
     UserId: string;
+    UserName: string;
     IsAdmin: boolean;
 }

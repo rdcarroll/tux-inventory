@@ -65,6 +65,7 @@ export class SecurityService {
                 //if (res.ActiveFlag) roleId += this.Access.User;
                 if (res.UserName) roleId += this.Access.User;
                 if (res.IsAdmin) roleId += this.Access.Admin;
+                if (res.IsSuperAdmin) roleId += this.Access.SuperAdmin;
                 res.role_id = roleId;
                 let cu =  this.getUser();
                 // store user details and token in local storage to keep user logged in between page refreshes
@@ -85,7 +86,8 @@ export class SecurityService {
 
     Access = {
         User: 1,
-        Admin: 2
+        Admin: 2,
+        SuperAdmin: 4
     }
 
     hasAccess(node: number): boolean {

@@ -35,32 +35,19 @@ export class sizesComponent implements OnInit {
         let q = {include:['CustomerSizes']}
         return this.ApiClient.pGet(`customers/${customerID}`, q).pipe(take(1),map((res: any) => {
             this.customer = res;
-        }));
-    }
-    
-    save(orderitem:OrderItem, action:string, parms?:any): void {
-        // parms = parms || {};
-        // this.ApiClient.pPut(`order_items/${orderitem.ID}/${action}`, parms, orderitem).pipe(take(1))
-        //     .subscribe(res => {
-        //         this.util.alert("success", "Success Saving Order", false, { icon: 'check' }, true);
-        //         this.getOrderItems(this.orderid).subscribe(res=>{
-        //         });
-        //     }, (err) => {
-        //         this.util.handleError(err, "Error Saving");
-        //     });
-
-    }
-        
-    size(template: TemplateRef<any>) {
-        this.getCustomer(this.customerid).subscribe(res=>{
-            
             //default
             if(this.customer.CustomerSizes.length){
                 this.customer_size = this.customer.CustomerSizes[0];
             }
             else{
-                this.customer_size = {};
+                this.customer_size = {CustomerID:this.customer.ID};
             }
+        }));
+    }
+    
+    size(template: TemplateRef<any>) {
+        this.getCustomer(this.customerid).subscribe(res=>{
+            
             this.dialogRef = this.dialog.open(template, {
               width: '80%'
             });
@@ -69,15 +56,26 @@ export class sizesComponent implements OnInit {
               });
         });
       }
-      sizeSave() {
-        // this.ApiClient.pPut(`orders/${this.orderid}/pickup`, {}, {}).pipe(take(1))
-        //     .subscribe(res => {
-        //         this.util.alert("success", "Success Picking Up Order", false, { icon: 'check' }, true);
-        //         this.closeEdit.emit(true);
-        //     }, (err) => {
-        //         this.util.handleError(err, "Error Picking Up Order");
-        //     });
+      add() {
+        this.ApiClient.pPost(`customer_sizes`, {}, this.customer_size).pipe(take(1))
+            .subscribe(res => {
+                this.util.alert("success", "Success Adding Customer Sizes", false, { icon: 'check' }, true);
+                this.getCustomer(this.customerid).subscribe(res=>{
+                });
+            }, (err) => {
+                this.util.handleError(err, "Error Adding Customer Sizes");
+            });
         }
+        save() {
+            this.ApiClient.pPut(`customer_sizes/${this.customer_size.ID}`, {}, this.customer_size).pipe(take(1))
+                .subscribe(res => {
+                    this.util.alert("success", "Success Saving Customer Sizes", false, { icon: 'check' }, true);
+                    this.getCustomer(this.customerid).subscribe(res=>{
+                    });
+                }, (err) => {
+                    this.util.handleError(err, "Error Saving Customer Sizes");
+                });
+          }
 
 
 

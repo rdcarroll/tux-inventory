@@ -13,6 +13,12 @@ module.exports = (router, app) => {
   router.put("/customers/:id", app.oauth.authorise(), customers.update);
   router.post("/customers", app.oauth.authorise(), customers.create);
 
+  const customer_sizes = require("../Controllers/customer_sizes.controller.js");
+  router.get("/customer_sizes", app.oauth.authorise(), customer_sizes.findAll);
+  router.get("/customer_sizes/:id", app.oauth.authorise(), customer_sizes.findOne);
+  router.put("/customer_sizes/:id", app.oauth.authorise(), customer_sizes.update);
+  router.post("/customer_sizes", app.oauth.authorise(), customer_sizes.create);
+
   const events = require("../Controllers/events.controller.js");
   router.get("/events", app.oauth.authorise(), events.findAll);
   router.get("/events/:id", app.oauth.authorise(), events.findOne);

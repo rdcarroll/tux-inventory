@@ -25,12 +25,22 @@ function registerUser(req, res) {
         //new user gets default password
         req.body.Password = "123456";
 
-        userDB.register(req.body.UserName, req.body.Password, (response) => {
-            sendResponse(
-                res,
-                !response.error  ? "Success!!" : "Something went wrong!",
-                response.error
-            );
+        userDB.register(req.body.UserName, req.body.Password, (resp) => {
+            if(resp.error){
+                sendResponse(
+                    res,
+                    "Something went wrong!",
+                    resp.error
+                );
+            }
+            let insertId = resp.results.insertId;
+            userDB.updateUser(insertId, req.body, (response) => {
+                sendResponse(
+                    res,
+                    !response.error  ? "Success!!" : "Something went wrong!",
+                    response.error
+                );
+            });
         });
     });
 }
@@ -43,21 +53,29 @@ function updateUser(req, res) {
 
             return;
         }
-
-        userDB.register(req.body.UserName, req.body.Password, (response) => {
+        if(!!req.body.Password){
+            userDB.register(req.body.UserName, req.body.Password, (response) => {
+                sendResponse(
+                    res,
+                    !response.error  ? "Success!!" : "Something went wrong!",
+                    response.error
+                );
+            });
+        }
+        else{
             sendResponse(
                 res,
-                !response.error  ? "Success!!" : "Something went wrong!",
-                response.error
+                 "Password missing!",
+                "null Password"
             );
-        });
+        }
     });
 }
 
 function login(query, res) {}
 
 function sendResponse(res, message, error) {
-    res.status(error !== undefined ? 400 : 200).json({
+    res.status(error !== undefined && error !== null ? 400 : 200).json({
         message: message,
         error: error,
     });
