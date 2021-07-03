@@ -40,6 +40,15 @@ module.exports = sequelize => {
       comment: null,
       field: "ModelName"
     },
+    ModelWDesc: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.ModelName} (${this.Description})`;
+      },
+      set(value) {
+        //throw new Error('Do not try to set the `fullName` value!');
+      }
+    },
     Cost: {
       type: DataTypes.DOUBLE,
       allowNull: true,

@@ -88,7 +88,7 @@ export class OrderPaymentComponent implements OnInit, OnChanges  {
             }
             this.ApiClient.pPost("ticket_payments", {}, nObject).pipe(take(1))
                 .subscribe(res => {
-                    this.util.alert("success", "Success Adding Payment", false, { icon: 'check' }, true);
+                    this.util.alert("success", "Success Adding Payment", false, { icon: 'check' }, false);
                     this.paymentChange.emit(res);
                     this.reasonid=null;
                     this.amount=0;

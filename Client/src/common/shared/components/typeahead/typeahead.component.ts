@@ -30,11 +30,12 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() keyparm: string = "keyword";
     @Output() myModelChange: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('inputbox') inputbox: ElementRef;
+    @ViewChild('auto') auto: ElementRef;
 
     myControl = new FormControl();
     filteredOptions: Observable<string[]>;
     max: number = 200;
-    panelwidth: any = 100;
+    panelwidth: any = 'auto';
     constructor(
         private router: Router,
         private route: ActivatedRoute) {
@@ -45,14 +46,15 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
         this.filteredOptions = this.myControl.valueChanges
             .pipe(
                 startWith(''),
-                map(value => this._filter(value))
+                map(value => {
+                    return this._filter(value);
+                })
             );
     }
     ngOnChanges(): void {
         //this.displayFn(this.myModel);
         if (this.myModel!=null && this.myModel != this.myControl.value) this.myControl.setValue(this.myModel);
     }
-
     displayFn(optionValue: any): string {
         if (Array.isArray(this.options)) {
             let val = this.options.filter((item: any) => item[this.valueField] == optionValue);
@@ -72,7 +74,8 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
         return (!value || 0 === value.length);
     }
     //on selection change
-    getSelected(val: any) {
+    onSelectionChanged(event: any) {
+        let val = event.option.value;
         this.emitter(val);
     }
     //on input value change
@@ -81,6 +84,7 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
         //this.myModel = _item[this.valueField];
         //this.myModelChange.emit(this.myModel);
         if (val.target.value.length == 0 || this.allowCustom) this.emitter(val.target.value);
+        //else this.clearFilter();
     }
     //clear
     clearFilter() {
@@ -89,7 +93,7 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     private _filter(value: string): string[] {
-        const filterValue = value.toLowerCase();
+        const filterValue = value && typeof value == 'string' ? value.toLowerCase() : "";
         if (this.options) {
             //return this.options.filter(option => option[this.displayField].toLowerCase().includes(filterValue)).slice(0, this.max);
             if (this.startswith) {
@@ -119,7 +123,7 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
     ngAfterViewInit() {
         let width = this.inputbox.nativeElement.clientWidth; 
         setTimeout(() => {
-            this.panelwidth = width || 'auto';
-        }, 500);
+            //this.panelwidth = width || 'auto';
+        }, 1500);
     }
 }

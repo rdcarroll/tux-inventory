@@ -5,7 +5,7 @@
     </div>
 </div></div>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Type</label>
             <div class="col-md-8">
@@ -14,53 +14,37 @@
                  </select>
             </div>
         </div>
+    </div>
+    <div class="col-md-8">
         <div class="form-group row">
-            <label class="col-md-4 col-form-label">Style</label>
-            <div class="col-md-8">
-                <select class="form-control" [(ngModel)]="invmodelid" (ngModelChange)="changeInventory($event,false)" name="InventoryID" required >
-                    <option *ngFor="let i of inventory" [value]="i.ID">{{i.ModelName}}</option>
-                 </select>
-                <!-- <my-typeahead [(myModel)]="invmodelid" [options]="inventory" [valueField]="'ID'" [displayField]="'ModelName'"></my-typeahead> -->
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-4 col-form-label">Description</label>
-            <div class="col-md-8 form-control-plaintext">
-                {{invmodeldesc}}
+            <label class="col-md-2 col-form-label">Style</label>
+            <div class="col-md-10">
+                <my-typeahead [(myModel)]="invmodelid" [searchField]="'ModelWDesc'" [options]="inventory" [valueField]="'ID'" [displayField]="'ModelWDesc'"></my-typeahead>
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+</div>
+<div class="row">
+    <div class="col-md-4">
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Size</label>
             <div class="col-md-8">
-                <!-- <select class="form-control" [(ngModel)]="itemsize" (ngModelChange)="changeInventoryItem()" name="ItemSize" required >
-                    <option *ngFor="let i of inventory_itemsizes" [value]="i.ItemSize">
-                        <fa-icon [icon]="['fas', 'trash-alt']" class="text-danger" size="xs" title="Delete"></fa-icon>
-                        <p [ngClass]="{'text-danger':i.overbooked,'text-success':!i.overbooked}">{{i.ItemSize}}</p>{{i.ItemSize}}</option>
-                 </select> -->
-                <!-- <my-typeahead [(myModel)]="invsku" [options]="inventory_items" [valueField]="'SKU'" [displayField]="'SKU'"></my-typeahead> -->
-                    <mat-select class="form-control" placeholder="Item Size" [(ngModel)]="itemsize" (ngModelChange)="changeInventoryItem()" name="ItemSize" required>
+               <mat-select class="form-control" placeholder="Item Size" [(ngModel)]="itemsize" (ngModelChange)="changeInventoryItem()" name="ItemSize" required>
                         <mat-option *ngFor="let i of inventory_itemsizes" [value]="i.ItemSize">
                             <p [ngClass]="{'text-danger':i.overbooked,'text-success':!i.overbooked}">{{i.ItemSize}}</p>
                         </mat-option>
                       </mat-select>
             </div>
         </div>
+    </div>
+    <div class="col-md-8">
         <div class="form-group row">
-            <label class="col-md-4 col-form-label">Price</label>
-            <div class="col-md-8">
+            <label class="col-md-2 col-form-label">Price</label>
+            <div class="col-md-4">
                                 <input matInput class="form-control" name="Cost" type="text" placeholder="Item Cost"
                                 [ngModel]="price | currency:'USD':'symbol':'2.2'"
                                 [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="price=$event" />
-                <!-- <input class="form-control" name="price" placeholder="" [(ngModel)]="price" required> -->
             </div>
         </div>
-        <!-- <div class="form-group row">
-            <label class="col-md-4 col-form-label"></label>
-            <div class="col-md-8">
-                <my-inandout [orderid]="item.OrderID" [orderitemid]="item.ID" [pickingup]="item.InventoryItemID==null" (closeEdit)="close()"></my-inandout>
-            </div>
-        </div> -->
     </div>
 </div>

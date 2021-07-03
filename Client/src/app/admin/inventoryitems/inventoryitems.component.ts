@@ -16,7 +16,7 @@ export class inventoryitemsComponent implements OnInit {
     columns : Column[] = [
         {
             display: 'Model Name', //The text to display
-            variable: 'Inventory.ModelName', //The name of the key that's apart of the data array
+            variable: 'Inventory.ModelWDesc', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
             sortable: false
         },
@@ -69,7 +69,7 @@ export class inventoryitemsComponent implements OnInit {
             include:['Inventory','Status']
         }
 
-        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'Barcode','Size','Inventory.ModelName','Status.Name'];
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'Barcode','Size','Inventory.ModelName','Inventory.Description','Status.Name'];
 
         this.util.loading(true, null);
         this.ApiClient.pGet("inventory_items", q).pipe(finalize(() => this.util.loading(false, null)), take(1))

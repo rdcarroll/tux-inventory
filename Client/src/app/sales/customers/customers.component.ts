@@ -95,7 +95,7 @@ export class customersComponent implements OnInit {
 
 
     getRow(row: any): void {
-        //this.router.navigate(['/admin/administrators', row.ID]);
+                this.router.navigate(['/sales/customers', row.ID]);
     }
     getBtn(args: any): void {
         switch (args[1]) {

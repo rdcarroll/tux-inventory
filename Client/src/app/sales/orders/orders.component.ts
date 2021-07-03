@@ -96,7 +96,7 @@ export class OrdersComponent implements OnInit {
 
 
     getRow(row: any): void {
-        //this.router.navigate(['/admin/administrators', row.ID]);
+        this.router.navigate(['/sales/orders', row.ID]);
     }
     getBtn(args: any): void {
         switch (args[1]) {
