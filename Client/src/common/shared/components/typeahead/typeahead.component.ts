@@ -53,7 +53,15 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
     }
     ngOnChanges(): void {
         //this.displayFn(this.myModel);
-        if (this.myModel!=null && this.myModel != this.myControl.value) this.myControl.setValue(this.myModel);
+        if (this.myModel!=null && this.myModel != this.myControl.value) {
+            //this.myControl.setValue(this.myModel);
+            //this.displayFn(this.myModel);
+            if (Array.isArray(this.options)) {
+                //let val = this.options.filter((item: any) => item[this.valueField] == this.myModel);
+                //this.myControl.setValue(val[0][this.displayField]);
+                this.myControl.setValue(this.myModel);
+            }
+        }
     }
     displayFn(optionValue: any): string {
         if (Array.isArray(this.options)) {
