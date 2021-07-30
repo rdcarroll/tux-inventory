@@ -31,6 +31,12 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-4 col-form-label">Email</label>
+                            <div class="col-md-8">
+                                <input class="form-control" name="email" placeholder="" [(ngModel)]="item.Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-4 col-form-label">Admin ?</label>
                             <div class="col-md-8">
                                 <input type="checkbox"  name="IsAdmin" [(ngModel)]="item.IsAdmin" required>

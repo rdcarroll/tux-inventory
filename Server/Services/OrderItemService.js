@@ -96,7 +96,7 @@ async function replace(id,query) {
 //count how many are checked out over time period
 async function checkBooking(items){
   try {
-    for (const item of items) {
+    for (var item of items) {
       //get the order from the actual order item
       let order_item = await db.order_items.findByPk(item.ID,{include:['Order']});
       const startDate = new Date(order_item.Order.pickUpDate);

@@ -9,7 +9,8 @@ module.exports = (injectedPgPool) => {
         updateUser:updateUser,
         getUser: getUser,
         isValidUser: isValidUser,
-        getUserByID: getUserByID
+        getUserByID: getUserByID,
+        getUserByUserName: getUserByUserName
     };
 };
 
@@ -19,7 +20,7 @@ function register(username, password, cbFunc) {
 
     var shaPass = crypto.createHash("sha256").update(password).digest("hex");
 
-    const query = `INSERT INTO employees (username, password) VALUES ('${username}', '${shaPass}') ON DUPLICATE KEY UPDATE password = "${shaPass}"`;
+    const query = `INSERT INTO employees (username, password, email) VALUES ('${username}', '${shaPass}', 'register') ON DUPLICATE KEY UPDATE password = "${shaPass}"`;
 
     pgPool.query(query, cbFunc);
 }
@@ -51,6 +52,15 @@ function updateUser(id, record, cbFunc) {
 }
 function getUserByID(id, cbFunc) {
     Model.findAll({where:{ID:id}})
+   .then(function(response) {
+       cbFunc(false,response[0]);
+     }).catch(function (err) {
+        // handle error;
+        cbFunc(err, false);
+      });
+}
+function getUserByUserName(uid, cbFunc) {
+    Model.findAll({where:{UserName:uid}})
    .then(function(response) {
        cbFunc(false,response[0]);
      }).catch(function (err) {

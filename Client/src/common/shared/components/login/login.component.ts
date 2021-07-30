@@ -1,6 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SecurityService } from '../../../core';
+import { SecurityService, Util } from '../../../core';
 import * as root from '../../../globals';
 
 @Component({
@@ -14,13 +14,21 @@ export class LoginComponent implements OnInit {
     credentials = { uid: root.UID, pwd: root.PWD };
     title = `${root.appname}`
 
-    constructor(private security: SecurityService, private route: ActivatedRoute) {
+    constructor(private security: SecurityService, private util: Util, private route: ActivatedRoute) {
         this.isWindows = root.loginmodel.toString() == "windows";
     }
     login() {
         console.log(this.returnUrl);
         //where do i need to return to after authenticating? it should be returnUrl parameter, if it is passed in.
         this.security.authN(this.credentials, this.returnUrl);
+    }
+    forgotClicked() {
+        this.security.requestPasswordReset(this.credentials.uid)
+        .subscribe(res => {
+            this.util.alert("success", "Thank You. A reset link has been emailed to the address on file for your User ID (UID).", true, { icon: 'check' }, true);
+        }, (err) => {
+            this.util.handleError(err, "Error Reseting");
+        });
     }
 
     ngOnInit() {

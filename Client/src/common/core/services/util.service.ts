@@ -114,6 +114,10 @@ export class Util {
                 if (typeof ex.error == "string") {
                     msg += ex.error + "</br>";
                 }
+                else if (typeof ex.error.error == "string") {
+                    msg += ex.error.error + "</br>";
+                }
+                
                 else if (typeof ex.message == "string") {
                     msg += ex.message + "</br>";
                 }

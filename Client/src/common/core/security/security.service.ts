@@ -56,6 +56,8 @@ export class SecurityService {
                 else {
                     this.userSubject.next(null);
                 }
+            }, (err) => {
+                this.userSubject.next(null);
             });
     }
     authZ() {
@@ -100,5 +102,9 @@ export class SecurityService {
         // remove user from local storage to log user out
         sessionStorage.removeItem('currentUser');
         this.userSubject.next(null);
+    }
+    
+    requestPasswordReset(userid:string):Observable<any> {
+        return this.http.post('/auth/requestreset', {UserName:userid});
     }
 }

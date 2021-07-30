@@ -42,16 +42,19 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
 
     changeInventoryType(inventoryTypeID:number, initChild:boolean){
          this.getInventory(inventoryTypeID).subscribe(res=>{
-            this.invmodelid = initChild?this.invmodelid : (res[0] ? res[0].ID : null);
+             let useIncoming = initChild && this.invmodeldesc !== "holder";
+            this.invmodelid = useIncoming ? this.invmodelid : (res[0] ? res[0].ID : null);
              this.changeInventory(this.invmodelid, initChild);
         });
     }
     changeInventory(inventoryID:number, initChild:boolean){
+        let useIncoming = initChild && this.invmodeldesc !== "holder";
         let inv = this.inventory.filter(inv => {  return inv.ID == inventoryID   })[0] || {};
-        this.price = initChild ? this.price : inv.Cost;
+        this.price = useIncoming ? this.price : inv.Cost;
         this.invmodeldesc =  initChild ? this.invmodeldesc : inv.Description;
          this.getInventoryItemSizes(inventoryID).subscribe(res=>{
-            this.invitemid = initChild?this.invitemid : (res[0] ? res[0].ID : null);
+            //this.invitemid = initChild?this.invitemid : (res[0] ? res[0].ID : null);
+            this.itemsize = useIncoming ? this.itemsize : (res[0] ? res[0].ItemSize : null);
         });
     }
     changeInventoryItem(){

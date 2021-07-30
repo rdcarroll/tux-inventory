@@ -35,6 +35,8 @@ export class OrderPrintComponent implements OnChanges {
             this.company = res[0];
             this.order = res[1];
             this.total = 0;
+            //dont use the default holders
+            this.order.OrderItems = this.order.OrderItems.filter((el:any) => el.Inventory.Description !== "holder");
             this.order.OrderItems.forEach((item:any)=>{
                 this.total += item.Cost||0;
             });
