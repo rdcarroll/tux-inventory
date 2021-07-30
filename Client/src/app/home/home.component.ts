@@ -26,19 +26,12 @@ export class HomeComponent implements OnInit {
         this.anchor_target = root.anchor_target;
     }
 
-    getLogList(): void {
-        //this.ApiClient.pGet("AMSLogs", q)
-        //    .pipe( take(1))
-        //    .subscribe(res => {
-        //        this.logs = res.value;
-        //    });
-    }
-
-
-    ngOnInit(): void {
-        this.getLogList();
+    getCompany(): void {
         let company = this.util.getData('company');
         this.title = `Welcome to ${company.Name} Management System`
+    }
+    ngOnInit(): void {
+        this.getCompany();
     }
 
 }
