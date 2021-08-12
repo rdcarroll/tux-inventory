@@ -6,6 +6,8 @@ const db = require("../Models");
 
 const customers = db.customers;
 const customer_sizes = db.customer_sizes;
+const inventory = db.inventory;
+const inventory_items = db.inventory_items;
 
 function isEmpty(o){
   var _isempty = true;
@@ -45,10 +47,10 @@ exports.importcustomers = async (req, res) => {
           //Email:row["Email Address"],
           //Phone:row["Phone Number"],
           Address:row["Street Address 1"],
-          City:row["City"],
-          State:row["State"],
+          City:row.City,
+          State:row.State,
           Zipcode:row["Postal Code"],
-          Birthday:row["Birthdate"],
+          Birthday:row.Birthdate,
         }
         _cust = await customers.update(update, {
           where: {
@@ -65,10 +67,10 @@ exports.importcustomers = async (req, res) => {
           Email:row["Email Address"],
           Phone:row["Phone Number"],
           Address:row["Street Address 1"],
-          City:row["City"],
-          State:row["State"],
+          City:row.City,
+          State:row.State,
           Zipcode:row["Postal Code"],
-          Birthday:row["Birthdate"],
+          Birthday:row.Birthdate,
         });
       }
 
@@ -93,8 +95,8 @@ exports.importcustomers = async (req, res) => {
           Neck:"",
           Sleeve:""
         }
-      if(row["Memo"]){
-        let ms = row["Memo"];
+      if(row.Memo){
+        let ms = row.Memo;
         let coatstyle = /Coat Style:(.*)\n/.test(ms) ? /Coat Style:(.*)\n/.exec(ms)[1] : "";
         let color = /Color:(.*)\n/.test(ms) ? /Color:(.*)\n/.exec (ms)[1] : "";
         let pants = /Pants:(.*)\n/.test(ms) ? /Pants:(.*)\n/.exec (ms)[1] : "";
@@ -131,12 +133,12 @@ exports.importcustomers = async (req, res) => {
         sizes.Coat = row["Coat Color/Size"].trim();
         sizes.Shirt = row["Shirt Color/Size"].trim();
         sizes.Pants = row["Pants Color"].trim();
-        sizes.Waist = row["Waist/Outseam"].trim();
+        sizes.Waist = row.Waist/Outseam.trim();
         sizes.Vest = row["Vest Color/Size"].trim();
         sizes.Tie = row["Tie Style/Color "].trim();
         sizes.Shoe = row["Shoe color/Size"].trim();
-        sizes.Height = row["Height"].trim();
-        sizes.Chest = row["Chest"].trim();
+        sizes.Height = row.Height.trim();
+        sizes.Chest = row.Chest.trim();
         sizes.Neck = row["Neck Size"].trim();
         sizes.Sleeve = row["Sleeve Size"].trim();
       }
@@ -157,10 +159,116 @@ exports.importcustomers = async (req, res) => {
         }
         else{
           //create
-          sizes["CustomerID"]=nu[0].ID;
+          sizes.CustomerID=nu[0].ID;
           _custsize = await customer_sizes.create(sizes);
         }
       }
+    })
+    .on('end', rowCount => {
+      //console.log(`Parsed ${rowCount} rows`)
+      //res.json(sizedata);
+      res.json(jsondata);
+    } );
+  } catch (err) {
+    res.status(500).send({
+      message: `Error importing`
+    });
+  }
+};
+
+
+exports.importinventory = async (req, res) => {
+  try {
+    let jsondata = [];
+    let sizedata = [];
+    fs.createReadStream(path.resolve(__dirname, '\..\\assets', 'inventory.csv'))
+    .pipe(fastcsv.parse({ headers: true }))
+    .on('error', error => console.error(error))
+    .on('data', async _row => {
+      let row = _row;
+      if(!row.ColorStyle && !row.Type) return;
+      //row["Phone Number"] = row["Phone Number"].replace('\'','');
+
+      jsondata.push(row);
+      //console.log(row);
+
+      let _type = db.inventory_types.findAll({where:{Name:row.Type}});
+
+      let _inventory = await inventory.findAll({where: {
+        InventoryTypeID: _type.ID, 
+        ModelName:row.ColorStyle
+      }});
+      let _inv = null;
+      if(_inventory.length>0){
+        //update
+        let inv = _inventory[0];
+        let update = {
+          InventoryTypeID:_type.ID,
+          Description:row.ColorStyle,
+          ModelName:row.Colr/Style,
+          Cost:row.Cost
+        }
+        _inv = await inventory.update(update, {
+          where: {
+            ID: inv.ID
+          }
+        });
+
+      }
+      else{
+        //create
+        _inv = await inventory.create({
+          InventoryTypeID:_type.ID,
+          Description:row.ColorStyle,
+          ModelName:row.Colr/Style,
+          Cost:row.Cost
+        });
+      }
+
+      
+      let nu = await inventory.findAll({where: {
+        InventoryTypeID:_type.ID,
+        ModelName:row.Colr/Style
+      }});
+      
+      let _inventory_items = await inventory_items.findAll({where: {
+        InventoryID: nu[0].ID, 
+        Size:row.Size, 
+        Barcode:row.Barcode
+      }});
+      let _inv_item = null;
+      if(_inventory_items.length>0){
+        //update
+        let inv_item = _inventory_items[0];
+        let update = {
+          InventoryID: nu[0].ID,
+          Size:row.Size, 
+          StatusID:2,
+          Barcode:row.Barcode
+        }
+        _inv_item = await inventory_items.update(update, {
+          where: {
+            ID: inv_item.ID
+          }
+        });
+      }
+      else{
+        //create
+        _inv = await inventory_items.create({
+          InventoryID: nu[0].ID,
+          Size:row.Size, 
+          StatusID:2,
+          Barcode:row.Barcode
+        });
+      }
+
+
+      let nu2 = await inventory_items.findAll({where: {
+        InventoryID: nu[0].ID,
+        Size:row.Size, 
+        StatusID:2,
+        Barcode:row.Barcode
+      }});
     })
     .on('end', rowCount => {
       //console.log(`Parsed ${rowCount} rows`)

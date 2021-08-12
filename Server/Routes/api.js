@@ -116,6 +116,7 @@ module.exports = (router, app) => {
   
   const maintenance = require("../Controllers/maintenance.controller.js");
   router.get("/importcustomers",  maintenance.importcustomers);
+  router.get("/importinventory",  maintenance.importinventory);
 
   return router;
 };
