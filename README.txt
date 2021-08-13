@@ -10,3 +10,4 @@ select * from inventory_items
 where inventoryid 
 in (select id from inventory.inventory where inventorytypeid = 7);
 
+
