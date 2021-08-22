@@ -2,7 +2,9 @@
 const express = require('express');
 const cron = require('node-cron');
 const path = require('path');
-const http = require('http');
+//const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 
 // Database imports
@@ -71,7 +73,10 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-const server = http.createServer(app);
+const server = https.createServer({
+  key: fs.readFileSync('certs/server.key'),
+  cert: fs.readFileSync('certs/server.cert')
+},app);
 
 /**
  * Listen on provided port, on all network interfaces.

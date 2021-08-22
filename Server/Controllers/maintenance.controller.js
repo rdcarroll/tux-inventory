@@ -182,33 +182,69 @@ exports.importinventory = async (req, res) => {
     let jsondata = [];
     let sizedata = [];
     fs.createReadStream(path.resolve(__dirname, '\..\\assets', 'inventory.csv'))
-    .pipe(fastcsv.parse({ headers: true }))
+    .pipe(fastcsv.parse({ headers: false }))
     .on('error', error => console.error(error))
     .on('data', async _row => {
+      // let srow = JSON.stringify(_row);
+      // let row = JSON.parse(srow);
       let row = _row;
-      if(!row.ColorStyle && !row.Type) return;
-      //row["Phone Number"] = row["Phone Number"].replace('\'','');
+      if(row[3]==="Barcode" || row[0]==null || row[1]==null || row[2]==null || row[3]==null || row[0]=="" || row[1]==""  || row[2]==""  || row[3]=="" ) return;
 
       jsondata.push(row);
       //console.log(row);
+    })
+    .on('end', async rowCount => {
+      for(var i=0; i<jsondata.length; i++){ 
+        let row = jsondata[i];
+        let types = await db.inventory_types.findAll({where:{Name:row[1].trim()}});
+      if(types.length==0)continue;
 
-      let _type = db.inventory_types.findAll({where:{Name:row.Type}});
+      let _type = types[0];
 
-      let _inventory = await inventory.findAll({where: {
+      let _inventory = await db.inventory.findAll({where: {
         InventoryTypeID: _type.ID, 
-        ModelName:row.ColorStyle
+        ModelName:row[0].trim()
       }});
+
+      let cost = 0;
+
+      switch(row[1].trim()){
+        case "Vest":
+          cost=29;
+          break;
+          case "Pants":
+            cost=39;
+            break;
+            case "Coat":
+              cost=79.95;
+              break;
+              case "Shoes":
+                cost=26;
+                break;
+                case "Shirt":
+                  cost=12.95;
+                  break;
+                  case "Windsor Tie":
+                    cost=10;
+                    break;
+                    case "Bow Tie":
+                      cost=10;
+                      break;
+                      default:
+                        cost=0;
+      }
+
       let _inv = null;
       if(_inventory.length>0){
         //update
         let inv = _inventory[0];
         let update = {
           InventoryTypeID:_type.ID,
-          Description:row.ColorStyle,
-          ModelName:row.Colr/Style,
-          Cost:row.Cost
+          Description:row[0].trim(),
+          ModelName:row[0].trim(),
+          Cost:cost
         }
-        _inv = await inventory.update(update, {
+        _inv = await db.inventory.update(update, {
           where: {
             ID: inv.ID
           }
@@ -217,62 +253,54 @@ exports.importinventory = async (req, res) => {
       }
       else{
         //create
-        _inv = await inventory.create({
+        _inv = await db.inventory.create({
           InventoryTypeID:_type.ID,
-          Description:row.ColorStyle,
-          ModelName:row.Colr/Style,
-          Cost:row.Cost
+          Description:row[0].trim(),
+          ModelName:row[0].trim(),
+          Cost:cost
         });
+      
+        _inventory= await db.inventory.findAll({where: {
+          InventoryTypeID:_type.ID,
+          ModelName:row[0].trim()
+        }});
       }
 
-      
-      let nu = await inventory.findAll({where: {
-        InventoryTypeID:_type.ID,
-        ModelName:row.Colr/Style
-      }});
-      
-      let _inventory_items = await inventory_items.findAll({where: {
-        InventoryID: nu[0].ID, 
-        Size:row.Size, 
-        Barcode:row.Barcode
-      }});
-      let _inv_item = null;
-      if(_inventory_items.length>0){
-        //update
-        let inv_item = _inventory_items[0];
-        let update = {
-          InventoryID: nu[0].ID,
-          Size:row.Size, 
-          StatusID:2,
-          Barcode:row.Barcode
+      if(_inventory.length>0){
+        let nu = _inventory[0];
+        let _inventory_items = await inventory_items.findAll({where: {
+          InventoryID: nu.ID, 
+          Size:row[2].trim(), 
+          Barcode:row[3].trim()
+        }});
+        let _inv_item = null;
+        if(_inventory_items.length>0){
+          // //update
+          // let inv_item = _inventory_items[0];
+          // let update = {
+          //   InventoryID: nu.ID,
+          //   Size:row[2].trim(), 
+          //   StatusID:2,
+          //   Barcode:row[3].trim()
+          // }
+          // _inv_item = await inventory_items.update(update, {
+          //   where: {
+          //     ID: inv_item.ID
+          //   }
+          // });
         }
-        _inv_item = await inventory_items.update(update, {
-          where: {
-            ID: inv_item.ID
-          }
-        });
+        else{
+          //create
+          inv_item = await inventory_items.create({
+            InventoryID: nu.ID,
+            Size:row[2].trim(), 
+            StatusID:2,
+            Barcode:row[3].trim()
+          });
+        }
       }
-      else{
-        //create
-        _inv = await inventory_items.create({
-          InventoryID: nu[0].ID,
-          Size:row.Size, 
-          StatusID:2,
-          Barcode:row.Barcode
-        });
       }
-
-
-      let nu2 = await inventory_items.findAll({where: {
-        InventoryID: nu[0].ID,
-        Size:row.Size, 
-        StatusID:2,
-        Barcode:row.Barcode
-      }});
-    })
-    .on('end', rowCount => {
-      //console.log(`Parsed ${rowCount} rows`)
-      //res.json(sizedata);
+     
       res.json(jsondata);
     } );
   } catch (err) {

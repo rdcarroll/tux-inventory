@@ -19,7 +19,7 @@
         <div class="form-group row">
             <label class="col-md-2 col-form-label">Model</label>
             <div class="col-md-10">
-                <my-typeahead [(myModel)]="invmodelid" [searchField]="'ModelWDesc'" [options]="inventory" [valueField]="'ID'" [displayField]="'ModelWDesc'"></my-typeahead>
+                <my-typeahead [(myModel)]="invmodelid"  (myModelChange)="changeInventory($event,false)" [searchField]="'ModelWDesc'" [options]="inventory" [valueField]="'ID'" [displayField]="'ModelWDesc'"></my-typeahead>
             </div>
         </div>
     </div>

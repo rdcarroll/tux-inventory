@@ -32,8 +32,8 @@
                   <td>{{item.Inventory.Description}}</td>
                   <td>{{item.ItemSize}}</td>
                   <td>{{item.pulledDate | date}}</td>
-                  <td style="max-width: 100px;" *ngIf="!item.pulledDate">
-                      <input class="form-control" name="first" placeholder="" [(ngModel)]="item.InventoryItem.Barcode" (blur)="pullBlur(item,$event)">
+                  <td style="max-width: 100px;" *ngIf="!item.pulledDate"> <!-- (blur)="pullBlur(item,$event)" -->
+                      <input class="form-control" name="first" placeholder="" [(ngModel)]="item.InventoryItem.Barcode" (ngModelChange)="pullChange(item,$event)" autocomplete="off">
                       <div *ngIf="item.notfound" class="text-alert">The barcode does not match an Inventory Item for the model and size selected, and has not been saved.</div>
                   </td>
                   <td *ngIf="item.pulledDate">

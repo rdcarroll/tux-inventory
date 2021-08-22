@@ -22,14 +22,14 @@ export class LoginComponent implements OnInit {
         //where do i need to return to after authenticating? it should be returnUrl parameter, if it is passed in.
         this.security.authN(this.credentials, this.returnUrl);
     }
-    forgotClicked() {
-        this.security.requestPasswordReset(this.credentials.uid)
-        .subscribe(res => {
-            this.util.alert("success", "Thank You. A reset link has been emailed to the address on file for your User ID (UID).", true, { icon: 'check' }, true);
-        }, (err) => {
-            this.util.handleError(err, "Error Reseting");
-        });
-    }
+    // forgotClicked() {
+    //     this.security.requestPasswordReset(this.credentials.uid)
+    //     .subscribe(res => {
+    //         this.util.alert("success", "Thank You. A reset link has been emailed to the address on file for your User ID (UID).", true, { icon: 'check' }, true);
+    //     }, (err) => {
+    //         this.util.handleError(err, "Error Reseting");
+    //     });
+    // }
 
     ngOnInit() {
         this.returnUrl = decodeURI(this.route.snapshot.queryParamMap.get('returnUrl') || "");

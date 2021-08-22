@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
                     { link: "/admin/inventorytypes", display: "InventoryTypes", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/inventory", display: "InventoryModels", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/inventoryitems", display: "InventoryItems", condition: this.canUse.toString(), icon: null, childnavs: [] },
-                    { link: "/admin/packages", display: "Packages", condition: this.canUse.toString(), icon: null, childnavs: [] },
+                    //{ link: "/admin/packages", display: "Packages", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/companies/"+company_id, display: "Company", condition: this.canUse.toString(), icon: null, childnavs: [] },
           ]
             }

@@ -54,7 +54,7 @@
                         <fa-icon *ngIf="row[col.variable]==22" [icon]="['fas', 'check-circle']" class="text-warning" size="xs" title="DISABLED"></fa-icon><!--DISABLED-->
                     </span>
 
-                    <span *ngSwitchCase="'button'" (click)="btnClick(row,col.type);$event.stopPropagation();" style="cursor:pointer;">
+                    <div *ngSwitchCase="'button'" (click)="btnClick(row,col.type);$event.stopPropagation();" style="cursor:pointer;" class="btn btn-sm btn-outline-secondary">
                         <span [ngSwitch]="col.type">
                             <fa-icon *ngSwitchCase="'edit'" [icon]="['fas', 'edit']" class="text-info" size="xs" title="Edit"></fa-icon>
                             <fa-icon *ngSwitchCase="'delete'" [icon]="['fas', 'trash-alt']" class="text-danger" size="xs" title="Delete"></fa-icon>
@@ -62,7 +62,7 @@
                             <fa-icon *ngSwitchCase="'deny'" [icon]="['fas', 'thumbs-down']" class="text-danger" size="xs" title="Deny"></fa-icon>
                             <fa-icon *ngSwitchCase="'view'" [icon]="['fas', 'eye']" class="text-primary" size="xs" title="View"></fa-icon>
                         </span>
-                    </span>
+                    </div>
 
                     <span *ngSwitchCase="'link'">
                         <button type="button" class="btn btn-link" (click)="btnClick(row,col.type);$event.stopPropagation();">{{getCell(row,col)}}</button>

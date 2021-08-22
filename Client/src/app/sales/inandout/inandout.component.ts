@@ -33,6 +33,12 @@ export class inandoutComponent implements OnInit {
     ) {
     }
 
+    getInventoryItems(orderid:number): Observable<any> {
+        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
+        return this.ApiClient.pGet(`orders/${orderid}/order_items`, q).pipe(take(1),map((res: any) => {
+            this.order_items = res;
+        }));
+    }
     getOrderItems(orderid:number): Observable<any> {
         let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
         return this.ApiClient.pGet(`orders/${orderid}/order_items`, q).pipe(take(1),map((res: any) => {
@@ -71,7 +77,7 @@ export class inandoutComponent implements OnInit {
         });
       }
       pullBlur(item:any,evt:any) {
-          let newbarcode = evt.target.value;
+          let newbarcode = evt;
           item.notfound = false;
           if(newbarcode && item.InventoryItemID==null){
             let q = {filter:`Barcode|'${newbarcode}',Size|'${item.ItemSize}',InventoryID|${item.InventoryID}`}
@@ -95,6 +101,11 @@ export class inandoutComponent implements OnInit {
           }
           
         }
+        pullChange(item:any,evt:any) {
+            setTimeout(() => {
+                this.pullBlur(item,evt);
+            }, 2000);
+          }
 
         
     pickup(template: TemplateRef<any>) {
