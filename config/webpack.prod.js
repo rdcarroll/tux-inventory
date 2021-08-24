@@ -73,8 +73,6 @@ module.exports = webpackMerge(commonConfig, {
         new webpack.DefinePlugin({
             __ANCHOR_TARGET__: JSON.stringify("_blank"),
             __DEBUG_MODE__: JSON.stringify("prod"),
-            __PDF_ROOT__: JSON.stringify("https://ws.ettp.gov/pdf/o"),
-            __SITE_URL__: JSON.stringify("http://pcs.ettp.gov"),
             __UID__: JSON.stringify(""),
             __PWD__: JSON.stringify("")
         })

@@ -132,48 +132,6 @@ export class DownloadService {
             //util.alerts.warning("Your browser does not currently support client-side excel downloads.");
         }
     }
-    pdf(title: string, obj: any, header?: any, footer?:any, margins?:any) {
-        title = title || "PCSFile"
-        let fileName = title.replace(/ /g, '_') + '.pdf';
-        try {
-            this.http.get('dist/ngApp.css', { responseType: 'text' }).subscribe(data => { 
-                var postObject = {
-                    Pages: [this.getHtmlBody(data as 'string', obj, true)],
-                    Header: header || "",
-                    Footer: footer || "",
-                    Margins: margins || {},
-                    Orientation: 2,
-                    FileName: fileName
-                };
-                var reqUrl = root.pdfroot;
-                let headers = new HttpHeaders({ 'Accept': '*/*', 'Content-Type':'application/json' });
-                var opts = {
-                    method: 'POST',
-                    body: JSON.stringify(postObject) || "{}",
-                    headers: headers,
-                    responseType: "arraybuffer" as 'arraybuffer',
-                    withCredentials: true
-                };
-
-                this.http.request(opts.method, reqUrl, opts)
-                    .pipe(take(1))
-                    .subscribe((data: ArrayBuffer) => {
-                        this.files.fileDownload(data, fileName);
-                        //var blob = new Blob([data], { type: "application/pdf" });
-
-                        //if (navigator.appVersion.toString().indexOf('.NET') > 0)
-                        //    window.navigator.msSaveBlob(blob, title + ".pdf");
-                        //else {
-                        //    var objectUrl = window.URL.createObjectURL(blob);
-                        //    window.open(objectUrl);
-                        //}
-                    });
-            });
-        }
-        catch (e) {
-            //util.alerts.warning("Your browser does not currently support client-side pdf downloads.");
-        }
-    }
     printToBrowser(title: string, obj: any) {
         title = title || "AppFile"
         let fileName = title.replace(/ /g, '_') + '.html';
