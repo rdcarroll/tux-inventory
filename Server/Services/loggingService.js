@@ -23,6 +23,6 @@ exports.logQuery = (req, res, next) => {
   exports.prune = () => {
     console.log('prunning logs');
     db.sequelize
-    .query('CALL prune_logs ()')
+    .query('DELETE FROM logs WHERE createdAt < NOW() - interval 1 month')
     .then(v=>console.log("done"));
     };
