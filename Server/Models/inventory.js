@@ -52,8 +52,8 @@ module.exports = sequelize => {
     },
     Cost: {
       type: DataTypes.DOUBLE,
-      allowNull: true,
-      defaultValue: null,
+      allowNull: false,
+      defaultValue: 0,
       primaryKey: false,
       autoIncrement: false,
       comment: null,

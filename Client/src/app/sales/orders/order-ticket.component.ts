@@ -98,7 +98,7 @@ export class OrderTicketComponent implements OnInit, OnChanges  {
     adjustmentChanged(adjustment:number): void {
         this.ApiClient.pPut("order_tickets/" + this.ticketnumber, {}, {Adjustment:adjustment}).pipe(take(1))
             .subscribe(res => {
-                this.util.alert("success", "Success Saving Adjustment", false, { icon: 'check' }, true);
+                //this.util.alert("success", "Success Saving Adjustment", false, { icon: 'check' }, true);
                 this.ticketChange.emit(res);
             }, (err) => {
                 this.util.handleError(err, "Error Saving");

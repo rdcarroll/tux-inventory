@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit {
 
     getCompany(): void {
         let company = this.util.getData('company');
-        this.title = `Welcome to ${company.Name} Management System`
+        let scompany = company?.Name || "our";
+        this.title = `Welcome to ${scompany} Management System`
     }
     ngOnInit(): void {
         this.getCompany();

@@ -42,10 +42,11 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Amount</label>
             <div class="col-md-8">
-                                <input matInput class="form-control" name="Amount" type="text" placeholder="Payment Amount"
+                                <!-- <input matInput class="form-control" name="Amount" type="text" placeholder="Payment Amount"
                                 [ngModel]="amount | currency:'USD':'symbol':'2.2'"
-                                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="amount=$event" />
+                                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="amount=$event" /> -->
                 <!-- <input class="form-control" name="price" placeholder="" [(ngModel)]="price" required> -->
+                <my-money [money]="amount" (moneyChange)="amount=$event"></my-money>
             </div>
         </div>
         <div class="btn-group float-right" role="group">

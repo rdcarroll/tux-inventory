@@ -41,7 +41,7 @@ import { AcknowledgeDialog } from './components/acknowledge.component';
 import { sanitizeHtmlPipe } from './directives/sanitize-html.pipe';
 import { MyFilterPipe } from './directives/my-filter.pipe';
 import { HighlightSearch } from './directives/my-highlight.pipe';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NotDoneComponent } from './components/login/notdone.component';
 import { RichTextEditorComponent } from './components/richtexteditor/richtexteditor.component';
@@ -53,6 +53,7 @@ import { SaveQueryDirective } from './directives/save-query.directive';
 import { AlertFixedComponent } from './components/alert-fixed.component';
 import { PopstateComponent } from './components/popstate.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { MoneyComponent } from './components/money/money.component';
 
 
 
@@ -103,9 +104,11 @@ import { NgxBarcodeModule } from 'ngx-barcode';
         sanitizeHtmlPipe,
         PendingApproveDialog,
         AcknowledgeDialog,
-        BackButtonComponent
+        BackButtonComponent,
+        MoneyComponent
     ],
     providers: [
+        CurrencyPipe,
         { provide: TINYMCE_SCRIPT_SRC, useValue: 'dist/tinymce/tinymce.min.js' }
     ],
     exports: [
@@ -145,7 +148,8 @@ import { NgxBarcodeModule } from 'ngx-barcode';
         FontAwesomeModule,
         ScrollingModule,
         BackButtonComponent,
-        NgxBarcodeModule
+        NgxBarcodeModule,
+        MoneyComponent
     ],
     entryComponents: [PendingApproveDialog, AcknowledgeDialog]
 })

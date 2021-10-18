@@ -1,6 +1,6 @@
 const db = require("../Models");
 const Model = db.inventory_items;
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 module.exports = {
     getAll: getAll,
@@ -53,7 +53,9 @@ async function update(id,record) {
 
 async function getAllSizes(query) {
   try {
-    return await Model.findAll({Attributes: ['InventoryID', 'Size'], group: ['InventoryID', 'Size'], where:query.where});
+    return await Model.findAll({attributes: ['InventoryID', 'Size'], group: ['InventoryID', 'Size'], where:query.where});
+    //return await Model.findAll({Attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('Size')), 'Size'], 'InventoryID'], where:query.where});
+    //return await Model.findAll({attributes: ['InventoryID', 'Size'], where:query.where});
   } catch (err) {
     throw err;
   }

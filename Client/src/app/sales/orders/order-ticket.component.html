@@ -49,9 +49,7 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Adjustment</label>
             <div class="col-md-8">
-                <input matInput class="form-control" name="Adjustment" type="text" placeholder="discounts, etc."
-                [ngModel]="adjustment | currency:'USD':'symbol':'2.2'"
-                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="adjustmentChanged($event)" />
+                <my-money [money]="adjustment" (moneyChange)="adjustmentChanged($event)"></my-money>
             </div>
         </div>
         <div class="form-group row">

@@ -41,9 +41,10 @@
         <div class="form-group row">
             <label class="col-md-2 col-form-label">Price</label>
             <div class="col-md-4">
-                                <input matInput class="form-control" name="Cost" type="text" placeholder="Item Cost"
+                                <!-- <input matInput class="form-control" name="Cost" type="text" placeholder="Item Cost"
                                 [ngModel]="price | currency:'USD':'symbol':'2.2'"
-                                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="price=$event" />
+                                [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="price=$event" /> -->
+                                <my-money [money]="price" (moneyChange)="price=$event"></my-money>
             </div>
         </div>
     </div>

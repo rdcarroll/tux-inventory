@@ -65,7 +65,7 @@ exports.update = async (req, res) => {
   }
 };
 
-// Delete a Customer with the specified id in the request
+// Delete an order item with the specified id in the request
 exports.delete = async (req, res) => {
   let response;
   const id = req.params.id;

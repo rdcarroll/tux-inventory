@@ -50,7 +50,8 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     changeInventory(inventoryID:number, initChild:boolean){
         let useIncoming = initChild && this.invmodeldesc !== "holder";
         let inv = this.inventory.filter(inv => {  return inv.ID == inventoryID   })[0] || {};
-        this.price = useIncoming ? this.price : inv.Cost;
+        let nCost = inv.Cost==null || inv.Cost==0 ? inv.InventoryType.Cost : inv.Cost;
+        this.price = useIncoming ? this.price : nCost;
         this.invmodeldesc =  initChild ? this.invmodeldesc : inv.Description;
          this.getInventoryItemSizes(inventoryID).subscribe(res=>{
             //this.invitemid = initChild?this.invitemid : (res[0] ? res[0].ID : null);
@@ -69,7 +70,7 @@ export class OrderItemEditComponent implements OnInit,OnChanges {
     }
     //models/styles
     getInventory(inventoryTypeID:number): Observable<any> {
-        let q = {filter:`InventoryTypeID|${inventoryTypeID},ModelName|!"default"`,pageSize:this.util.MaxPageSize()}
+        let q = {include:['InventoryType'],filter:`InventoryTypeID|${inventoryTypeID},ModelName|!"default"`,pageSize:this.util.MaxPageSize()}
         return this.ApiClient.pGet(`inventory`, q).pipe(take(1))
         .pipe(map((res: any) => {
             return this.inventory = res.rows;

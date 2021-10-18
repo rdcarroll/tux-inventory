@@ -76,6 +76,15 @@ module.exports = sequelize => {
       comment: null,
       field: "TaxRate"
     },
+    Message: {
+      type: DataTypes.TEXT(5000),
+      allowNull: true,
+      defaultValue: null,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Message"
+    },
   };
   const options = {
     tableName: "company",

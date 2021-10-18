@@ -40,6 +40,7 @@ module.exports = (router, app) => {
 
   const inventory_items = require("../Controllers/inventory_items.controller.js");
   router.get("/inventory_items", app.oauth.authorise(), inventory_items.findAll);
+  router.get("/inventory_items/export", inventory_items.export);
   router.get("/inventory_items/:id", app.oauth.authorise(), inventory_items.findOne);
   router.put("/inventory_items/:id", app.oauth.authorise(), inventory_items.update);
   router.post("/inventory_items", app.oauth.authorise(), inventory_items.create);

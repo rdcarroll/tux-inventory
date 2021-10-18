@@ -2,6 +2,11 @@ const model_service = require(`../Services/InventoryItemService`);
 const orderitem_service = require(`../Services/OrderItemService`);
 const model_name = `InventoryItem`;
 
+const json2csv = require('json2csv').parse;
+const { Op, Sequelize } = require("sequelize");
+const fields = ['Type', 'Model', 'Description','Size','Barcode','Cost'];
+const opts = { fields };
+
 // Create and Save a new Record
 exports.create = async (req, res) => {
   let response;
@@ -98,6 +103,42 @@ exports.addAction = async (req, res) => {
   } catch (err) {
     res.status(500).send({
       message: `Error updating ${model_name} : ${err.message}.`
+    });
+  }
+};
+
+// Retrieve all Records from the database
+exports.export = async (req, res) => {
+  let response;
+  try {
+    req.query['raw']=true;
+    req.query['nest']=true;
+    req.query['include']=[{association:'Inventory', include:['InventoryType']}];
+    req.query['order']=[[Sequelize.literal("Inventory.InventoryTypeID"),'asc'],[Sequelize.literal("Inventory.ModelName"),'asc']];
+    req.query['where']={Barcode:{ [Op.ne]: 0 }};
+    response = await model_service.getAll(req.query);
+    
+    let flat = [];
+    for (const item of response.rows) {
+      var x = {
+        Type : item.Inventory.InventoryType['Name'],
+        Model : item.Inventory['ModelName'],
+        Description : item.Inventory['Description'],
+        Size : item['Size'],
+        Barcode : item['Barcode'],
+        Cost : item.Inventory['Cost']
+      }
+      flat.push(x);
+    }
+
+    const csv = json2csv(flat, opts);
+    res.header('Content-Type', 'text/csv');
+    res.attachment("Inventory.csv");
+    return res.send(csv);
+    res.json(flat);
+  } catch (err) {
+    res.status(500).send({
+      message: `Error retrieving ${model_name}s : ${err.message}`
     });
   }
 };

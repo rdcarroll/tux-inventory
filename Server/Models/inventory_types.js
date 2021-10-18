@@ -21,6 +21,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "Name"
+    },
+    Cost: {
+      type: DataTypes.DOUBLE,
+      allowNull: false,
+      defaultValue: 0,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Cost"
     }
   };
   const options = {
