@@ -40,6 +40,12 @@ export class inandoutComponent implements OnInit {
             this.order_items = res;
         }));
     }
+    // getBarcodes(inventoryItemID:number): Observable<any> {
+    //     // let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
+    //     // return this.ApiClient.pGet(`orders/${orderid}/order_items`, q).pipe(take(1),map((res: any) => {
+    //     //     this.barcodes = res;
+    //     // }));
+    // }
     getOrderItems(orderid:number): Observable<any> {
         let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
         return this.ApiClient.pGet(`orders/${orderid}/order_items`, q).pipe(take(1),map((res: any) => {
