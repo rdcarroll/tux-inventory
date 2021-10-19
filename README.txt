@@ -11,3 +11,4 @@ Self Signed Certificates
 
 
 
+rick@ubuntu-node-mysql-angular:~/code/inventory$ git pull origin main

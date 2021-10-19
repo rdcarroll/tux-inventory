@@ -1,6 +1,6 @@
 ﻿
 import { CurrencyPipe } from '@angular/common';
-import { Component, Output, EventEmitter, Input, } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit, OnChanges, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
     selector: 'my-money',
     templateUrl: './money.component.html'
 })
-export class MoneyComponent {
+export class MoneyComponent implements OnInit, OnChanges {
     @Input() money: number;
     @Input() placeholder: string;
     @Output() moneyChange = new EventEmitter<number>();
@@ -48,6 +48,9 @@ export class MoneyComponent {
                 this.emitter(response);
                 this.moneyText = this.formatMoney(response) || "0.00";
             });
+    }
+    ngOnChanges() {
+        this.moneyText = this.formatMoney(this.money) || "0.00";
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();
