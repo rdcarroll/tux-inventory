@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { OrderItem } from '../sales';
 import { identifierModuleUrl } from '@angular/compiler';
+import { ShowEventDialog } from './reports/show-event.modal';
 
 @Component({
     selector: 'my-inandout',
@@ -119,7 +120,7 @@ export class inandoutComponent implements OnInit {
                     this.closeEdit.emit(true);
                   });
             });
-        });``
+        });
       }
       pickupSave() {
         this.ApiClient.pPut(`orders/${this.orderid}/pickup`, {}, {}).pipe(take(1))
@@ -173,6 +174,13 @@ export class inandoutComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+    }
+    print(id:number): void {
+        const dialogRef = this.dialog.open(ShowEventDialog, {
+                width:'250px',data:{id:id,mode:this.mode},disableClose:true
+        });
+        dialogRef.afterClosed().subscribe(res=>{});
 
     }
 }

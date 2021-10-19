@@ -86,9 +86,12 @@ async function syncOrder(id) {
       update.SubTotal += (item.Cost||0);
     }
     update.Adjustment = parseFloat(ot.Adjustment)||0;
-    if(company.length>0) update.Tax = update.SubTotal * (company[0].TaxRate||.10);
 
-    update.Total = update.SubTotal + update.Tax + update.Adjustment;
+    let sa_total =  update.Adjustment + update.SubTotal;
+
+    if(company.length>0) update.Tax = sa_total * (company[0].TaxRate||.10);
+
+    update.Total = sa_total + update.Tax;
 
     let ticketPayments = await db.ticket_payments.findAll({where: {TicketID: ot.ID }});
     for (const item of ticketPayments) {
