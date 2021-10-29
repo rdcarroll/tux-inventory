@@ -35,7 +35,9 @@
                       <div *ngIf="item.notfound" class="text-alert">The barcode does not match an Inventory Item for the model and size selected, and has not been saved.</div>
                   </td>
                   <td *ngIf="item.pulledDate">
-                    <span>{{item.InventoryItem.Barcode}}</span>
+                    <div *ngIf="item.InventoryItem?.Barcode" >
+                        <ngx-barcode [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem.Barcode" [bc-height]="30"></ngx-barcode>
+                      </div>
                   </td>
                 </ng-container>
                 <ng-template #is_default>

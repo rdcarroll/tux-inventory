@@ -1,6 +1,7 @@
 const model_service = require(`../Services/OrderService`);
 const orderitem_service = require(`../Services/OrderItemService`);
 const orderticket_service = require(`../Services/OrderTicketService`);
+const invitem_service = require(`../Services/InventoryItemService`);
 
 const model_name = `Order`;
 
@@ -114,11 +115,16 @@ exports.replaceItems = async (req, res) => {
 };
 
 exports.pickup = async (req, res) => {
-  let response;
+  const now = new Date();
   const id = req.params.id;
   if(req.query.where)req.query.where['OrderID']=id;
   try {
     orderItems = await orderitem_service.getAll(req.query);
+    for (const orderItem of orderItems) {
+      let a = await orderitem_service.update(orderItem.ID, {pickedupDate:now});
+      //get InventoryItemID or InventoryItem, and add the action
+      let dpull = await invitem_service.actionitem(orderItem.InventoryItemID,3);
+    }
     
     res.json(orderItems);
   } catch (err) {

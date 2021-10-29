@@ -111,8 +111,10 @@ async function returnitem(id) {
     throw err;
   }
 }
+//TODO: something more generic than hardcoded status ids
 async function actionitem(id, status) {
   try {
+    //TODO: Add orderid to table so we can track it back to a customer if it is an order action
     await db.inventory_item_actions.create({InventoryItemID:id,ActionID:status});
     let record = {StatusID:status}
     return await Model.update(record, {

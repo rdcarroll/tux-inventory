@@ -1,5 +1,5 @@
 ﻿
-import { Component, Input, Output, EventEmitter, OnInit, OnChanges, ViewChild, ElementRef, AfterViewInit, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges, ViewChild, ElementRef, AfterViewInit, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -29,6 +29,7 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() iskeyword: boolean = false;
     @Input() keyparm: string = "keyword";
     @Output() myModelChange: EventEmitter<any> = new EventEmitter<any>();
+    @Output() myFocus: EventEmitter<any> = new EventEmitter<any>();
     @ViewChild('inputbox') inputbox: ElementRef;
     @ViewChild('auto') auto: ElementRef;
 
@@ -51,9 +52,9 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
                 })
             );
     }
-    ngOnChanges(): void {
+    ngOnChanges(changes: SimpleChanges): void {
         //this.displayFn(this.myModel);
-        if (this.myModel!=null && this.myModel != this.myControl.value) {
+        if (this.myModel!=null && (changes['myModel'] || changes['options'])) {
             //this.myControl.setValue(this.myModel);
             //this.displayFn(this.myModel);
             if (Array.isArray(this.options)) {
@@ -93,6 +94,10 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
         //this.myModelChange.emit(this.myModel);
         if (val.target.value.length == 0 || this.allowCustom) this.emitter(val.target.value);
         //else this.clearFilter();
+    }
+    //on focus
+    onFocus(event: any) {
+        this.myFocus.emit(this.myModel);
     }
     //clear
     clearFilter() {

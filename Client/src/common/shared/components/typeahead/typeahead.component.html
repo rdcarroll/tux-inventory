@@ -12,6 +12,7 @@
            [placeholder]="placeholder"
            [required]="required"
            (change)="getChange($event)"
+           (focus)="onFocus($event)"
            [formControl]="myControl"
            [matAutocomplete]="auto">
     <div class="input-group-append">

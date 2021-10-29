@@ -34,8 +34,9 @@
                   <td>{{item.ItemSize}}</td>
                   <td>{{item.pulledDate | date}}</td>
                   <td style="max-width: 100px;" *ngIf="!item.pulledDate"> <!-- (blur)="pullBlur(item,$event)" -->
-                    <!-- <my-typeahead [(myModel)]="item.InventoryItem.Barcode"  (myModelChange)="changeInventory($event,false)" [searchField]="'Barcode'" [options]="barcodes" [valueField]="'Barcode'" [displayField]="'Barcode'"></my-typeahead> -->
-                      <input class="form-control" name="barcode" placeholder="" [(ngModel)]="item.InventoryItem.Barcode" (ngModelChange)="pullChange(item,$event)" autocomplete="off">
+                    <my-typeahead [myModel]="item"  (myModelChange)="pullChange(item,$event)" (myFocus)="onBarcodeFocus($event)"
+                    [searchField]="'Barcode'" [options]="barcodes" [valueField]="'Barcode'" [displayField]="'Barcode'"></my-typeahead>
+                      <!-- <input class="form-control" name="barcode" placeholder="" [(ngModel)]="item.InventoryItem.Barcode" (ngModelChange)="pullChange(item,$event)" autocomplete="off"> -->
                       <div *ngIf="item.notfound" class="text-alert">The barcode does not match an Inventory Item for the model and size selected, and has not been saved.</div>
                   </td>
                   <td *ngIf="item.pulledDate">

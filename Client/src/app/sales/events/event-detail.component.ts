@@ -16,6 +16,7 @@ export class eventDetailComponent implements OnInit {
     item: Event;
     id: string;
     eventtypes: any;
+    adding: boolean = false;
 
     constructor(
         private ApiClient: ApiClientService,
@@ -35,6 +36,7 @@ export class eventDetailComponent implements OnInit {
         this.id = this.route.snapshot.paramMap.get('id');
         this.getLookups().subscribe(res=>{
             if (this.id === 'add') {
+                this.adding=true;
                 this.item = new Event();
             }
             else {
@@ -47,6 +49,7 @@ export class eventDetailComponent implements OnInit {
     add(): void {
         this.ApiClient.pPost("events", {}, this.item).pipe(take(1))
             .subscribe(res => {
+                this.adding=false;
                 this.item = res;
                 this.id = this.item.ID.toString();
                 this.router.navigate(['/sales', 'events', this.item.ID]);
