@@ -1,6 +1,9 @@
 ﻿
 <div id="ticketorder">
     <div style="width:670px;" id="exportable">
+        <div class="alert alert-info hide-on-print">
+            Use your browser's Print function, or key shortcuts, to Print
+        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div *ngIf="order">
@@ -61,6 +64,8 @@
                                       <th>Style</th>
                                       <th>Description</th>
                                       <th>Size</th>
+                                      <th>Pull Date</th>
+                                      <th>Return Date</th>
                                       <th>Price</th>
                                       <th>SKU</th>
                                   </tr>
@@ -71,6 +76,8 @@
                                       <td>{{item.Inventory.ModelName}}</td>
                                       <td>{{item.Inventory.Description}}</td>
                                       <td>{{item.ItemSize}}</td>
+                                      <td>{{item.pulledDate | date}}</td>
+                                      <td>{{item.returnedDate | date}}</td>
                                       <td>{{item.Cost | currency}}</td>
                                       <td>
                                           <div *ngIf="item.InventoryItem" >
@@ -79,23 +86,23 @@
                                       </td>
                                   </tr>
                                   <tr>
-                                      <td colspan="4" class="text-right">Subtotal</td>
+                                      <td colspan="6" class="text-right">Subtotal</td>
                                       <td>{{total | currency}}</td>
                                       <td></td>
                                   </tr>
                                   <ng-container *ngFor="let ticket of order.OrderTickets">
                                     <tr>
-                                        <td colspan="4" class="text-right">Adjustments</td>
+                                        <td colspan="6" class="text-right">Adjustments</td>
                                         <td>{{ticket.Adjustment | currency}}</td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" class="text-right">Payments</td>
+                                        <td colspan="6" class="text-right">Payments</td>
                                         <td>{{ticket.Paid | currency}}</td>
                                         <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="4" class="text-right">Total</td>
+                                        <td colspan="6" class="text-right">Total</td>
                                         <td>{{ticket.Balance | currency}}</td>
                                         <td></td>
                                     </tr>

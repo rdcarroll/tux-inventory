@@ -1,12 +1,6 @@
-﻿
-                            
-                            <div class="row padded">
-                                <div class="col-md-12">
-                                    <div class="float-left">
-                                        <!-- <my-typeahead [myModel]="package_id" (myModelChange)="packageChanged($event)" 
-                                        [options]="packages" [valueField]="'ID'" [displayField]="'Name'" [placeholder]="'Set Package'"></my-typeahead> -->
-                                    </div>
-                                    <button class="btn btn-primary float-right" (click)="addItemClicked()"><fa-icon [icon]="['fas', 'plus']"></fa-icon> Item</button>
+﻿<div class="row padded">
+                                <div class="col-md-12">                       
+                                    <button class="btn btn-info space-left float-right" (click)="addItemClicked()">Add Item</button>
                                 </div>
                             </div>
                             <div style="min-height: 400px;">
@@ -53,11 +47,11 @@
                                                             <fa-icon *ngIf="item.overbooked" [icon]="['fas', 'check']" class="text-success" size="xs"></fa-icon>
                                                         </td>
                                                     </ng-template>
-                                                    <td>
-                                                        <button class="btn btn-xs" (click)="btnClick(item,'edit');">
+                                                    <td style="width:105px;">
+                                                        <button class="btn btn-sm btn-outline-secondary" (click)="btnClick(item,'edit');">
                                                             <fa-icon [icon]="['fas', 'edit']" class="text-info" size="xs" title="Edit"></fa-icon>
                                                         </button>
-                                                        <button class="btn btn-xs" (click)="btnClick(item,'delete');" >
+                                                        <button class="btn btn-sm btn-outline-secondary space-left" (click)="btnClick(item,'delete');" >
                                                             <fa-icon [icon]="['fas', 'trash-alt']" class="text-danger" size="xs" title="Delete"></fa-icon>
                                                         </button>
                                                     </td>

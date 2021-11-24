@@ -19,6 +19,7 @@ import { packagesComponent } from './packages/packages.component';
 import { PackageDetailComponent } from './packages/package-detail.component';
 import { packageinventoryDetailComponent } from './packages/packageinventory-detail.component';
 import { CompanyDetailComponent } from './company/company-detail.component';
+import { BusinessInandoutComponent } from './businandout/businandout.component';
 
 const routes: Routes = [
     {
@@ -47,6 +48,8 @@ const routes: Routes = [
             { path: 'packageinventory/:id', component: packageinventoryDetailComponent },
 
             { path: 'companies/:id', component: CompanyDetailComponent },
+
+            { path: 'inandout', component: BusinessInandoutComponent },
         ]
     }
 ];

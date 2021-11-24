@@ -20,7 +20,8 @@ import { PackageDetailComponent } from './packages/package-detail.component';
 import { InventoryDetailComponent } from './inventory/inventory-detail.component';
 import { packageinventoryDetailComponent } from './packages/packageinventory-detail.component';
 import { CompanyDetailComponent } from './company/company-detail.component';
-import { BusinessInandoutComponent } from './inventoryitems/inandout/inandout.component';
+import { BusinessInandoutPopupComponent } from './inventoryitems/inandout/inandout.component';
+import { BusinessInandoutComponent } from './businandout/businandout.component';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 

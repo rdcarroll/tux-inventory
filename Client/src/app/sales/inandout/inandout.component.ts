@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { OrderItem } from '../sales';
 import { identifierModuleUrl } from '@angular/compiler';
 import { ShowEventDialog } from './reports/show-event.modal';
+import { ShowOrderDialog } from '../orders/reports/show-order.modal';
 
 @Component({
     selector: 'my-inandout',
@@ -193,10 +194,14 @@ export class inandoutComponent implements OnInit {
 
     }
     print(id:number): void {
-        const dialogRef = this.dialog.open(ShowEventDialog, {
-                width:'250px',data:{id:id,mode:this.mode},disableClose:true
-        });
-        dialogRef.afterClosed().subscribe(res=>{});
+        // const dialogRef = this.dialog.open(ShowEventDialog, {
+        //         width:'250px',data:{id:id,mode:this.mode},disableClose:true
+        // });
+        // dialogRef.afterClosed().subscribe(res=>{});
 
+        const dialogRef = this.dialog.open(ShowOrderDialog, {
+            width:'250px',data:{id:id},disableClose:true
+    });
+    dialogRef.afterClosed().subscribe(res=>{});
     }
 }

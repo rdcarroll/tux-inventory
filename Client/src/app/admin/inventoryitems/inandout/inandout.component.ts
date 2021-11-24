@@ -10,7 +10,7 @@ import { identifierModuleUrl } from '@angular/compiler';
     selector: 'business-inandout',
     templateUrl: './inandout.component.html'
 })
-export class BusinessInandoutComponent {
+export class BusinessInandoutPopupComponent {
     @Output() itemChange = new EventEmitter<object>();
     @Output() closeEdit = new EventEmitter<boolean>();
     dialogRef: any;

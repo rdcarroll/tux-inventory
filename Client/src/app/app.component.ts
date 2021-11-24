@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
             },
             {
                 link: null, display: "Admin", condition: this.canAdmin.toString(), icon: "fas wrench", childnavs: [
+                    { link: "/admin/inandout", display: "In and Out (Laundry)", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/employees", display: "Employees", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     //{ link: "/admin/customers", display: "Customers", condition: this.canUse.toString(), icon: null, childnavs: [] },
                     { link: "/admin/eventtypes", display: "EventTypes", condition: this.canUse.toString(), icon: null, childnavs: [] },

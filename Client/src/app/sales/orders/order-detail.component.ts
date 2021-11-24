@@ -96,8 +96,11 @@ export class OrderDetailComponent implements OnInit {
             .subscribe(res => {
                 this.order = res;
                 this.id = this.order.ID.toString();
-                this.router.navigate(this.backto);
+                //this.router.navigate(this.backto);
                 this.util.alert("success", "Success Adding Order", false, { icon: 'check' }, true);
+                this.router.navigate(['/sales/orders', this.id ]);
+                this.getOrder(this.id)
+                    .subscribe(res => { });
             }, (err) => {
                 this.util.handleError(err, "Error Adding");
             });

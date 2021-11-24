@@ -6,21 +6,33 @@
         <div class="col-md-12">
             <div class="card" *ngIf="order">
                 <div class="card-header">
-                    <button type="button" class="btn btn-info float-right space-left" (click)="print(id)" *ngIf="id!='add'">Print</button>
-                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'return'" (closeEdit)="close()"></my-inandout>
-                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pickup'" (closeEdit)="close()"></my-inandout>
-                    <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pull'" (closeEdit)="close()"></my-inandout>
-                    <my-backbutton class="float-right" [link]="backto"></my-backbutton>
-                    <h3>
-                        <span *ngIf="id==='add'">Create Order</span>
-                        <span *ngIf="id!='add'">Order {{order.ID}} {{order.Customer.FullName}}</span>
-                    </h3>
+                    <div class="row">
+                        <div class="col-md-6">                
+                            <h3>
+                                <span *ngIf="id==='add'">Create Order</span>
+                                <span *ngIf="id!='add'">Order {{order.ID}} {{order.Customer.FullName}}</span>
+                            </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-info float-right space-left" (click)="print(id)" *ngIf="id!='add'">Open Printable Ticket in a New Window</button>
+                            <my-backbutton class="float-right" [link]="backto"></my-backbutton>
+                        </div>
+                    </div>
+                        <div class="row table-dark-header">
+                            <div class="col-md-12">
+                                <a class="btn btn-success float-right space-left" [routerLink]="['/admin/inandout']">In and Out (Laundry)</a>
+                                <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'return'" (closeEdit)="close()"></my-inandout>
+                                <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pickup'" (closeEdit)="close()"></my-inandout>
+                                <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pull'" (closeEdit)="close()"></my-inandout>
+                            </div>
+                        </div>
                 </div>
                 <div class="card-body">
                     <mat-tab-group>
                         <mat-tab label="Order">
                             <div class="col-md-12">
                                 <form #orderForm="ngForm">
+
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group row">

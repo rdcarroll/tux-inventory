@@ -257,4 +257,7 @@ html.print-page .hide-on-print, body.print-page .hide-on-print {
     .col-sm-1 {
          width: 8.33333333%;
     }
+    .hide-on-print {
+        display: none !important;
+    }
  }
