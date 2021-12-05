@@ -15,7 +15,7 @@ export class DownloadService {
         private ApiClient: ApiClientService,
         private http: HttpClient,
         private files: FileService) { }
-    private getHtmlBody(cssdata: string, obj: any, breakInside: boolean) {
+    private getHtmlDoc(cssdata: string, obj: any, breakInside: boolean) {
         
         var avoidBreakInside = breakInside ? "table tr td, table tr th, table, table tr {page-break-inside: auto !important;}" : "table tr td, table tr th {page-break-inside: avoid !important;}";
         var cssDiv1a = '<!DOCTYPE html><html><head><meta http-equiv=""content-type"" content=""text/html; charset=utf-8"" /><style>' + avoidBreakInside + '</style></head><body style="margin:15px;">';
@@ -88,6 +88,7 @@ export class DownloadService {
 
         return pageBody;
     }
+
     private convertBSTable(el: JQuery<HTMLElement>) {
         var _el = el.clone(); //dont mess up the original!
 
@@ -133,18 +134,20 @@ export class DownloadService {
         }
     }
     printToBrowser(title: string, obj: any) {
-        title = title || "AppFile"
-        let fileName = title.replace(/ /g, '_') + '.html';
+        
         try {
+            
             this.http.get('dist/ngApp.css', { responseType: 'text' }).subscribe(data => {
-                let fullhtml = this.getHtmlBody(data as 'string', obj, true);
-                var file = new Blob([fullhtml], { type: 'text/html' });
-                var fileURL = URL.createObjectURL(file);
-                var win = window.open();
-                win.document.title = "Order";
-                win.document.write('<div style="height:100%;"><iframe src="' + fileURL + '" frameborder="0" style="border:0; width:100%; height:100%;"></iframe></div>')
-               
-                //window.open(`data:text/html;charset=utf-8,${fullhtml}`);
+                let fullhtml = this.getHtmlDoc(data, obj, false);
+                
+                var win = window.open('','printwindow'); 
+                win.document.write(fullhtml);
+                win.document.getElementsByTagName("body")[0].setAttribute("style","padding:unset;margin:2cm;");
+                
+                setTimeout(function () {
+                    win.print();
+                    win.close();
+                }, 500);
             });
         }
         catch (e) {
@@ -158,7 +161,7 @@ export class DownloadService {
     email(obj: any, subject:string, addresses: string[], bbc?: string[], cc?: string[]) {
         try {
             this.http.get('dist/ngApp.css', { responseType: 'text' }).subscribe(data => {
-                let _body = this.getHtmlBody(data as 'string', obj, true);
+                let _body = this.getHtmlDoc(data as 'string', obj, true);
                 let ishtml = true;
                 let postObject = {
                     "Addresses": addresses,
