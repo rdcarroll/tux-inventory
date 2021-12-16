@@ -66,7 +66,7 @@ export class inventoryitemsComponent implements OnInit {
 
         let q: APIParms = {
             pageSize: this.config.pageSize, page: (this.config.page),
-            include:['Inventory','Status']
+            include:[{'Inventory':['InventoryType']},'Status']
         }
 
         if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'Barcode','Size','Inventory.ModelName','Inventory.Description','Status.Name'];

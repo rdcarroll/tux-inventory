@@ -43,8 +43,8 @@ module.exports = sequelize => {
     ModelWDesc: {
       type: DataTypes.VIRTUAL,
       get() {
-        let desc = this.ModelName!=this.Description? ` (${this.Description})` : '';
-        return `${this.ModelName}${desc}`;
+        //let desc = this.ModelName!=this.Description? ` (${this.Description})` : '';
+        return `${this.ModelName} (${this.InventoryType?.Name})`;
       },
       set(value) {
         //throw new Error('Do not try to set the `fullName` value!');

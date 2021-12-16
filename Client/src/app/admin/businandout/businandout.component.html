@@ -34,12 +34,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of inventory_items">
-                  <td>{{item.Inventory.InventoryType.Name}}</td>
-                  <td>{{item.Inventory.ModelName}}</td>
-                  <td>{{item.Inventory.Description}}</td>
+                  <td>{{item.Inventory?.InventoryType.Name}}</td>
+                  <td>{{item.Inventory?.ModelName}}</td>
+                  <td>{{item.Inventory?.Description}}</td>
                   <td>{{item.Size}}</td>
                   <td>{{item.Barcode}}</td>
-                  <td>{{item.StatusID}}</td>
+                  <td>{{item.Status?.Name}}</td>
               </tr>
             </tbody>
         </table>

@@ -16,7 +16,7 @@ export class BusinessInandoutComponent implements OnInit {
     status_type: any;
     barcode: any;
     invitem: any;
-    inventory_items: any[];
+    inventory_items: any[] = [];
 
     constructor(
         private ApiClient: ApiClientService,
@@ -37,7 +37,7 @@ export class BusinessInandoutComponent implements OnInit {
         }));
     }
     addInventoryItem(id:number): Observable<any> {
-        return this.ApiClient.pGet(`inventory_items/${id}`, {include:['Inventory']}).pipe(take(1),map((res: any) => {
+        return this.ApiClient.pGet(`inventory_items/${id}`, {include:[{'Inventory':['InventoryType']},"Status"]}).pipe(take(1),map((res: any) => {
             this.inventory_items.push(res);
         }));
     }
@@ -46,7 +46,7 @@ export class BusinessInandoutComponent implements OnInit {
         this.getInventoryItem()
             .subscribe(
                 (res) => {
-                    if(this.invitem){
+                    if(null != this.invitem && this.status_type != null){
                         this.ApiClient.pPost(`inventory_items/${this.invitem.ID}/actions`, {}, {status_type:this.status_type}).pipe(take(1))
                             .subscribe(res => {
                                 this.util.alert("success", "Success Saving Action", false, { icon: 'check' }, false);
