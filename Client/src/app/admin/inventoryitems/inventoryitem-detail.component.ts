@@ -51,7 +51,7 @@ export class InventoryItemDetailComponent implements OnInit {
 
     getLookups(): Observable<any> {
         return forkJoin([
-            this.ApiClient.pGet("inventory", {include:['InventoryType']}).pipe(take(1)),
+            this.ApiClient.pGet("inventory", {include:['InventoryType'], pageSize:this.util.MaxPageSize()}).pipe(take(1)),
             this.ApiClient.pGet("status_types", {}).pipe(take(1))])
         .pipe(map((res: any) => {
             this.inventories = res[0].rows;
