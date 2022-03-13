@@ -14,7 +14,7 @@ export class currentlyoutComponent implements OnInit {
     items: any[];
     statuses: any;
     status: any;
-    message:string="Inventory Status Report"
+    message:string="Inventory Currently Out with Customer Report"
 
     constructor(
         private ApiClient: ApiClientService,
@@ -39,10 +39,7 @@ export class currentlyoutComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getLookups()
-            .subscribe(res =>{
-                this.getInvOut(this.status);
-            } );
+        this.getInvOut(this.status);
     }
 
     changeStatus(statusid:any): void {

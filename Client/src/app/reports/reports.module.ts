@@ -5,6 +5,8 @@ import { ReportsRoutingModule } from './reports-routing.module';
 
 import { ReportsComponent } from './reports.component';
 import { itemhistoryComponent } from './itemhistory/itemhistory.component';
+import { statusComponent } from './status/status.component';
+import { currentlypulledComponent } from './currentlypulled/currentlypulled.component';
 import { currentlyoutComponent } from './currentlyout/currentlyout.component';
 
 @NgModule({
@@ -15,6 +17,8 @@ import { currentlyoutComponent } from './currentlyout/currentlyout.component';
     declarations: [
         ReportsComponent,
         itemhistoryComponent,
+        statusComponent,
+        currentlypulledComponent,
         currentlyoutComponent
     ]
 })
