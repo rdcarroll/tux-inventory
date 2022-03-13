@@ -83,11 +83,11 @@ export class OrderDetailComponent implements OnInit {
     getLookups(): Observable<any> {
         return forkJoin([
             this.ApiClient.pGet("customers", {pageSize:this.util.MaxPageSize(), select:"ID,FirstName,LastName,FullName"}).pipe(take(1)),
-            this.ApiClient.pGet("events", {}).pipe(take(1))
+            this.ApiClient.pGet("events", {pageSize:this.util.MaxPageSize(), select:"ID,EventName"}).pipe(take(1))
         ])
         .pipe(map((res: any) => {
             this.customers = res[0].rows;
-            this.events = res[1];
+            this.events = res[1].rows;
         }));
     }
 
@@ -118,8 +118,8 @@ export class OrderDetailComponent implements OnInit {
     useDateChanged(evt:Date): void {
         let uDate = moment(evt);
         this.order.useDate = uDate.toDate();
-        this.order.pickUpDate = uDate.clone().subtract(4,'days').toDate();
-        this.order.returnDate = uDate.clone().add(4,'days').toDate();
+        this.order.pickUpDate = uDate.clone().subtract(1,'days').toDate();
+        this.order.returnDate = uDate.clone().add(1,'days').toDate();
     }
     actualReturnDateChanged(evt:Date): void {
         let uDate = evt;

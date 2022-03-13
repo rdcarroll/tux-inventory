@@ -48,7 +48,7 @@ export class OrderItemsComponent implements OnInit, OnChanges {
 
 
     getOrderItems(): Observable<any> {
-        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
+        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}], orderby:"Inventory.InventoryType.Rank|asc"}
         return this.ApiClient.pGet(`orders/${this.order.ID}/order_items`, q).pipe(take(1));
     }
     ngOnInit(): void {

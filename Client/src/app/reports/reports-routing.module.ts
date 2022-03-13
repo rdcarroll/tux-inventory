@@ -11,7 +11,7 @@ const routes: Routes = [
         path: 'reports', component: ReportsComponent, canActivate: [AuthGuard, AdminGuard],
         children: [
             { path: 'itemhistory', component: itemhistoryComponent },
-            { path: 'currentlyout', component: currentlyoutComponent },
+            { path: 'status', component: currentlyoutComponent },
         ]
     }
 ];

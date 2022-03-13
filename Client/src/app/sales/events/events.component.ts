@@ -51,19 +51,20 @@ export class eventsComponent implements OnInit {
     }
 
     pageChange(): void {
-
         let q: APIParms = {
-            pageSize: this.config.pageSize, page: (this.config.page)
+            pageSize: this.config.pageSize, page: (this.config.page), orderby:"eventDate|desc"
         }
 
-        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'EventName'];
+        if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'EventName']; 
 
         this.util.loading(true, null);
         this.ApiClient.pGet("events", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
-                    this.items = res;
-                    this.config.collectionSize = res.TotalCount;
+                    // this.items = res;
+                    // this.config.collectionSize = res.TotalCount;
+                    this.items = res.rows;
+                    this.config.collectionSize = res.count;
                 }, (err) => {
                     this.util.alert("error", err.statusText, false, null);
                 });

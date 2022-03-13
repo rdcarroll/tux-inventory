@@ -34,7 +34,7 @@ module.exports = sequelize => {
     FullName: {
       type: DataTypes.VIRTUAL,
       get() {
-        return `${this.FirstName} ${this.LastName}`;
+        return `${(this.FirstName&&this.LastName?this.LastName+', '+this.FirstName:(this.FirstName))}`;
       },
       set(value) {
         //throw new Error('Do not try to set the `fullName` value!');

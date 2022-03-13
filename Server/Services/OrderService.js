@@ -11,7 +11,7 @@ module.exports = {
 };
 async function getAll(query) {
     try {
-      return await Model.findAll(query);
+      return await Model.findAndCountAll(query);
     } catch (err) {
       throw err;
     }
@@ -39,7 +39,7 @@ async function create(record) {
       CustomerID:model.CustomerID,
     });
     //create default inv items list for order
-    const dInv = await db.inventory.findAll({where:{ModelName:"default"}});
+    const dInv = await db.inventory.findAll({where:{ModelName:"default"}, include:["InventoryType"], order:[["InventoryType","Rank","ASC"]]});
     for (const di of dInv) {
       const dInvItems = await db.inventory_items.findAll({limit:1, where:{InventoryID:di.ID}});
       for (const dii of dInvItems) {

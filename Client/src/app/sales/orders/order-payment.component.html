@@ -46,11 +46,11 @@
                                 [ngModel]="amount | currency:'USD':'symbol':'2.2'"
                                 [ngModelOptions]="{updateOn:'blur'}" (ngModelChange)="amount=$event" /> -->
                 <!-- <input class="form-control" name="price" placeholder="" [(ngModel)]="price" required> -->
-                <my-money [money]="amount" (moneyChange)="amount=$event"></my-money>
+                <my-money [money]="amount" (moneyChange)="amountChanged($event)"></my-money>
             </div>
         </div>
-        <div class="btn-group float-right" role="group">
+        <!-- <div class="btn-group float-right" role="group">
             <button (click)="save()" class="btn btn-link btn-sm">Save</button>
-        </div>
+        </div> -->
     </div>
 </div>

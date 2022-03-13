@@ -30,6 +30,15 @@ module.exports = sequelize => {
       autoIncrement: false,
       comment: null,
       field: "Cost"
+    },
+    Rank: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+      primaryKey: false,
+      autoIncrement: false,
+      comment: null,
+      field: "Rank"
     }
   };
   const options = {

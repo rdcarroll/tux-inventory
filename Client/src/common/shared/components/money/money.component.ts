@@ -42,7 +42,7 @@ export class MoneyComponent implements OnInit, OnChanges {
         this.moneyText = this.formatMoney(this.money) || "0.00";
         this.placeholder = this.placeholder || "$ or %";
         this.subscription = this.money$.pipe(
-            debounceTime(1600),
+            //debounceTime(2600),
             distinctUntilChanged()).subscribe(response => {
 
                 this.emitter(response);

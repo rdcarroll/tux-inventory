@@ -61,6 +61,23 @@ function parseq(qarray, qwhere){
      }
      return qwhere;
 }
+//order by
+function parseorderby(orderby){
+  let wh = [];
+  let marray = orderby.split(",").map(function(item) {
+     return item.split("|").map(function(_item) {
+         return _item.trim();
+       });
+   });
+   marray.forEach(el => {
+     let rightside = el[1] && el[1].toUpperCase() == 'DESC' ? 'DESC' : 'ASC';
+     let leftsidearr = el[0].split(".");
+     leftsidearr.push(rightside);
+     wh.push(leftsidearr);
+   });
+     if(wh.length) return wh;
+     return null;
+}
 exports.setQuery = async (req, res, next) => {
     let query = req.query;
     try {
@@ -69,6 +86,7 @@ exports.setQuery = async (req, res, next) => {
         if(query.select) q.attributes = parsefields(query.select);
         if(query.include) q.include = parseinclude(query.include);
         if(query.qf) q.where = parseq(query.qf,q.where);
+        if(query.orderby) q.order = parseorderby(query.orderby);
 
         q.limit = parseInt(query.pageSize) || defaultPageSize;
         q.offset = ((parseInt(query.page)||defaultPage)-1) * q.limit;

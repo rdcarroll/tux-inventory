@@ -27,6 +27,12 @@ export class OrdersComponent implements OnInit {
             sortable: false
         },
         {
+            display: 'Use Date',
+            variable: 'useDate',
+            filter: 'date',
+            sortable: false
+        },
+        {
             display: 'Created Date',
             variable: 'createdAt',
             filter: 'date',
@@ -59,7 +65,7 @@ export class OrdersComponent implements OnInit {
     pageChange(): void {
 
         let q: APIParms = {
-            pageSize: this.config.pageSize, page: (this.config.page),
+            pageSize: this.config.pageSize, page: (this.config.page), orderby:'useDate|desc',
             include:['Customer']
         }
 
@@ -69,8 +75,10 @@ export class OrdersComponent implements OnInit {
         this.ApiClient.pGet("orders", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
             .subscribe(
                 (res) => {
-                    this.items = res;
-                    this.config.collectionSize = res.TotalCount;
+                    // this.items = res;
+                    // this.config.collectionSize = res.TotalCount;
+                    this.items = res.rows;
+                    this.config.collectionSize = res.count;
                 }, (err) => {
                     this.util.alert("error", err.statusText, false, null);
                 });

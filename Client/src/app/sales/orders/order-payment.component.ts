@@ -62,7 +62,7 @@ export class OrderPaymentComponent implements OnInit, OnChanges  {
     ngOnInit(): void {
         this.user = this.security.getUser();
         this.getPaymentReasons().subscribe(res=>{
-            
+            if(this.reasons?.length > 0) this.reasonid = this.reasons[0].ID
         });
     }
     
@@ -79,18 +79,21 @@ export class OrderPaymentComponent implements OnInit, OnChanges  {
             }
         }
     }
-    save(): void {
-        if(this.reasonid && this.amount){
+    amountChanged(amount:number): void {
+        this.save(amount);
+    }
+    save(namount:number): void {
+        if(this.reasonid && namount){
             let nObject = {
                 TicketID:this.ticketID,
                 ReasonID:this.reasonid,
-                Amount :  this.amount
+                Amount :  namount
             }
             this.ApiClient.pPost("ticket_payments", {}, nObject).pipe(take(1))
                 .subscribe(res => {
                     this.util.alert("success", "Success Adding Payment", false, { icon: 'check' }, false);
                     this.paymentChange.emit(res);
-                    this.reasonid=null;
+                    if(this.reasons?.length > 0) this.reasonid = this.reasons[0].ID
                     this.amount=0;
                 }, (err) => {
                     this.util.handleError(err, "Error Saving");

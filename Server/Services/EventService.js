@@ -10,7 +10,7 @@ module.exports = {
 };
 async function getAll(query) {
     try {
-      return await Model.findAll(query);
+      return await Model.findAndCountAll(query);
     } catch (err) {
       throw err;
     }

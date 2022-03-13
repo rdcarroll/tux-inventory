@@ -63,7 +63,7 @@ export class BusinessInandoutComponent implements OnInit {
     }
     ngOnInit(): void {
         this.getStatusTypes().subscribe(res => {
-            
+            if(this.status_types.length > 0) this.status_type = this.status_types[0].ID;
         }, (err) => {
             this.util.handleError(err, "Server Error");
         });

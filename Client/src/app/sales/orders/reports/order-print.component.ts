@@ -29,14 +29,20 @@ export class OrderPrintComponent implements OnChanges {
     getLookups(id:string): Observable<any> {
         return forkJoin([
             this.ApiClient.pGet("companies/1", {}).pipe(take(1)),
-            this.ApiClient.pGet("orders/" + this.id, {include:['Customer','OrderTickets',{'OrderItems':[{'Inventory':['InventoryType']},'InventoryItem']}]}).pipe(take(1))
+            this.ApiClient.pGet("orders/" + this.id, {include:['Customer','OrderTickets']}).pipe(take(1))
         ])
         .pipe(map((res: any) => {
             this.company = res[0];
             this.order = res[1];
+        }));
+    }
+    getOrderItems(id:string): Observable<any> {
+        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}], orderby:"Inventory.InventoryType.Rank|asc"}
+        return this.ApiClient.pGet(`orders/${id}/order_items`, q).pipe(take(1)).pipe(map((res2: any) => {
+            this.order.OrderItems = res2;
             this.total = 0;
             //dont use the default holders
-            this.order.OrderItems = this.order.OrderItems.filter((el:any) => el.Inventory.Description !== "holder");
+            //this.order.OrderItems = this.order.OrderItems.filter((el:any) => el.Inventory.Description !== "holder");
             this.order.OrderItems.forEach((item:any)=>{
                 this.total += item.Cost||0;
             });
@@ -46,9 +52,14 @@ export class OrderPrintComponent implements OnChanges {
         if(this.id){
             this.getLookups(this.id)
                 .subscribe(res => {
-                    setTimeout(() => {
-                        this.action.emit(true);
-                    }, 500);
+                    this.getOrderItems(this.id)
+                        .subscribe(res => {
+                            setTimeout(() => {
+                                this.action.emit(true);
+                            }, 500);
+                         }, (err) => {
+                            this.action.emit(false);
+                        });
                  }, (err) => {
                     this.action.emit(false);
                 });

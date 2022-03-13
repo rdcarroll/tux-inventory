@@ -27,9 +27,9 @@ export class customersComponent implements OnInit {
             sortable: false
         },
         {
-            display: 'Created Date',
-            variable: 'createdAt',
-            filter: 'date',
+            display: 'Phone',
+            variable: 'Phone',
+            filter: 'text',
             sortable: false
         },
         {
@@ -59,7 +59,7 @@ export class customersComponent implements OnInit {
     pageChange(): void {
 
         let q: APIParms = {
-            pageSize: this.config.pageSize, page: (this.config.page)
+            pageSize: this.config.pageSize, page: (this.config.page), orderby:"LastName|asc,FirstName|asc"
         }
 
         if (this.searchText && this.searchText.length > 0) q.qf = [this.searchText,'FirstName','LastName','Email','Phone'];
