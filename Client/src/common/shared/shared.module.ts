@@ -54,6 +54,7 @@ import { AlertFixedComponent } from './components/alert-fixed.component';
 import { PopstateComponent } from './components/popstate.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { MoneyComponent } from './components/money/money.component';
+import { BarcodeComponent } from './components/barcode/barcode.component';
 
 
 
@@ -105,7 +106,8 @@ import { MoneyComponent } from './components/money/money.component';
         PendingApproveDialog,
         AcknowledgeDialog,
         BackButtonComponent,
-        MoneyComponent
+        MoneyComponent,
+        BarcodeComponent
     ],
     providers: [
         CurrencyPipe,
@@ -149,7 +151,8 @@ import { MoneyComponent } from './components/money/money.component';
         ScrollingModule,
         BackButtonComponent,
         NgxBarcodeModule,
-        MoneyComponent
+        MoneyComponent,
+        BarcodeComponent
     ],
     entryComponents: [PendingApproveDialog, AcknowledgeDialog]
 })

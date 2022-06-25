@@ -100,9 +100,11 @@ export class TypeAheadComponent implements OnInit, OnChanges, AfterViewInit {
         this.myFocus.emit(this.myModel);
     }
     //clear
-    clearFilter() {
-        this.myControl.setValue("");
-        this.emitter("");
+    clearFilter(event: any) {
+        if(event.pointerId>0){
+            this.myControl.setValue("");
+            this.emitter("");
+        }
     }
 
     private _filter(value: string): string[] {

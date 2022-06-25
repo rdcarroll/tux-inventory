@@ -91,4 +91,7 @@ export class InventoryItemDetailComponent implements OnInit {
                 dialogRef.afterClosed().subscribe(res=>{});
             } );
     }
+    getChange(event: any) {
+        event.stopPropagation();
+    }
 }

@@ -15,10 +15,8 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Inventory Model</label>
                             <div class="col-md-8">
-                                
-                                <my-typeahead [(myModel)]="item.InventoryID" (myModelChange)="eventChanged($event)" 
-                                [options]="inventories" [valueField]="'ID'" [displayField]="'ModelWDesc'"
-                                ></my-typeahead>
+                                <my-typeahead [(myModel)]="item.InventoryID"
+                                [options]="inventories" [valueField]="'ID'" [displayField]="'ModelWDesc'"></my-typeahead>
                                 <!-- <select class="form-control" [(ngModel)]="item.InventoryID" name="Inventory" required [disabled]="inventory_id!=null">
                                     <option *ngFor="let i of inventories" [value]="i.ID">{{i.ModelName}} ({{i.InventoryType.Name}})</option>
                                  </select> -->
@@ -35,19 +33,20 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Size</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="Size" placeholder="" [(ngModel)]="item.Size" required>
+                                <input type="text" class="form-control" name="Size" placeholder="" [(ngModel)]="item.Size" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Barcode</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="Barcode" placeholder="" [(ngModel)]="item.Barcode" required>
+                                <!-- <input type="text" class="form-control" name="Barcode" placeholder="" [(ngModel)]="item.Barcode" required> -->
+                                <my-barcode [(barcode)]="item.Barcode" [name]="'Barcode'"></my-barcode>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Serial Number</label>
                             <div class="col-md-8">
-                                <input class="form-control" name="SerialNumber" placeholder="" [(ngModel)]="item.SerialNumber" required>
+                                <input type="text" class="form-control" name="SerialNumber" placeholder="" [(ngModel)]="item.SerialNumber" required>
                             </div>
                         </div>
 
