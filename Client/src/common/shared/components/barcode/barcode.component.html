@@ -1,12 +1,17 @@
 ﻿<!-- <div>
     <input matInput [name]="name" placeholder="Scan or type barcode..." class="form-control" [(ngModel)]="barcodeText"
            [disabled]="readOnly" style="height:auto;border: 1px solid #ced4da;padding: .375rem .75rem; margin:0;" 
-           (keypress)="onKeypressEvent($event)" type="text"/>
+           (keypress)="onKeypressEvent($event)" type="text"/> 
+           (window:keypress)="onKey($event)" 
+    (keyup)="onKey($event)" 
+    (ngModelChange)="onBarcodeChange($event)" 
 </div> -->
 <div class="my-barcode input-group">
-    <input matInput class="form-control" 
+    <input class="form-control" 
     type="text" 
-    [(ngModel)]="barcode" 
+    name="my-barcode"
+    [ngModel]="barcode" 
+    (keyup)="onBarcodeChange($event)" 
     [placeholder]="placeholder"
-    [required]="required" /> 
+    [required]="required"/> 
 </div>
