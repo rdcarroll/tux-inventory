@@ -73,6 +73,9 @@ export class BusinessInandoutPopupComponent {
                                 this.util.handleError(err, "Error Saving");
                             });
                     }
+                    else{
+                        this.util.alert("warning", "Barcode Not Found", false, { icon: 'check' }, false);
+                    }
                 }, (err) => {
                     this.util.alert("error", err.statusText, false, null);
                 });

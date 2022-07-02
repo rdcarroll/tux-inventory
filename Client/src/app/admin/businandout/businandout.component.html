@@ -15,7 +15,8 @@
         <div class="form-group row">
             <label class="col-md-4 col-form-label">Scan or Type Barcode</label>
             <div class="col-md-6">
-              <input class="form-control" name="Size" placeholder="" [(ngModel)]="barcode" required>
+              <!-- <input class="form-control" name="Size" placeholder="" [(ngModel)]="barcode" required> -->
+              <my-barcode [(barcode)]="barcode" [name]="'Barcode'" [required]="true" name="barcode"></my-barcode>
             </div>
             <div class="col-md-2">
               <button type="button" class="btn btn-success" (click)="save()">Save Action</button>
