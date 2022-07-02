@@ -94,12 +94,13 @@ export class inandoutComponent implements OnInit {
             });
         });
       }
-      pullBlur(item:any,evt:any) {
-          let newbarcode = evt;
-          item.notfound = false;
-          if(newbarcode && item.InventoryItemID==null){
+      pullChange(item:any,evt:{ barcode: string; scanned: boolean; }) {
+        if(!evt.scanned)return;
+        let newbarcode = evt.barcode;
+        item.notfound = false;
+        if(newbarcode && item.InventoryItemID==null){
             let q = {filter:`Barcode|'${newbarcode}',Size|'${item.ItemSize}',InventoryID|${item.InventoryID}`}
-            return this.ApiClient.pGet(`inventory_items`, q).pipe(take(1)).subscribe(res=>{
+            this.ApiClient.pGet(`inventory_items`, q).pipe(take(1)).subscribe(res=>{
                 if(res.count==0){
                     //alert("The barcode does not match an Inventory Item for the model and size selected.");
                     item.notfound = true;
@@ -111,20 +112,14 @@ export class inandoutComponent implements OnInit {
                     this.save(item,'pull');
                 }
             });
-          }
-          else if(item.InventoryItemID){
+        }
+        else if(item.InventoryItemID){
             alert("Please use the Returns to remove this item.");
             this.getOrderItems(this.orderid).subscribe(res=>{
             });
-          }
-          
         }
-        pullChange(item:any,evt:any) {
-            setTimeout(() => {
-                this.pullBlur(item,evt);
-            }, 2000);
-          }
-
+        
+    }
         
     pickup(template: TemplateRef<any>) {
         this.getOrder(this.orderid).subscribe(res=>{
@@ -163,9 +158,10 @@ export class inandoutComponent implements OnInit {
             });
         });
       }
-      returnBlur(item:any,evt:any) {
-          item.notfound=false;
-        let returnbarcode = evt.target.value;
+    returnChange(item:any,evt:{ barcode: string; scanned: boolean; }) {
+        if(!evt.scanned)return;
+        item.notfound=false;
+        let returnbarcode = evt.barcode;
         if(returnbarcode && item.InventoryItem && item.InventoryItem.Barcode == returnbarcode){
             if(item.pickedupDate){
                 this.save(item,'return');
@@ -182,9 +178,7 @@ export class inandoutComponent implements OnInit {
         else if(returnbarcode && item.InventoryItem && item.InventoryItem.Barcode != returnbarcode){
             item.notfound=true;
         }
-
- 
-        }
+    }
 
     ngOnChanges(): void {
         

@@ -15,17 +15,30 @@ export class BarcodeComponent implements OnInit, OnDestroy   {
     @Input() name: string;
     @Input() placeholder: string = "scan or type";
     @Output() barcodeChange = new EventEmitter<string>();
+    @Output() scanChange = new EventEmitter<{ barcode: string; scanned: boolean; }>();
     barcodeText: string="";
     subject: Subject<any> = new Subject();
+   keyDownTime:Date;
+   scanned:boolean=false;
     constructor() {
         this.id = this.id || "test";
         this.name = this.name || "test";
     }
 
-    onBarcodeChange(e: any) {
-        const keycode = e.keyCode || e.which;
-        this.barcodeText += String.fromCharCode(keycode);
+    onKeydown(e: any) {
+        var keycode = e.keyCode || e.which;
+        if(e.code.startsWith("Numpad")) keycode -= 48;
+        if(keycode != 13) this.barcodeText += String.fromCharCode(keycode);
+        
         this.subject.next(this.barcodeText);
+        
+        this.keyDownTime = new Date();
+    }
+    onKeyup(e: any) {
+        var now = new Date();
+        const keycode = e.keyCode || e.which;
+        var diff = now.getTime() - this.keyDownTime.getTime();
+        this.scanned = diff < 20 || keycode==13;
     }
     ngOnInit() {   
         if(null==this.barcode)this.barcode="";     
@@ -36,6 +49,7 @@ export class BarcodeComponent implements OnInit, OnDestroy   {
             that.barcode=val.trim();
             that.barcodeText ="";
             that.barcodeChange.emit(that.barcode);
+            that.scanChange.emit({barcode:that.barcode,scanned:that.scanned});
             }
         );
     }

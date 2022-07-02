@@ -143,4 +143,6 @@ export class OrderDetailComponent implements OnInit {
         dialogRef.afterClosed().subscribe(res=>{});
 
     }
+    close(): void {
+    }
 }

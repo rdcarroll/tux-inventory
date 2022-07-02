@@ -11,7 +11,8 @@
     type="text" 
     name="my-barcode"
     [ngModel]="barcode" 
-    (keyup)="onBarcodeChange($event)" 
+    (keydown)="onKeydown($event)" 
+    (keyup)="onKeyup($event)" 
     [placeholder]="placeholder"
     [required]="required"/> 
 </div>
