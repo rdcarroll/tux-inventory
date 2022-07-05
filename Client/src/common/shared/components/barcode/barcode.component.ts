@@ -1,7 +1,7 @@
 ﻿
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy} from '@angular/core';
 import { Subject } from 'rxjs';
-import { buffer, debounceTime } from 'rxjs/operators';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'my-barcode',
@@ -16,7 +16,6 @@ export class BarcodeComponent implements OnInit, OnDestroy   {
     @Input() placeholder: string = "scan or type";
     @Output() barcodeChange = new EventEmitter<string>();
     @Output() scanChange = new EventEmitter<{ barcode: string; scanned: boolean; }>();
-    barcodeText: string="";
     subject: Subject<any> = new Subject();
    keyDownTime:Date;
    scanned:boolean=false;
@@ -26,12 +25,7 @@ export class BarcodeComponent implements OnInit, OnDestroy   {
     }
 
     onKeydown(e: any) {
-        var keycode = e.keyCode || e.which;
-        if(e.code.startsWith("Numpad")) keycode -= 48;
-        if(keycode != 13) this.barcodeText += String.fromCharCode(keycode);
-        
-        this.subject.next(this.barcodeText);
-        
+        this.subject.next(this.barcode);
         this.keyDownTime = new Date();
     }
     onKeyup(e: any) {
@@ -41,17 +35,14 @@ export class BarcodeComponent implements OnInit, OnDestroy   {
         this.scanned = diff < 20 || keycode==13;
     }
     ngOnInit() {   
-        if(null==this.barcode)this.barcode="";     
+        if(null==this.barcode)this.barcode="";  
         var that = this; 
         this.subject
         .pipe(debounceTime(500))
         .subscribe((val) => {
-            that.barcode=val.trim();
-            that.barcodeText ="";
             that.barcodeChange.emit(that.barcode);
             that.scanChange.emit({barcode:that.barcode,scanned:that.scanned});
-            }
-        );
+        });
     }
     ngOnDestroy() {
         this.subject.unsubscribe();
