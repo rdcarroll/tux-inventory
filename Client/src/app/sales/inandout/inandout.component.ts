@@ -58,7 +58,7 @@ export class inandoutComponent implements OnInit {
 
     }
     getOrderItems(orderid:number): Observable<any> {
-        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}]}
+        let q = {include:['InventoryItem',{'Inventory':['InventoryType']}], orderby:"Inventory.InventoryType.Rank|asc"}
         return this.ApiClient.pGet(`orders/${orderid}/order_items`, q).pipe(take(1),map((res: any) => {
             this.order_items = res;
         }));
