@@ -20,6 +20,8 @@ import { EventPrintComponent } from './inandout/reports/event-print.component';
 import { ShowOrderDialog } from './orders/reports/show-order.modal';
 import { ShowEventDialog } from './inandout/reports/show-event.modal';
 import { sizesComponent } from './sizes/sizes.component';
+import { TicketPrintComponent } from './orders/reports/ticket-print.component';
+import { ShowTicketDialog } from './orders/reports/show-ticket.modal';
 
 //import { AppConnector, Application, Building, Company, Database, Department, Domain, Group, Server, Site } from './sitedata';
 
@@ -45,8 +47,10 @@ import { sizesComponent } from './sizes/sizes.component';
         OrderPrintComponent,
         EventPrintComponent,
         ShowOrderDialog,
-        ShowEventDialog
+        ShowEventDialog,
+        TicketPrintComponent,
+        ShowTicketDialog
     ],
-    entryComponents: [ShowOrderDialog,ShowEventDialog]
+    entryComponents: [ShowOrderDialog,ShowEventDialog,ShowTicketDialog]
 })
 export class SalesModule { }

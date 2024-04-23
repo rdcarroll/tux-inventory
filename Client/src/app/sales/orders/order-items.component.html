@@ -12,6 +12,7 @@
                                             <th>Description</th>
                                             <th>Size</th>
                                             <th>Price</th>
+                                            <th>Pulled</th>
                                             <th>Picked Up</th>
                                             <th>Returned</th>
                                             <th>Overbooked?</th>
@@ -41,6 +42,7 @@
                                                         <td>{{item.Inventory.Description}}</td>
                                                         <td>{{item.ItemSize}}</td>
                                                         <td>{{item.Cost | currency}}</td>
+                                                        <td>{{item.pulledDate | date}}</td>
                                                         <td>{{item.pickedupDate | date}}</td>
                                                         <td>{{item.returnedDate | date}}</td>
                                                         <td>

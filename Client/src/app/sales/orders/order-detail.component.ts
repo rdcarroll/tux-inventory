@@ -11,6 +11,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowOrderDialog } from './reports/show-order.modal';
+import { ShowTicketDialog } from './reports/show-ticket.modal';
 
 @Component({
     selector: 'order-detail',
@@ -138,6 +139,13 @@ export class OrderDetailComponent implements OnInit {
 
     print(id:number): void {
         const dialogRef = this.dialog.open(ShowOrderDialog, {
+                width:'250px',data:{id:id},disableClose:true
+        });
+        dialogRef.afterClosed().subscribe(res=>{});
+
+    }
+    printTicket(id:number): void {
+        const dialogRef = this.dialog.open(ShowTicketDialog, {
                 width:'250px',data:{id:id},disableClose:true
         });
         dialogRef.afterClosed().subscribe(res=>{});
