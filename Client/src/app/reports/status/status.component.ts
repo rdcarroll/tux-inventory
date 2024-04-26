@@ -4,6 +4,7 @@ import { map, take } from 'rxjs/operators';
 import { ApiClientService, Util } from '../../../common/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
+import { MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'status',
@@ -23,7 +24,7 @@ export class statusComponent implements OnInit {
         private router: Router
     ) { }
     getInvOut(id:number): void{
-        this.ApiClient.pGet("inventory_items", {filter:`StatusID|${id},Barcode|!null`,include:['Status',{'Inventory':['InventoryType']}]}).pipe(take(1))
+        this.ApiClient.pGet("inventory_items", {pageSize:100000, filter:`StatusID|${id},InventoryID|!0,Barcode|!null`,include:['Status',{'Inventory':['InventoryType']}]}).pipe(take(1))
             .subscribe(res =>{
                 this.items = res.rows;
             } );
@@ -38,6 +39,10 @@ export class statusComponent implements OnInit {
         }));
     }
 
+    rowClick(id:any): void{
+        
+    }
+
     ngOnInit(): void {
         this.getLookups()
             .subscribe(res =>{
@@ -49,4 +54,35 @@ export class statusComponent implements OnInit {
         this.getInvOut(statusid);
     }
 
+    columns:MyColumn[] = [
+        {
+            display:"Name",
+            variable:"Inventory.InventoryType.Name",
+            filter:'text',
+            sortable:true,
+            filterable:true
+        },
+        {
+            display:"Description",
+            variable:"Inventory.Description",
+            filter:'text',
+            sortable:true,
+            filterable:true,
+            autosize:true
+        },
+        {
+            display:"Size",
+            variable:"Size",
+            filter:'text',
+            sortable:true,
+            filterable:true
+        },
+        {
+            display:"Barcode",
+            variable:"Barcode",
+            filter:'text',
+            sortable:true,
+            filterable:true
+        }
+    ]
 }

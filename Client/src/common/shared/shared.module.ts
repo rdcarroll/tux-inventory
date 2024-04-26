@@ -41,7 +41,7 @@ import { AcknowledgeDialog } from './components/acknowledge.component';
 import { sanitizeHtmlPipe } from './directives/sanitize-html.pipe';
 import { MyFilterPipe } from './directives/my-filter.pipe';
 import { HighlightSearch } from './directives/my-highlight.pipe';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NotDoneComponent } from './components/login/notdone.component';
 import { RichTextEditorComponent } from './components/richtexteditor/richtexteditor.component';
@@ -122,6 +122,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         LinkCellRenderer,
     ],
     providers: [
+        DatePipe,
         CurrencyPipe,
         { provide: TINYMCE_SCRIPT_SRC, useValue: 'dist/tinymce/tinymce.min.js' }
     ],
@@ -164,7 +165,12 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         BackButtonComponent,
         NgxBarcodeModule,
         MoneyComponent,
-        BarcodeComponent
+        BarcodeComponent,
+        MyAGGrid,
+        BooleanRenderer,
+        BtnCellRenderer,
+        CheckboxRenderer,
+        LinkCellRenderer,
     ],
     entryComponents: [PendingApproveDialog, AcknowledgeDialog]
 })
