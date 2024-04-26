@@ -1,7 +1,7 @@
 ﻿
 <div class="padded"></div>
 <div class="container">
-    <div class="row">
+    <div class="row flex-grow-1">
 
         <div class="col-md-12">
             <div class="card">
@@ -19,8 +19,8 @@
                     </div>
                     <table class="table table-bordered">
                         <tr *ngFor="let item of items">
-                            <td>{{item.Inventory.InventoryType.Name}}</td>
-                            <td>{{item.Inventory.Description}}</td>
+                            <td>{{item.Inventory?.InventoryType.Name}}</td>
+                            <td>{{item.Inventory?.Description}}</td>
                             <td>{{item.Size}}</td>
                             <td>{{item.Barcode}}</td>
                         </tr>

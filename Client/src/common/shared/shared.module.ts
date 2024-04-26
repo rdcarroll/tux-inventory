@@ -55,6 +55,12 @@ import { PopstateComponent } from './components/popstate.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { MoneyComponent } from './components/money/money.component';
 import { BarcodeComponent } from './components/barcode/barcode.component';
+import { MyAGGrid } from './components/aggrid/aggrid.component';
+import { BooleanRenderer } from './components/aggrid/boolean-renderer.component';
+import { BtnCellRenderer } from './components/aggrid/button-cell-renderer.component';
+import { CheckboxRenderer } from './components/aggrid/checkbox-renderer.component';
+import { LinkCellRenderer } from './components/aggrid/link-cell-renderer.component';
+import {AgGridModule} from 'ag-grid-angular-legacy';
 
 
 
@@ -74,7 +80,8 @@ import { BarcodeComponent } from './components/barcode/barcode.component';
         MomentModule,
         EditorModule,
         ScrollingModule,
-        NgxBarcodeModule
+        NgxBarcodeModule,
+        AgGridModule
     ],
     declarations: [
         LoginComponent,
@@ -107,7 +114,12 @@ import { BarcodeComponent } from './components/barcode/barcode.component';
         AcknowledgeDialog,
         BackButtonComponent,
         MoneyComponent,
-        BarcodeComponent
+        BarcodeComponent,
+        MyAGGrid,
+        BooleanRenderer,
+        BtnCellRenderer,
+        CheckboxRenderer,
+        LinkCellRenderer,
     ],
     providers: [
         CurrencyPipe,

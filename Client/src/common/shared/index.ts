@@ -9,3 +9,19 @@ export * from './components/acknowledge.component';
 export * from './components/richtexteditor/richtexteditor.component';
 //export * from './angular-editor.module';
 //export * from './material.module';
+
+export interface MyColumn{
+    display?: string,
+    variable?: string,
+    sortable?:boolean,
+    filter:string,
+    maxwidth:number,
+    minwidth:number,
+    width?:number,
+    type?:string,
+    format?:string,
+    hidden?:boolean,
+    editable?:boolean,
+    filterable?:boolean,
+    autosize?:boolean
+}
