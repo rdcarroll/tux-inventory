@@ -2,8 +2,8 @@
 config = {
   development:{
         HOST: "localhost",
-        USER: "root",
-        PASSWORD: "admin",
+        USER: "rdcarr",
+        PASSWORD: "Mong00se!",
         DB: "inventory",
         dialect: "mysql",
         dialectOptions: { decimalNumbers: true },
