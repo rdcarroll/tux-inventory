@@ -3,7 +3,8 @@ import { SecurityService, CurrentUser, Util, ApiClientService } from './../commo
 import { NavigationStart, Router } from '@angular/router';
 import { filter, finalize, map, take } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
-import * as root from '../common/globals';
+import * as root from '../environments/environment';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'my-app',
@@ -124,7 +125,7 @@ export class AppComponent implements OnInit {
         });
 
         this.router.events.pipe(filter((event) => event instanceof NavigationStart))
-            .subscribe((event: NavigationStart) => {
+            .subscribe((event:any) => {
                 // You only receive NavigationStart events
 
                 $("body").removeClass("print-page");

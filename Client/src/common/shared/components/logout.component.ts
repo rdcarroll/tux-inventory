@@ -5,7 +5,7 @@ import { SecurityService, CurrentUser } from '../../core';
     selector: 'my-logout',
     template: `<div ngbDropdown *ngIf="user" style="margin-left:15px;">
                     <button class="btn btn-light dropdown-toggle" id="navbarDropdown" ngbDropdownToggle>
-                        <fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon> {{user.FullName?.substring(0,15) || user.UserId || "not logged in"}}
+                        <fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon> {{user.FullName.substring(0,15) || user.UserId || "not logged in"}}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
                         <button class="dropdown-item" (click)="logOut()" ngbDropdownItem>Logout</button>
@@ -16,7 +16,7 @@ import { SecurityService, CurrentUser } from '../../core';
 })
 
 export class LogoutComponent implements OnInit, OnDestroy {
-    user: CurrentUser;
+    user: CurrentUser|null;
 
     constructor(private security: SecurityService) { }
 

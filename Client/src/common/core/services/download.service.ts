@@ -15,7 +15,7 @@ export class DownloadService {
         private ApiClient: ApiClientService,
         private http: HttpClient,
         private files: FileService) { }
-    private getHtmlDoc(cssdata: string, obj: any, breakInside: boolean) {
+    private getHtmlDoc(cssdata: string, obj: any, breakInside: boolean):string {
         
         var avoidBreakInside = breakInside ? "table tr td, table tr th, table, table tr {page-break-inside: auto !important;}" : "table tr td, table tr th {page-break-inside: avoid !important;}";
         var cssDiv1a = '<!DOCTYPE html><html><head><meta http-equiv=""content-type"" content=""text/html; charset=utf-8"" /><style>' + avoidBreakInside + '</style></head><body style="margin:15px;">';
@@ -23,8 +23,8 @@ export class DownloadService {
         var cssDiv2 = '</body></html>';
         var regex = new RegExp("-md-", 'g');
 
-        var $clone = null;
-        var pageBody = null;
+        var $clone:any = null;
+        var pageBody = "";
         if (obj) {
             $clone = $(obj).find('#exportable').clone();
         }
@@ -33,55 +33,55 @@ export class DownloadService {
         }
 
         //input boxes
-        $clone.find("input[type=text]").each(function (index) {
-            var value = $(this).val();
-            $(this).replaceWith("<p>" + value + "</p>");
+        $clone.find("input[type=text]").each(function (index, tdl) {
+            var value = $(tdl).val();
+            $(tdl).replaceWith("<p>" + value + "</p>");
         });
         var checkedbox: string = `<svg role="img" aria-hidden="true" focusable="false" viewBox="0 0 448 512" class="svg-checked"><path fill="currentColor" d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zm0 400H48V80h352v352zm-35.864-241.724L191.547 361.48c-4.705 4.667-12.303 4.637-16.97-.068l-90.781-91.516c-4.667-4.705-4.637-12.303.069-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l59.792 60.277 141.352-140.216c4.705-4.667 12.303-4.637 16.97.068l22.536 22.718c4.667 4.706 4.637 12.304-.068 16.971z"></path></svg>`;
         var uncheckedbox: string = `<svg role="img" aria-hidden="true" focusable="false" class="svg-unchecked" viewBox="0 0 448 512"><path fill="currentColor" d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"></path></svg>`;
-        $clone.find("input[type=checkbox]").each(function (index) {
-            var value = this.checked;
+        $clone.find("input[type=checkbox]").each(function (index, tdl) {
+            var value = tdl.checked;
            // $(this).replaceWith(value ? "[X]" : "[  ]");
-            $(this).replaceWith(value ? checkedbox : uncheckedbox);
+            $(tdl).replaceWith(value ? checkedbox : uncheckedbox);
         });
         //replace fa-icon check box
-        $clone.find("fa-icon[ng-reflect-icon*='far,check-square']").each(function (index) {
+        $clone.find("fa-icon[ng-reflect-icon*='far,check-square']").each(function (index, tdl) {
             //$(this).replaceWith( "[X]");
-            $(this).replaceWith(checkedbox);
+            $(tdl).replaceWith(checkedbox);
         });
         //replace fa-icon un-check box
-        $clone.find("fa-icon[ng-reflect-icon*='far,square']").each(function (index) {
+        $clone.find("fa-icon[ng-reflect-icon*='far,square']").each(function (index, tdl) {
             //$(this).replaceWith("[  ]"); 
-            $(this).replaceWith(uncheckedbox);
+            $(tdl).replaceWith(uncheckedbox);
         });
-        $clone.find("input[type=number]").each(function (index) {
-            var value = $(this).val();
-            $(this).replaceWith("<p>" + value + "</p>");
+        $clone.find("input[type=number]").each(function (index, tdl) {
+            var value = $(tdl).val();
+            $(tdl).replaceWith("<p>" + value + "</p>");
         });
         //text boxes
-        $clone.find("textarea").each(function (index) {
-            var value = $(this).val();
-            $(this).replaceWith("<p>" + value + "</p>");
+        $clone.find("textarea").each(function (index, tdl) {
+            var value = $(tdl).val();
+            $(tdl).replaceWith("<p>" + value + "</p>");
         });
         //select boxes
-        $clone.find("select").each(function (index) {
-            var value = $(this).find(':selected').text();
-            $(this).replaceWith("<p>" + value + "</p>");
+        $clone.find("select").each(function (index, tdl) {
+            var value = $(tdl).find(':selected').text();
+            $(tdl).replaceWith("<p>" + value + "</p>");
         });
 
         //replace company logo with inline base64
-        $clone.find("img[src*='CorpLog2.jpg']").each(function (index) {
+        $clone.find("img[src*='CorpLog2.jpg']").each(function (index, tdl) {
             var base64logo = root.base64Logo;
-            let style = $(this).attr('style');
-            $(this).replaceWith(`<img src="${base64logo}" style="${style}" />`);
+            let style = $(tdl).attr('style');
+            $(tdl).replaceWith(`<img src="${base64logo}" style="${style}" />`);
         });
 
         //remove hidden elements
-        $clone.find(".hidden-print").each(function (index) {
-            $(this).remove();
+        $clone.find(".hidden-print").each(function (index, tdl) {
+            $(tdl).remove();
         });
-        $clone.find(".ng-hide").each(function (index) {
-            $(this).remove();
+        $clone.find(".ng-hide").each(function (index, tdl) {
+            $(tdl).remove();
         });
 
         pageBody = cssDiv1b + $clone.prop('outerHTML').replace(regex, "-xs-") + cssDiv2;
@@ -141,12 +141,12 @@ export class DownloadService {
                 let fullhtml = this.getHtmlDoc(data, obj, false);
                 
                 var win = window.open('','printwindow'); 
-                win.document.write(fullhtml);
-                win.document.getElementsByTagName("body")[0].setAttribute("style","padding:unset;margin:2cm;");
+                win?.document.write(fullhtml);
+                win?.document.getElementsByTagName("body")[0].setAttribute("style","padding:unset;margin:2cm;");
                 
                 setTimeout(function () {
-                    win.print();
-                    win.close();
+                    win?.print();
+                    win?.close();
                 }, 500);
             });
         }

@@ -14,16 +14,16 @@
                             </h3>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-info float-right space-left" (click)="print(id)" *ngIf="id!='add'">Open Printable Ticket in a New Window</button>
-                            <my-backbutton class="float-right" [link]="backto"></my-backbutton>
+                            <button type="button" class="btn btn-info float-end space-left" (click)="print(id)" *ngIf="id!='add'">Open Printable Ticket in a New Window</button>
+                            <my-backbutton class="float-end" [link]="backto"></my-backbutton>
                         </div>
                     </div>
                         <div class="row table-dark-header">
                             <div class="col-md-12">
-                                <a class="btn btn-success float-right space-left" [routerLink]="['/admin/inandout']">In and Out (Laundry)</a>
-                                <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'return'" (closeEdit)="close()"></my-inandout>
-                                <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pickup'" (closeEdit)="close()"></my-inandout>
-                                <my-inandout *ngIf="id!='add'" class="float-right space-left" [orderid]="order.ID" [mode]="'pull'" (closeEdit)="close()"></my-inandout>
+                                <a class="btn btn-success float-end space-left" [routerLink]="['/admin/inandout']">In and Out (Laundry)</a>
+                                <my-inandout *ngIf="id!='add'" class="float-end space-left" [orderid]="order.ID" [mode]="'return'" (closeEdit)="close()"></my-inandout>
+                                <my-inandout *ngIf="id!='add'" class="float-end space-left" [orderid]="order.ID" [mode]="'pickup'" (closeEdit)="close()"></my-inandout>
+                                <my-inandout *ngIf="id!='add'" class="float-end space-left" [orderid]="order.ID" [mode]="'pull'" (closeEdit)="close()"></my-inandout>
                             </div>
                         </div>
                 </div>

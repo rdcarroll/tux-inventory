@@ -1,7 +1,7 @@
 ﻿import {  Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { setTimeout } from 'timers';
-import * as root from '../../../common/globals';
+import * as root from '../../../environments/environment';
 
 @Injectable()
 export class Util {

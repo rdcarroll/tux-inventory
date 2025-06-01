@@ -7,3 +7,4 @@ node_modules
 **/Client/src/**/*.js.map
 Client/src/**/*.js
 Client/src/**/*.js.map
+Client/.angular/

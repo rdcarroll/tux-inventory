@@ -3,7 +3,7 @@ import { Order } from '../sales';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../../common/shared';
+import { Column, Config, MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'my-orders',
@@ -13,30 +13,36 @@ export class OrdersComponent implements OnInit {
     items: Order[];
     config: Config;
     searchText: string;
-    columns : Column[] = [
+    message:string="Orders"
+    columns : MyColumn[] = [
         {
             display: 'Order ID', //The text to display
             variable: 'ID', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
+            sortable:true,
+            filterable:true
         },
         {
             display: 'Customer Name',
             variable: 'Customer.FullName',
             filter: 'text',
-            sortable: false
+            sortable:true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'Use Date',
             variable: 'useDate',
             filter: 'date',
-            sortable: false
+            sortable:true,
+            filterable:true
         },
         {
             display: 'Created Date',
             variable: 'createdAt',
             filter: 'date',
-            sortable: false
+            sortable:true,
+            filterable:true
         },
         {
             filter: 'button',
@@ -58,7 +64,7 @@ export class OrdersComponent implements OnInit {
             page: 1,
             collectionSize: 0,
             maxSize: 5,
-            pageSize: this.util.PageSize()
+            pageSize: this.util.MaxPageSize()
         };
     }
 
@@ -73,15 +79,17 @@ export class OrdersComponent implements OnInit {
 
         this.util.loading(true, null);
         this.ApiClient.pGet("orders", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
-            .subscribe(
-                (res) => {
+            .subscribe({
+                next: (res) => {
                     // this.items = res;
                     // this.config.collectionSize = res.TotalCount;
                     this.items = res.rows;
                     this.config.collectionSize = res.count;
-                }, (err) => {
+                },
+                error: (err) => {
                     this.util.alert("error", err.statusText, false, null);
-                });
+                }
+            });
     }
     searchChanged(s: string) {
         this.searchText = s;
@@ -94,16 +102,16 @@ export class OrdersComponent implements OnInit {
     }
     remove(id: number): void {
         this.ApiClient.pRemove("orders/" + id, {}).pipe(take(1))
-            .subscribe(res => {
+            .subscribe({next:(res) => {
                 this.util.alert("success", "Order was successfully removed.", false, { icon: 'check' }, true);
                 this.pageChange();
-            }, (err) => {
+            }, error: (err) => {
                 this.util.handleError(err, "Error Removing");
-            });
+            }});
     }
 
 
-    getRow(row: any): void {
+    rowClick(row:any): void{
         this.router.navigate(['/sales/orders', row.ID]);
     }
     getBtn(args: any): void {

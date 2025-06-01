@@ -14,8 +14,8 @@ import * as root from '../../globals';
                         <h3>{{customTitle}}</h3>
                     </div>
                     <div class="col-md-4">
-                        <my-logout class="float-right"></my-logout>
-                        <a class="btn btn-light float-right"  routerLink="/landing"><fa-icon [icon]="['fas', 'home']"></fa-icon> Home</a>
+                        <my-logout class="float-end"></my-logout>
+                        <a class="btn btn-light float-end"  routerLink="/landing"><fa-icon [icon]="['fas', 'home']"></fa-icon> Home</a>
                     </div>
                 </div>
             </div>

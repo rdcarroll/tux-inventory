@@ -45,7 +45,7 @@ export class OrderDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.customer_id = this.route.snapshot.queryParams["customer_id"];
         this.event_id = this.route.snapshot.queryParams["event_id"];
         this.getLookups().subscribe(res=>{
@@ -116,7 +116,7 @@ export class OrderDetailComponent implements OnInit {
                 this.util.handleError(err, "Error Saving");
             });
     }
-    useDateChanged(evt:Date): void {
+    useDateChanged(evt:object): void {
         let uDate = moment(evt);
         this.order.useDate = uDate.toDate();
         this.order.pickUpDate = uDate.clone().subtract(1,'days').toDate();
@@ -137,14 +137,14 @@ export class OrderDetailComponent implements OnInit {
             .subscribe(res => {});
     }
 
-    print(id:number): void {
+    print(id:string): void {
         const dialogRef = this.dialog.open(ShowOrderDialog, {
                 width:'250px',data:{id:id},disableClose:true
         });
         dialogRef.afterClosed().subscribe(res=>{});
 
     }
-    printTicket(id:number): void {
+    printTicket(id:string): void {
         const dialogRef = this.dialog.open(ShowTicketDialog, {
                 width:'250px',data:{id:id},disableClose:true
         });

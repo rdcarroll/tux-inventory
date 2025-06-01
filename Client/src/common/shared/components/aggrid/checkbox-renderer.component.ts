@@ -1,5 +1,5 @@
 ﻿import { Component, OnDestroy } from '@angular/core';
-import { AgRendererComponent } from 'ag-grid-angular-legacy';
+import { AgRendererComponent } from 'ag-grid-angular';
 import { ICellRendererParams } from "ag-grid-community";
 
 @Component({
@@ -32,7 +32,7 @@ export class CheckboxRenderer implements AgRendererComponent {
 
     checkedHandler(event: any) {
         let checked = event.target.checked;
-        let col = this.params.column;
+        let col = this.params.column!;
         this.params.node.setDataValue(col, checked);
     }
     ngOnDestroy() {

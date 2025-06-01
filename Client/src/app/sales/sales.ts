@@ -8,6 +8,7 @@ export class Order {
     pickUpDate: Date;
     returnDate: Date;
     actualReturnDate: Date;
+    OrderTickets: any;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -21,8 +22,11 @@ export class OrderItem {
     ItemSize: string;
     InventoryItemID: number;
     Cost: number;
+    Inventory: any;
     pickedupDate: Date;
-    returedDate: Date;
+    returnedDate: Date;
+    pulledDate: Date;
+    overbooked: boolean;
     createdAt: Date;
     updatedAt: Date;
     InventoryItem: {};
@@ -36,6 +40,8 @@ export class Customer {
     Email: string;
     Phone: string;
     Address: string;
+    Orders: Order[];
+    OrderTickets: any[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -43,6 +49,7 @@ export class Event {
     ID: number;
     EventName: string;
     EventTypeID: number;
+    Orders: Order[];
     eventDate: Date;
     createdAt: Date;
     updatedAt: Date;

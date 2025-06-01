@@ -5,7 +5,7 @@ import { ApiClientService, Util } from '../../../../common/core';
 import { Order } from '../../sales';
 import { forkJoin, Observable } from 'rxjs';
 import * as moment from 'moment';
-import * as root from '../../../../common/globals';
+import * as root from '../../../../environments/environment';
 
 @Component({
     selector: 'event-print',

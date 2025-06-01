@@ -1,6 +1,5 @@
-﻿
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
+﻿@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
 
 //$theme-colors: ( "primary" : rgb(10,52,67), "success":rgb(120,149,61), "warning":rgb(237,176,84), "info":rgb(27,116,138), "danger": rgb(213,70,41) );
 
@@ -14,9 +13,9 @@ $ettp-fail: #D54629;
 $navbar-dark-color: $ettp-compliment;
 $navbar-inverse-bg: $ettp-primary;
 
-@import "~bootstrap/scss/bootstrap";
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~ag-grid-community/styles/ag-grid.css';
-@import '~ag-grid-community/styles/ag-theme-alpine.css';
-@import '~ag-grid-community/styles/ag-theme-balham.css';
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "../../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import '../../../node_modules/ag-grid-community/styles/ag-grid.css';
+@import '../../../node_modules/ag-grid-community/styles/ag-theme-alpine.css';
+@import '../../../node_modules/ag-grid-community/styles/ag-theme-balham.css';
 

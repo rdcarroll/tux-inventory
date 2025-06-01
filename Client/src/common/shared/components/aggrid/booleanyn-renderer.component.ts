@@ -1,5 +1,5 @@
 ﻿import { Component, OnDestroy } from '@angular/core';
-import { AgRendererComponent } from 'ag-grid-angular-legacy';
+import { AgRendererComponent } from 'ag-grid-angular';
 import { ICellRendererParams } from "ag-grid-community";
 
 
@@ -23,7 +23,7 @@ export class YNBooleanRenderer implements AgRendererComponent {
     doshow: boolean = false;
 
     // gets called once before the renderer is used
-    agInit(params: ICellRendererParams): void {
+    agInit(params: ICellRendererParams): void|null{
         if (!params.data && !params.colDef?.showRowGroup) return null;
         this.doshow = true;
         this.params = params;

@@ -3,7 +3,7 @@ import { Event } from '../sales';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../../common/shared';
+import { Column, Config, MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'my-events',
@@ -13,18 +13,22 @@ export class eventsComponent implements OnInit {
     items: Event[];
     config: Config;
     searchText: string;
-    columns : Column[] = [
+    message:string="Events"
+    columns : MyColumn[] = [
         {
             display: 'Event Name', //The text to display
             variable: 'EventName', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
+            sortable:true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'Event Date',
             variable: 'eventDate',
             filter: 'date',
-            sortable: false
+            sortable:true,
+            filterable:true
         },
         {
             filter: 'button',
@@ -46,7 +50,7 @@ export class eventsComponent implements OnInit {
             page: 1,
             collectionSize: 0,
             maxSize: 5,
-            pageSize: this.util.PageSize()
+            pageSize: this.util.MaxPageSize()
         };
     }
 
@@ -77,6 +81,9 @@ export class eventsComponent implements OnInit {
     gridPageChange(page: number): void {
         this.config.page = page;
         this.pageChange();
+    }
+    rowClick(id:any): void{
+        
     }
     remove(id: number): void {
         this.ApiClient.pRemove("events/" + id, {}).pipe(take(1))

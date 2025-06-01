@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card" *ngIf="item">
                 <div class="card-header">
-                    <my-backbutton class="float-right" [link]="['/sales/customers']"></my-backbutton>
+                    <my-backbutton class="float-end" [link]="['/sales/customers']"></my-backbutton>
                     <h3><span>{{id==='add'?"Create":"Update"}} </span>Customer</h3>
                 </div>
                 <div class="card-body">
@@ -65,7 +65,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label"></label>
                                     <div class="col-md-8">
-                                        <my-sizes *ngIf="item.ID" class="float-right space-left" [customerid]="item.ID" (closeEdit)="close()"></my-sizes>
+                                        <my-sizes *ngIf="item.ID" class="float-end space-left" [customerid]="item.ID" (closeEdit)="close()"></my-sizes>
                                     </div>
                                 </div>
                             </div>

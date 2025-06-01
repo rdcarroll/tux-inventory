@@ -33,7 +33,7 @@ export class InventoryItemDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.inventory_id = this.route.snapshot.queryParams["inventory_id"];
         if(this.inventory_id) this.backto = ['/admin/inventory',this.inventory_id];
         this.getLookups().subscribe(res=>{

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 
 import { Config } from '../../common/shared';
-import * as root from '../../common/globals';
+import * as root from '../../environments/environment';
 import { Util } from '../../common/core';
 
 @Component({

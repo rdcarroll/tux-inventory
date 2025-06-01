@@ -7,7 +7,7 @@ import {  HttpClient } from '@angular/common/http';
 @Injectable()
 export class ApiClientService {
 
-    private defaultMode = 'api';  // default api base
+    private defaultMode = '../api';  // default api base
     private defaultResponseType = 'Json';
     private defaultHeaders:any = { 'Content-Type': 'application/json' };
     private defaultCache = false;
@@ -79,7 +79,7 @@ export class ApiClientService {
 
     private urlBuilder(url: string, params: any): string {
         let avoidlist = ['mode', 'responseType'];
-        var q = [];
+        var q:string[] = [];
         for (let key in params) {
             if (key=='include' || key=='qf') q.push(key + "=" + JSON.stringify(params[key]));
             else if (avoidlist.indexOf(key) < 0) q.push(key + "=" + encodeURIComponent(params[key]));
@@ -90,13 +90,13 @@ export class ApiClientService {
 
     private request(options: ApiOptions): Observable<any> {
 
-        let cu = JSON.parse(sessionStorage.getItem('currentUser'));
+        let cu = JSON.parse(sessionStorage.getItem('currentUser')??"");
         //let authheader = {'Authorization':`${cu.token_type} ${cu.access_token}`};
         let authheader = {'Authorization':`Bearer ${cu.access_token}`};
         options.headers = Object.assign(this.defaultHeaders, authheader, options.headers || {})
         if (options.cache && options.cache === true) {
             if (sessionStorage.getItem(encodeURIComponent(options.url)) != null) {
-                return observableOf(JSON.parse(sessionStorage.getItem(encodeURIComponent(options.url))));
+                return observableOf(JSON.parse(sessionStorage.getItem(encodeURIComponent(options.url))!));
             }
         }
 
@@ -123,7 +123,7 @@ export class ApiClientService {
                     )
                 ),
                 map((res:any) => {
-                    this.observable = null;
+                    this.observable = new Observable<any>;
                     if (options.cache && options.cache === true) {
                         sessionStorage.setItem(encodeURIComponent(options.url), JSON.stringify(res.body));
                     }

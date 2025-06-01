@@ -37,7 +37,7 @@ export class DateTimeComponent implements OnInit  {
         this.dateTime = this.dateTime == null ? this.now : this.dateTime;
     }
 
-    range1(l: number) { var x = []; var i = 1; while (x.push(i++) < l) { }; return x }
+    range1(l: number) { var x:number[] = []; var i = 1; while (x.push(i++) < l) { }; return x }
 
     onChange() {
         //var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);

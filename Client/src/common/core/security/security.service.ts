@@ -9,12 +9,12 @@ import { take } from 'rxjs/operators';
 export class SecurityService {
     constructor(private http: HttpClient, private ApiClient: ApiClientService ) { }
 
-    private userSubject = new Subject<CurrentUser>();
+    private userSubject = new Subject<CurrentUser|null>();
     private authZSubject = new Subject<object>();
     private returnUrl: string;
 
     getUser(): CurrentUser{
-        let value = JSON.parse(sessionStorage.getItem('currentUser'));
+        let value = JSON.parse(sessionStorage.getItem('currentUser')??"");
         var cu: CurrentUser = typeof value === 'object' ? value : null;
         if(cu) cu.FullName=`${cu.FirstName} ${cu.LastName}`;
         return cu;
@@ -47,18 +47,20 @@ export class SecurityService {
         let options = {
             headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         };
-        this.http.post('/auth/login', body.toString(), options).subscribe((user:any) => {
+        this.http.post('/auth/login', body.toString(), options).subscribe({
+            next: (user: any) => {
                 if (user) {
                     // store user details and token in local storage to keep user logged in between page refreshes
                     sessionStorage.setItem('currentUser', JSON.stringify(user));
                     this.userSubject.next(user);
-                }
-                else {
+                } else {
                     this.userSubject.next(null);
                 }
-            }, (err) => {
+            },
+            error: (err) => {
                 this.userSubject.next(null);
-            });
+            }
+        });
     }
     authZ() {
         this.ApiClient.pGet("Employees/Me", {}).pipe(take(1))

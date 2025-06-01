@@ -15,7 +15,7 @@ export interface DialogData{
 })
 export class ShowTicketDialog {
 
-    id: number;
+    id: string;
     order: any;
 
     constructor(
@@ -24,7 +24,7 @@ export class ShowTicketDialog {
        public dialogRef: MatDialogRef<ShowTicketDialog>,
        @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) {
-        this.id = data.id;
+        this.id = data.id.toString();
      }
 
 

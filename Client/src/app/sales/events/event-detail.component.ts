@@ -33,7 +33,7 @@ export class eventDetailComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.getLookups().subscribe(res=>{
             if (this.id === 'add') {
                 this.adding=true;
@@ -69,8 +69,8 @@ export class eventDetailComponent implements OnInit {
             });
     }
 
-    eventDateChanged(evt:Date): void {
+    eventDateChanged(evt:object): void {
         // let uDate = moment(evt);
-        this.item.eventDate = evt;
+        this.item.eventDate = evt as Date;
     }
 }
