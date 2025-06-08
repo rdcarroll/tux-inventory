@@ -107,8 +107,8 @@ export class inventoryComponent implements OnInit {
     }
 
 
-    getRow(row: any): void {
-        //this.router.navigate(['/admin/administrators', row.ID]);
+    rowClick(row: any): void {
+        this.router.navigate(['/admin/inventory', row.ID]);
     }
     getBtn(args: any): void {
         switch (args[1]) {

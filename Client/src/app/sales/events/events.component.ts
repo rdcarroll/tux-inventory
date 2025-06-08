@@ -82,8 +82,8 @@ export class eventsComponent implements OnInit {
         this.config.page = page;
         this.pageChange();
     }
-    rowClick(id:any): void{
-        
+    rowClick(row: any): void {
+                this.router.navigate(['/sales/events', row.ID]);
     }
     remove(id: number): void {
         this.ApiClient.pRemove("events/" + id, {}).pipe(take(1))
@@ -95,10 +95,6 @@ export class eventsComponent implements OnInit {
             });
     }
 
-
-    getRow(row: any): void {
-                this.router.navigate(['/sales/events', row.ID]);
-    }
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":

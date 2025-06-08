@@ -44,24 +44,28 @@ export class BusinessInandoutComponent implements OnInit {
     
     save(): void {
         this.getInventoryItem()
-            .subscribe(
-                (res) => {
+            .subscribe({
+                next: (res) => {
                     if(null != this.invitem && this.status_type != null){
                         this.ApiClient.pPost(`inventory_items/${this.invitem.ID}/actions`, {}, {status_type:this.status_type}).pipe(take(1))
-                            .subscribe(res => {
-                                this.util.alert("success", "Success Saving Action", false, { icon: 'check' }, false);
-                                this.addInventoryItem(this.invitem.ID).subscribe((result: any) => {
-                                  });
-                            }, (err) => {
-                                this.util.handleError(err, "Error Saving");
+                            .subscribe({
+                                next: res => {
+                                    this.util.alert("success", "Success Saving Action", false, { icon: 'check' }, false);
+                                    this.addInventoryItem(this.invitem.ID).subscribe();
+                                },
+                                error: (err) => {
+                                    this.util.handleError(err, "Error Saving");
+                                }
                             });
                     }
                     else{
                         this.util.alert("warning", "Barcode Not Found", false, { icon: 'exclamation' }, false);
                     }
-                }, (err) => {
+                },
+                error: (err) => {
                     this.util.alert("error", err.statusText, false, null);
-                });
+                }
+            });
 
     }
     ngOnInit(): void {

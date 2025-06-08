@@ -21,7 +21,7 @@
                         <div class="form-group row mb-2">
                             <label class="col-md-4 col-form-label">Inventory Type</label>
                             <div class="col-md-8">
-                                <select class="form-control" [(ngModel)]="item.InventoryTypeID" name="InventoryType" required>
+                                <select class="form-controlz form-select" [(ngModel)]="item.InventoryTypeID" name="InventoryType" required>
                                     <option *ngFor="let i of inventorytypes" [value]="i.ID">{{i.Name}}</option>
                                  </select>
                             </div>

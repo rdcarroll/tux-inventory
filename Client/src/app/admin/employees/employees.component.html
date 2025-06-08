@@ -5,12 +5,11 @@
         </div>
         <a class="btn btn-link float-end" [routerLink]="['/admin/employees/add']">Add Employee</a>
     </div>
-    <div class="flex-grow-1" style="overflow-y: auto;">
+    <div class="flex-grow-1 mb-1" style="overflow-y: auto;">
         <my-datagrid name="maingrid" [columns]="columns" [data]="items" [Tools]="[]"
         (btnClicked)="getBtn($event)"
          (rowClicked)="rowClick($event)"></my-datagrid>
     </div>
-    <div class="mt-1"></div>
 </div>
 
 

@@ -103,10 +103,6 @@ export class EmployeesComponent implements OnInit {
             });
     }
 
-
-    getRow(row: any): void {
-        //this.router.navigate(['/admin/administrators', row.ID]);
-    }
     getBtn(args: any): void {
         switch (args[1]) {
             case "edit":
@@ -119,8 +115,8 @@ export class EmployeesComponent implements OnInit {
                 break;
         }
     }
-    rowClick(row:any): void{
-        
+    rowClick(row: any): void {
+        this.router.navigate(['/admin/employees', row.ID]);
     }
 
     ngOnInit(): void {

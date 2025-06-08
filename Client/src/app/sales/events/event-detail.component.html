@@ -13,10 +13,6 @@
 
                     <form>
                         <div class="row">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6"></div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group row mb-2">
                                     <label class="col-md-4 col-form-label">Event Name</label>
@@ -27,7 +23,7 @@
                                 <div class="form-group row mb-2">
                                     <label class="col-md-4 col-form-label">Event Type</label>
                                     <div class="col-md-8">
-                                        <select class="form-control" [(ngModel)]="item.EventTypeID" name="EventType" required>
+                                        <select class="form-controlz form-select" [(ngModel)]="item.EventTypeID" name="EventType" required>
                                             <option *ngFor="let i of eventtypes" [value]="i.ID">{{i.Name}}</option>
                                          </select>
                                     </div>

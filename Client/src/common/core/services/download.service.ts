@@ -137,7 +137,7 @@ export class DownloadService {
         
         try {
             
-            this.http.get('dist/ngApp.css', { responseType: 'text' }).subscribe(data => {
+            this.http.get('styles.css', { responseType: 'text' }).subscribe(data => {
                 let fullhtml = this.getHtmlDoc(data, obj, false);
                 
                 var win = window.open('','printwindow'); 

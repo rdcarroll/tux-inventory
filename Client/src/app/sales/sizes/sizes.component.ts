@@ -49,7 +49,7 @@ export class sizesComponent implements OnInit {
         this.getCustomer(this.customerid).subscribe(res=>{
             
             this.dialogRef = this.dialog.open(template, {
-              width: '80%'
+              width: '60%'
             });
             this.dialogRef.afterClosed().subscribe((result: any) => {
                 this.closeEdit.emit(true);

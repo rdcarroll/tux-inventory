@@ -3,7 +3,7 @@ import { Customer } from '../sales';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../../common/shared';
+import { Column, Config, MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'my-customers',
@@ -13,24 +13,30 @@ export class customersComponent implements OnInit {
     items: Customer[];
     config: Config;
     searchText: string;
-    columns : Column[] = [
+    message:string="Customers"
+    columns : MyColumn[] = [
         {
             display: 'Full Name', //The text to display
             variable: 'FullName', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
+            sortable:true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'Email',
             variable: 'Email',
             filter: 'text',
-            sortable: false
+            sortable:true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'Phone',
             variable: 'Phone',
             filter: 'text',
-            sortable: false
+            sortable:true,
+            filterable:true,
         },
         {
             filter: 'button',
@@ -52,7 +58,7 @@ export class customersComponent implements OnInit {
             page: 1,
             collectionSize: 0,
             maxSize: 5,
-            pageSize: this.util.PageSize()
+            pageSize: this.util.MaxPageSize()
         };
     }
 
@@ -66,13 +72,15 @@ export class customersComponent implements OnInit {
 
         this.util.loading(true, null);
         this.ApiClient.pGet("customers", q).pipe(finalize(() => this.util.loading(false, null)), take(1))
-            .subscribe(
-                (res) => {
+            .subscribe({
+                next: (res) => {
                     this.items = res.rows;
                     this.config.collectionSize = res.count;
-                }, (err) => {
+                },
+                error: (err) => {
                     this.util.alert("error", err.statusText, false, null);
-                });
+                }
+            });
     }
     searchChanged(s: string) {
         this.searchText = s;
@@ -85,16 +93,20 @@ export class customersComponent implements OnInit {
     }
     remove(id: number): void {
         this.ApiClient.pRemove("customers/" + id, {}).pipe(take(1))
-            .subscribe(res => {
-                this.util.alert("success", "Customer was successfully removed.", false, { icon: 'check' }, true);
-                this.pageChange();
-            }, (err) => {
-                this.util.handleError(err, "Error Removing");
+            .subscribe({
+                next: (res) => {
+                    this.util.alert("success", "Customer was successfully removed.", false, { icon: 'check' }, true);
+                    this.pageChange();
+                },
+                error: (err) => {
+                    this.util.handleError(err, "Error Removing");
+                }
             });
     }
 
 
-    getRow(row: any): void {
+    rowClick(arg:any): void{
+        let row: Customer = arg;
                 this.router.navigate(['/sales/customers', row.ID]);
     }
     getBtn(args: any): void {

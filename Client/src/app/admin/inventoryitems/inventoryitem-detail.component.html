@@ -25,7 +25,7 @@
                         <div class="form-group row mb-2">
                             <label class="col-md-4 col-form-label">Current Status</label>
                             <div class="col-md-8">
-                                <select class="form-control" [(ngModel)]="item.StatusID" name="StatusType" required>
+                                <select class="form-controlz form-select" [(ngModel)]="item.StatusID" name="StatusType" required>
                                     <option *ngFor="let i of statuses" [value]="i.ID">{{i.Name}}</option>
                                  </select>
                             </div>
@@ -67,6 +67,7 @@
 </div>
 
 <ng-template #dialogRef let-data>
+ <div class="p-5">
     Historical Actions for this Inventory Item
     <table class="table table-bordered">
         <tr *ngFor="let item of data.actionitems">
@@ -74,6 +75,7 @@
             <td>{{item.Action.Name}}</td>
         </tr>
     </table>
+</div>
 </ng-template>
 
 

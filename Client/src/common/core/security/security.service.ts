@@ -14,9 +14,10 @@ export class SecurityService {
     private returnUrl: string;
 
     getUser(): CurrentUser{
-        let value = JSON.parse(sessionStorage.getItem('currentUser')??"");
+        let user = sessionStorage.getItem('currentUser');
+        let value = JSON.parse(user ?? "");
         var cu: CurrentUser = typeof value === 'object' ? value : null;
-        if(cu) cu.FullName=`${cu.FirstName} ${cu.LastName}`;
+        if(cu?.LastName) cu.FullName=`${cu.FirstName} ${cu.LastName}`;
         return cu;
     }
     getReturnUrl(): string {

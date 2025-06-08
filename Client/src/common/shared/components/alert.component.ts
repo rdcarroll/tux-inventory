@@ -13,7 +13,7 @@ import { Util } from '../../core';
 <div *ngIf="message.css?.icon == 'arrow-up'" class="float-start" style="margin-right:5px;"><fa-icon  [icon]="['fas', 'arrow-up']"></fa-icon></div>
 <div *ngIf="message.css?.icon == 'lightbulb'" class="float-start" style="margin-right:5px;"><fa-icon  [icon]="['far', 'lightbulb']"></fa-icon></div>
 <div *ngIf="message.css?.icon == 'exclamation'" class="float-start" style="margin-right:5px;"><fa-icon  [icon]="['fas', 'exclamation-triangle']"></fa-icon></div>
-                    <button type='button' class='close' (click)='btnClick(message)'><fa-icon [icon]="['fas', 'times-circle']" size="xs" title="Close"></fa-icon></button>
+                    <button type='button' class='btn-close float-end' (click)='btnClick(message)'></button>
                     <div [innerHTML]="message.msg"></div>
                     </div>
                 </div>

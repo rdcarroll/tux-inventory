@@ -15,7 +15,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Package Name</label>
                             <div class="col-md-8">
-                                <select class="form-control" [(ngModel)]="item.PackageID" name="Package" required [disabled]="package_id!=null">
+                                <select class="form-controlz form-select" [(ngModel)]="item.PackageID" name="Package" required [disabled]="package_id!=null">
                                     <option *ngFor="let i of packages" [value]="i.ID">{{i.Name}}</option>
                                  </select>
                             </div>
@@ -23,7 +23,7 @@
                         <div class="form-group row">
                             <label class="col-md-4 col-form-label">Inventory Model</label>
                             <div class="col-md-8">
-                                <select class="form-control" [(ngModel)]="item.InventoryID" name="Inventory" required>
+                                <select class="form-controlz form-select" [(ngModel)]="item.InventoryID" name="Inventory" required>
                                     <option *ngFor="let i of inventories" [value]="i.ID">{{i.ModelName}} ({{i.InventoryType.Name}})</option>
                                  </select>
                             </div>

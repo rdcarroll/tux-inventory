@@ -31,10 +31,10 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="form-group row">
+        <div class="form-group row mb-2">
             <label class="col-md-4 col-form-label">Type</label>
             <div class="col-md-8">
-                <select class="form-control" [(ngModel)]="reasonid" name="PaymentReasonID" required >
+                <select class="form-controlz form-select" [(ngModel)]="reasonid" name="PaymentReasonID" required >
                     <option *ngFor="let i of reasons" [value]="i.ID">{{i.Name}}</option>
                  </select>
             </div>

@@ -5,10 +5,9 @@
         </div>
         <a class="btn btn-link float-end" [routerLink]="['/sales/events/add']">Add Event</a>
     </div>
-    <div class="flex-grow-1" style="overflow-y: auto;">
+    <div class="flex-grow-1 mb-1">
         <my-datagrid name="maingrid" [columns]="columns" [data]="items" [Tools]="[]"
         (btnClicked)="getBtn($event)"
          (rowClicked)="rowClick($event)"></my-datagrid>
     </div>
-    <div class="mt-1"></div>
 </div>

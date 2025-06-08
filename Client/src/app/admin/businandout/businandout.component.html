@@ -4,12 +4,11 @@
         <h4 style="margin: 0px;" class="pull-left">Check Items In or Out</h4>
       </div>
   </div>
-  <div class="flex-grow-1" style="overflow-y: auto;">
-    <div class="card-blockz">
+  <div class="flex-grow-1 p-3" style="overflow-y: auto;">
       <div class="form-group row mb-2">
           <label class="col-md-4 col-form-label">Select Action</label>
           <div class="col-md-6">
-              <select class="form-control" [(ngModel)]="status_type" name="status_types" required>
+              <select class="form-controlz form-select" [(ngModel)]="status_type" name="status_types" required>
                   <option *ngFor="let i of status_types" [value]="i.ID">{{i.Name}}</option>
                </select>
           </div>
@@ -48,7 +47,6 @@
             </tr>
           </tbody>
       </table>
-    </div>
   </div>
   <div class="mt-1"></div>
 </div>

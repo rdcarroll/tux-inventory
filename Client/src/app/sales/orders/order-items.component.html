@@ -22,7 +22,7 @@
                                     <tbody>
                                             <tr *ngFor="let item of orderitems">
                                                 <ng-container *ngIf="item.$$editing; else not_editing">
-                                                    <td colspan="9">
+                                                    <td colspan="10">
                                                         <order-item-edit [item]="item" (itemChange)="save(item,$event)" (closeEdit)="btnClick(item,'close')"></order-item-edit>
                                                     </td>
                                                 </ng-container>
@@ -33,6 +33,7 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td>{{item.Cost | currency}}</td>
+                                                        <td></td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -62,7 +63,7 @@
                                             <tr>
                                                 <td colspan="4" class="text-right">Total</td>
                                                 <td>{{total | currency}}</td>
-                                                <td colspan="4"></td>
+                                                <td colspan="5"></td>
                                             </tr>
                                     </tbody>
                                 </table> 
