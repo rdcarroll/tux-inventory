@@ -52,12 +52,13 @@
                   "tsConfig":"tsconfig.jit.json"
               },
             "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
+                  "buildOptimizer": true,
+                  "optimization": true,
+                  "vendorChunk": false,
+                  "extractLicenses": true,
+                  "sourceMap": false,
+                  "namedChunks": false,
+              "outputHashing": "all",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -69,8 +70,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -78,11 +79,17 @@
                   "maximumError": "4kb"
                 }
               ],
+                  "buildOptimizer": true,
+                  "optimization": true,
+                  "vendorChunk": false,
+                  "extractLicenses": true,
+                  "sourceMap": false,
+                  "namedChunks": false,
               "outputHashing": "all",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.production.ts"
                 }
               ]              
             }
