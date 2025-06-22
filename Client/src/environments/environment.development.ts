@@ -13,7 +13,7 @@ export const UID = "RC1";
 export const PWD = "123456";
 export const email_root = "sample.com";
 export const file_target = "_self";
-export const assetpath = "dist/";
+export const assetpath = "dist/assets/";
 export const toolbarHiddenButtons = [
     [
         //'undo',

@@ -29,6 +29,7 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/assets/images/icon-favicon-20.jpg",
+              "src/assets/images/CorpLog2.jpg",
               {
                 "glob": "_redirects",
                 "input": "src/assets",
