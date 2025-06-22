@@ -1,5 +1,6 @@
 ﻿import { Component, Input } from '@angular/core';
-import * as root from '../../globals';
+//import * as root from '../../globals';
+import * as root from '../../../environments/environment';
 
 @Component({
     selector: 'app-jumbo',

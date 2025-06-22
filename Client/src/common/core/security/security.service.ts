@@ -15,7 +15,7 @@ export class SecurityService {
 
     getUser(): CurrentUser{
         let user = sessionStorage.getItem('currentUser');
-        let value = JSON.parse(user ?? "");
+        let value = user ? JSON.parse(user) : null;
         var cu: CurrentUser = typeof value === 'object' ? value : null;
         if(cu?.LastName) cu.FullName=`${cu.FirstName} ${cu.LastName}`;
         return cu;

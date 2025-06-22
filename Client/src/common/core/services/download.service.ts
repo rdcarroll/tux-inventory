@@ -3,7 +3,8 @@ import { Html2CSVService } from './html2csv.service';
 import * as FileSaver from 'file-saver';
 import * as $ from 'jquery'; //to be able to use $. notation in components
 import { ApiClientService } from '..';
-import * as root from '../../globals';
+//import * as root from '../../globals';
+import * as root from '../../../environments/environment';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { take, map } from 'rxjs/operators';
 import { FileService } from './file.service';
@@ -137,7 +138,7 @@ export class DownloadService {
         
         try {
             
-            this.http.get('styles.css', { responseType: 'text' }).subscribe(data => {
+            this.http.get('dist/styles.css', { responseType: 'text' }).subscribe(data => {
                 let fullhtml = this.getHtmlDoc(data, obj, false);
                 
                 var win = window.open('','printwindow'); 

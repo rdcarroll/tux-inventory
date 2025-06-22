@@ -12,7 +12,7 @@ export interface DialogData{
 
 @Component({
     selector: 'show-order-dialog',
-    template: '<div class="p-4">Loading Order...Please Wait</div><order-print [hidden]="true" [id]="id" (action)="complete($event)"></order-print>'
+    template: '<div class="p-4 d-print-none">Loading Order...Please Wait</div><order-print [hidden]="true" [id]="id" (action)="complete($event)"></order-print>'
 })
 export class ShowOrderDialog {
 

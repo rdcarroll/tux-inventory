@@ -18,6 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "../dist",
+            "deployUrl": "dist/",
             "index": {
               "input":"src/index.html",
               "output":"index.html"

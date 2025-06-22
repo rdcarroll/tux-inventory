@@ -51,17 +51,23 @@ export class OrderPrintComponent implements OnChanges {
     ngOnChanges(): void {
         if(this.id){
             this.getLookups(this.id)
-                .subscribe(res => {
-                    this.getOrderItems(this.id)
-                        .subscribe(res => {
-                            setTimeout(() => {
-                                this.action.emit(true);
-                            }, 500);
-                         }, (err) => {
-                            this.action.emit(false);
-                        });
-                 }, (err) => {
-                    this.action.emit(false);
+                .subscribe({
+                    next: res => {
+                        this.getOrderItems(this.id)
+                            .subscribe({
+                                next: res => {
+                                    setTimeout(() => {
+                                        this.action.emit(true);
+                                    }, 500);
+                                },
+                                error: err => {
+                                    this.action.emit(false);
+                                }
+                            });
+                    },
+                    error: err => {
+                        this.action.emit(false);
+                    }
                 });
         }
     }
