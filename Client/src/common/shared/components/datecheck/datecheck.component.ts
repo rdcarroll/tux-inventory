@@ -23,7 +23,7 @@ export class DateCheckComponent  {
             this.dateTime = new Date();
             this.dateTime.setHours(5, 0, 0, 0);
         }
-        else this.dateTime = null;
+        else this.dateTime = this.dateTime;
         this.check = isChecked;
         this.dateTimeChange.emit(this.dateTime);
         this.checkChange.emit(this.check);

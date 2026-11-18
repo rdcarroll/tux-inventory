@@ -29,7 +29,7 @@ export class packageinventoryDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.package_id = this.route.snapshot.queryParams["package_id"];
         if(this.package_id) this.backto = ['/admin/packages',this.package_id];
         this.getLookups().subscribe(res=>{

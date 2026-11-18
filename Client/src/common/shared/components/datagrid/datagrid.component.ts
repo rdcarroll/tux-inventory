@@ -89,7 +89,7 @@ export class Datagrid implements OnInit, OnChanges {
         row.$$selected = true;
         this.btnClicked.emit([row,btntype]);
     }
-    getRowValue(row: any, variable: string): void {
+    getRowValue(row: any, variable: string): void|null {
         try {
             return eval("row." + variable);
         } catch (e) {

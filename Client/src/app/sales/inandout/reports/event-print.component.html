@@ -30,13 +30,13 @@
                   <td style="max-width: 100px;" *ngIf="!item.pulledDate"> <!-- (blur)="pullBlur(item,$event)" -->
                     
                     <div *ngIf="item.InventoryItem" >
-                        <ngx-barcode [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem" [bc-height]="30"></ngx-barcode>
+                        <ngx-barcode6 [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem" [bc-height]="30"></ngx-barcode6>
                       </div>
                       <div *ngIf="item.notfound" class="text-alert">The barcode does not match an Inventory Item for the model and size selected, and has not been saved.</div>
                   </td>
                   <td *ngIf="item.pulledDate">
                     <div *ngIf="item.InventoryItem?.Barcode" >
-                        <ngx-barcode [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem.Barcode" [bc-height]="30"></ngx-barcode>
+                        <ngx-barcode6 [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem.Barcode" [bc-height]="30"></ngx-barcode6>
                       </div>
                   </td>
                 </ng-container>
@@ -77,7 +77,7 @@
                   <td>{{item.pulledDate | date}}</td>
                   <td>
                     <div *ngIf="item.InventoryItem" >
-                        <ngx-barcode [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem" [bc-height]="30"></ngx-barcode>
+                        <ngx-barcode6 [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem" [bc-height]="30"></ngx-barcode6>
                       </div>
                   </td>
                 </ng-container>
@@ -121,18 +121,21 @@
                     <td>{{item.returnedDate | date}}</td>
                     <td>
                         <div *ngIf="item.InventoryItem" >
-                            <ngx-barcode [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem" [bc-height]="30"></ngx-barcode>
+                            <ngx-barcode6 [bc-value]="item.InventoryItem.Barcode" [bc-display-value]="item.InventoryItem" [bc-height]="30"></ngx-barcode6>
                           </div>
                     </td>
                     <td style="max-width: 100px;" *ngIf="!item.returnedDate || !item.pickedupDate">
                         <div *ngIf="item.returnbarcode" >
-                            <ngx-barcode [bc-value]="item.returnbarcode" [bc-display-value]="item.returnbarcode" [bc-height]="30"></ngx-barcode>
+                            <ngx-barcode6 [bc-value]="item.returnbarcode" [bc-display-value]="item.returnbarcode" [bc-height]="30"></ngx-barcode6>
                           </div>
                         <div *ngIf="item.notfound" class="text-alert">The barcode does not match the Inventory Item checked out, and has not been saved.</div>
                     </td>
                     <td style="max-width: 200px;" *ngIf="item.returnedDate && item.pickedupDate">
                     </td>
                   </ng-container>
+                  <ng-template #is_default>
+                    <td colspan="6">Inventory Model and Size not selected, yet</td>
+                  </ng-template>
               </tr>
             </tbody>
         </table>

@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { ITooltipAngularComp } from 'ag-grid-angular-legacy';
+import { ITooltipAngularComp } from 'ag-grid-angular';
 import { ITooltipParams } from 'ag-grid-community';
 
 @Component({

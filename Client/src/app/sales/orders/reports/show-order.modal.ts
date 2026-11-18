@@ -4,6 +4,7 @@ import { map, take } from 'rxjs/operators';
 import { ApiClientService, DownloadService, Util } from '../../../../common/core';
 import { forkJoin, Observable } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as $ from 'jquery';
 
 export interface DialogData{
     id:number
@@ -11,11 +12,11 @@ export interface DialogData{
 
 @Component({
     selector: 'show-order-dialog',
-    template: '<div>Loading Order...Please Wait</div><order-print [hidden]="true" [id]="id" (action)="complete($event)"></order-print>'
+    template: '<div class="p-4 d-print-none">Loading Order...Please Wait</div><order-print [hidden]="true" [id]="id" (action)="complete($event)"></order-print>'
 })
 export class ShowOrderDialog {
 
-    id: number;
+    id: string;
     order: any;
 
     constructor(
@@ -24,7 +25,7 @@ export class ShowOrderDialog {
        public dialogRef: MatDialogRef<ShowOrderDialog>,
        @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) {
-        this.id = data.id;
+        this.id = data.id.toString();
      }
 
 

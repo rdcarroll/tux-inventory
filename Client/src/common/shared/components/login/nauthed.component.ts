@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import * as root from '../../../globals';
+//import * as root from '../../../globals';
+import * as root from '../../../../environments/environment';
 
 @Component({
     selector: 'my-nauthed',

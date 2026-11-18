@@ -3,7 +3,7 @@ import { InventoryType } from '../admin';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../../common/shared';
+import { Column, Config, MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'my-inventorytypes',
@@ -13,18 +13,22 @@ export class inventorytypesComponent implements OnInit {
     items: InventoryType[];
     config: Config;
     searchText: string;
-    columns : Column[] = [
+    message:string="Inventory Types"
+    columns : MyColumn[] = [
         {
             display: 'Name', //The text to display
             variable: 'Name', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
+            sortable: true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'Created Date',
             variable: 'createdAt',
             filter: 'date',
-            sortable: false
+            sortable: true,
+            filterable:true
         },
         {
             filter: 'button',
@@ -46,7 +50,7 @@ export class inventorytypesComponent implements OnInit {
             page: 1,
             collectionSize: 0,
             maxSize: 5,
-            pageSize: this.util.PageSize()
+            pageSize: this.util.MaxPageSize()
         };
     }
 
@@ -88,8 +92,8 @@ export class inventorytypesComponent implements OnInit {
     }
 
 
-    getRow(row: any): void {
-        //this.router.navigate(['/admin/administrators', row.ID]);
+    rowClick(row: any): void {
+        this.router.navigate(['/admin/inventorytypes', row.ID]);
     }
     getBtn(args: any): void {
         switch (args[1]) {

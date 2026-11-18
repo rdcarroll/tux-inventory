@@ -16,7 +16,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
 import { HttpClientModule } from '@angular/common/http';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+//import { AngularEditorModule } from '@kolkov/angular-editor';
 
 import { LoginComponent } from './components/login/login.component';
 import { NauthedComponent } from './components/login/nauthed.component';
@@ -31,7 +31,7 @@ import { DateComponent } from './components/date/date.component';
 import { DateTimeComponent } from './components/datetime/datetime.component';
 import { DateCheckComponent } from './components/datecheck/datecheck.component';
 import { TypeAheadComponent } from './components/typeahead/typeahead.component';
-import { MyChartComponent } from './components/chart/chart.component';
+//import { MyChartComponent } from './components/chart/chart.component';
 import { SearchComponent } from './components/search/search.component';
 import { EditableComponent } from './components/editable/editable.component';
 import { EditModeDirective } from './components/editable/editmode.directive';
@@ -44,15 +44,15 @@ import { HighlightSearch } from './directives/my-highlight.pipe';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { MomentModule } from 'ngx-moment';
 import { NotDoneComponent } from './components/login/notdone.component';
-import { RichTextEditorComponent } from './components/richtexteditor/richtexteditor.component';
 import { LogoutComponent } from './components/logout.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BackButtonComponent } from './components/backbutton/backbutton.component';
 import { SaveQueryDirective } from './directives/save-query.directive';
 import { AlertFixedComponent } from './components/alert-fixed.component';
-import { PopstateComponent } from './components/popstate.component';
-import { NgxBarcodeModule } from 'ngx-barcode';
+//import { PopstateComponent } from './components/popstate.component';
+// Import ngx-barcode module
+import { NgxBarcode6Module } from 'ngx-barcode6';
 import { MoneyComponent } from './components/money/money.component';
 import { BarcodeComponent } from './components/barcode/barcode.component';
 import { MyAGGrid } from './components/aggrid/aggrid.component';
@@ -60,19 +60,19 @@ import { BooleanRenderer } from './components/aggrid/boolean-renderer.component'
 import { BtnCellRenderer } from './components/aggrid/button-cell-renderer.component';
 import { CheckboxRenderer } from './components/aggrid/checkbox-renderer.component';
 import { LinkCellRenderer } from './components/aggrid/link-cell-renderer.component';
-import {AgGridModule} from 'ag-grid-angular-legacy';
+import {AgGridModule} from 'ag-grid-angular';
 
 
 
 @NgModule({
     imports: [
-        CommonModule,
         FormsModule, // <-- import the FormsModule before binding with [(ngModel)],
+        CommonModule,
         ReactiveFormsModule,
         CustomMaterialModule,
         //CustomAngularEditorModule,
         HttpClientModule, 
-        AngularEditorModule,
+        //AngularEditorModule,
         //MatTableModule,
         NgbModule,
         RouterModule,
@@ -80,7 +80,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         MomentModule,
         EditorModule,
         ScrollingModule,
-        NgxBarcodeModule,
+        NgxBarcode6Module,
         AgGridModule
     ],
     declarations: [
@@ -91,7 +91,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         PhoneMaskDirective,
         AlertComponent,
         AlertFixedComponent,
-        PopstateComponent,
+        //PopstateComponent,
         JumboComponent,
         LoadingComponent,
         ThruOfComponent,
@@ -100,8 +100,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         DateTimeComponent,
         DateCheckComponent,
         TypeAheadComponent,
-        RichTextEditorComponent,
-        MyChartComponent,
+       // MyChartComponent,
         SearchComponent,
         EditableComponent,
         EditModeDirective,
@@ -137,7 +136,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         SaveQueryDirective,
         AlertComponent,
         AlertFixedComponent,
-        PopstateComponent,
+        //PopstateComponent,
         JumboComponent,
         LoadingComponent,
         ThruOfComponent,
@@ -146,8 +145,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         DateTimeComponent,
         DateCheckComponent,
         TypeAheadComponent,
-        RichTextEditorComponent,
-        MyChartComponent,
+       // MyChartComponent,
         SearchComponent,
         PendingApproveDialog,
         MyFilterPipe,
@@ -163,7 +161,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         FontAwesomeModule,
         ScrollingModule,
         BackButtonComponent,
-        NgxBarcodeModule,
+        NgxBarcode6Module,
         MoneyComponent,
         BarcodeComponent,
         MyAGGrid,
@@ -172,7 +170,7 @@ import {AgGridModule} from 'ag-grid-angular-legacy';
         CheckboxRenderer,
         LinkCellRenderer,
     ],
-    entryComponents: [PendingApproveDialog, AcknowledgeDialog]
+    //entryComponents: [PendingApproveDialog, AcknowledgeDialog]
 })
 export class SharedModule {
 constructor(library: FaIconLibrary) {

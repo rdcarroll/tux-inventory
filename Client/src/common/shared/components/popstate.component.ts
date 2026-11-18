@@ -11,8 +11,7 @@ import { Util } from '../../core';
 
 export class PopstateComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
-    @Output()
-    popped = new EventEmitter<string>();
+    @Output() popped = new EventEmitter<string>();
 
     constructor(private loadingService: Util, private router: Router) { }
 
@@ -22,8 +21,8 @@ export class PopstateComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscription = this.router.events.pipe(filter((event) => event instanceof NavigationStart))
-            .subscribe((event: NavigationStart) => {
-                if (event.navigationTrigger == "popstate")
+            .subscribe((event2: NavigationStart) => {
+                if (event2.navigationTrigger == "popstate")
                     this.complete();
             });
 

@@ -51,6 +51,6 @@ import { ShowTicketDialog } from './orders/reports/show-ticket.modal';
         TicketPrintComponent,
         ShowTicketDialog
     ],
-    entryComponents: [ShowOrderDialog,ShowEventDialog,ShowTicketDialog]
+    //entryComponents: [ShowOrderDialog,ShowEventDialog,ShowTicketDialog]
 })
 export class SalesModule { }

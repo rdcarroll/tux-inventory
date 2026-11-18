@@ -7,6 +7,4 @@ node_modules
 **/Client/src/**/*.js.map
 Client/src/**/*.js
 Client/src/**/*.js.map
-# Angular
-Client/.angular/cache
-# Angular build artifacts
+Client/.angular/

@@ -7,10 +7,10 @@ export const version: string = "0.0.1";
 
 export const loginmodel = "forms";
 export const appname = "Inventory Management System";
-export const debugmode = __DEBUG_MODE__; //debug or live
-export const anchor_target = __ANCHOR_TARGET__;
-export const UID = __UID__;
-export const PWD = __PWD__;
+export const debugmode = "sample.com"; //debug or live
+export const anchor_target = "sample.com";
+export const UID = "sample.com";
+export const PWD = "sample.com";
 export const email_root = "sample.com";
 export const file_target = "_self";
 export const assetpath = "dist/";

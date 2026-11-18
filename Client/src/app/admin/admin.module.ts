@@ -48,6 +48,7 @@ import { BusinessInandoutComponent } from './businandout/businandout.component';
         PackageDetailComponent,
         packageinventoryDetailComponent,
         CompanyDetailComponent,
+        BusinessInandoutPopupComponent,
          BusinessInandoutComponent
     ]
 })

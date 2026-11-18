@@ -26,7 +26,7 @@ export class InventoryDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.getLookups().subscribe(res=>{
             if (this.id === 'add') {
                 this.item = new Inventory();

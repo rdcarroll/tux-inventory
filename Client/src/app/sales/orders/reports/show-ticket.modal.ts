@@ -4,6 +4,7 @@ import { map, take } from 'rxjs/operators';
 import { ApiClientService, DownloadService, Util } from '../../../../common/core';
 import { forkJoin, Observable } from 'rxjs';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as $ from 'jquery';
 
 export interface DialogData{
     id:number
@@ -11,11 +12,11 @@ export interface DialogData{
 
 @Component({
     selector: 'show-ticket-dialog',
-    template: '<div>Loading Order...Please Wait</div><ticket-print [hidden]="true" [id]="id" (action)="complete($event)"></ticket-print>'
+    template: '<div class="p-4">Loading Order...Please Wait</div><ticket-print [hidden]="true" [id]="id" (action)="complete($event)"></ticket-print>'
 })
 export class ShowTicketDialog {
 
-    id: number;
+    id: string;
     order: any;
 
     constructor(
@@ -24,7 +25,7 @@ export class ShowTicketDialog {
        public dialogRef: MatDialogRef<ShowTicketDialog>,
        @Inject(MAT_DIALOG_DATA) public data: DialogData
     ) {
-        this.id = data.id;
+        this.id = data.id.toString();
      }
 
 

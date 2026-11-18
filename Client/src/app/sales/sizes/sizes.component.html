@@ -4,19 +4,20 @@
 </div>
 
 <ng-template #edittemplate>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Sizes for Customer : {{customer.FullName}} </h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
-        <span aria-hidden="true">&times;</span>
+ 
+    <div class="modal-header p-2">
+      <h4 class="modal-title pull-leftz">Sizes for Customer : {{customer.FullName}} </h4>
+      <button type="button" class="btn-close pull-rightz" aria-label="Close" (click)="dialogRef.close()">
+        <!-- <span aria-hidden="true">&times;</span> -->
       </button>
     </div>
-    <div class="modal-body">
-      <div class="row">
+    <div class="modal-body p-3">
+      <div class="row mb-2">
           <div class="col-md-6">
               <div class="form-group row">
                   <label class="col-md-4 col-form-label">Coat</label>
                   <div class="col-md-8">
-                      <input class="form-control" name="Coat" placeholder="" [(ngModel)]="customer_size.Coat" required>
+                      <input class="form-control" name="Coat" placeholder="" [(ngModel)]="customer_size.Coat" required autofocus>
                   </div>
               </div>
           </div>
@@ -29,7 +30,7 @@
               </div>
           </div>
       </div>
-      <div class="row">
+      <div class="row mb-2">
           <div class="col-md-6">
               <div class="form-group row">
                   <label class="col-md-4 col-form-label">Pants</label>
@@ -47,7 +48,7 @@
               </div>
           </div>
       </div>
-      <div class="row">
+      <div class="row mb-2">
           <div class="col-md-6">
               <div class="form-group row">
                   <label class="col-md-4 col-form-label">Vest</label>
@@ -65,7 +66,7 @@
               </div>
           </div>
       </div>
-      <div class="row">
+      <div class="row mb-2">
           <div class="col-md-6">
               <div class="form-group row">
                   <label class="col-md-4 col-form-label">Shoe</label>
@@ -83,7 +84,7 @@
               </div>
           </div>
       </div>
-      <div class="row">
+      <div class="row mb-2">
           <div class="col-md-6">
               <div class="form-group row">
                   <label class="col-md-4 col-form-label">Chest</label>
@@ -101,7 +102,7 @@
               </div>
           </div>
       </div>
-      <div class="row">
+      <div class="row mb-2">
           <div class="col-md-6">
               <div class="form-group row">
                   <label class="col-md-4 col-form-label">Sleeve</label>

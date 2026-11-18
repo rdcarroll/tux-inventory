@@ -220,7 +220,7 @@ export class MyAGGrid implements OnInit, OnChanges {
     onFirstDataRendered(params: any): void {
         if (this.statusBarComponent) this.statusBarComponent.setCount(this.rowData.length);
         if (this.id) {
-            const filterModel = localStorage.getItem(`${this.id}-filtering`);
+            const filterModel = localStorage.getItem(`${this.id}-filtering`)!;
             this.api.setFilterModel(JSON.parse(filterModel));
         }
         this.api.sizeColumnsToFit();
@@ -228,7 +228,7 @@ export class MyAGGrid implements OnInit, OnChanges {
     onColumnEverythingChanged(params: any): void {
         this.statusBarComponent?.setCount(this.rowData.length);
         if (this.id) {
-            const filterModel = localStorage.getItem(`${this.id}-filtering`);
+            const filterModel = localStorage.getItem(`${this.id}-filtering`)!;
             this.api.setFilterModel(JSON.parse(filterModel));
         }
         this.api?.sizeColumnsToFit();
@@ -240,7 +240,7 @@ export class MyAGGrid implements OnInit, OnChanges {
         }
     }
     // define a column type (you can define as many as you like)
-    columnTypes = {
+    columnTypes : any = {
         nonEditableColumn: { editable: false },
         textColumn: { editable: false },
         numberColumn: { editable: false },
@@ -442,6 +442,8 @@ export class MyAGGrid implements OnInit, OnChanges {
         //        })).subscribe();
     }
 
+    onBtnMyFilters(): void {
+    }
     onBtnExportExcel(): void {
         this.export_excel();
     }

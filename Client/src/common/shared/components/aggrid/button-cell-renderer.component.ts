@@ -1,5 +1,5 @@
 ﻿import { Component, OnDestroy } from '@angular/core';
-import { AgRendererComponent } from 'ag-grid-angular-legacy';
+import { AgRendererComponent } from 'ag-grid-angular';
 import { ICellRendererParams } from "ag-grid-community";
 
 export interface IVCRP extends ICellRendererParams {
@@ -25,7 +25,7 @@ export class BtnCellRenderer implements AgRendererComponent {
     doshow: boolean = false;
 
     // gets called once before the renderer is used
-    agInit(params: any): void {
+    agInit(params: any): void|null {
         if (!params.data) return null;
         this.doshow = true;
         this.params = params;

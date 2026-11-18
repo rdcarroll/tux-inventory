@@ -31,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Point static path to dist
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
+//app.use('/wwwroot', express.static(path.join(__dirname, 'wwwroot')));
 
 // Auth and routes
 app.oauth = oAuth2Server({
@@ -61,7 +62,7 @@ app.use('/api', api);
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/views/index.html'));
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
 /**

@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { OrderItem } from '../sales';
-import { identifierModuleUrl } from '@angular/compiler';
+//import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
     selector: 'my-sizes',
@@ -49,7 +49,7 @@ export class sizesComponent implements OnInit {
         this.getCustomer(this.customerid).subscribe(res=>{
             
             this.dialogRef = this.dialog.open(template, {
-              width: '80%'
+              width: '60%'
             });
             this.dialogRef.afterClosed().subscribe((result: any) => {
                 this.closeEdit.emit(true);

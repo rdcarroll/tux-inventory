@@ -9,7 +9,7 @@ export class FileService {
 
     fileUpload(URI: string, elementId: string, fileName?: string, options?:any): Observable<any> {
         //this one uses api to upload base64 encoded file to server side loaction
-        let finfo = (<HTMLInputElement>document.getElementById(elementId)).files[0];//current filename
+        let finfo = (<HTMLInputElement>document.getElementById(elementId)).files![0];//current filename
         let nFileName = finfo.name;
         let reader = new FileReader();
         options = options || {};
@@ -20,7 +20,7 @@ export class FileService {
                 fileName = fileName || nFileName;
 
                 //if you want the base64encoded file you would use the below line:
-                let base64StringFile = btoa(data.toString());
+                let base64StringFile = btoa(data!.toString());
 
                 var newfile = {
                     Data: base64StringFile,
@@ -62,7 +62,8 @@ export class FileService {
 
         if (navigator.appVersion.toString().indexOf('.NET') > 0
             || navigator.appVersion.toString().indexOf('Edge') > 0)
-            window.navigator.msSaveBlob(blob, fileName);
+            var aa = 0;
+            //window.navigator.msSaveBlob(blob, fileName);
         else {
             var a = document.createElement("a");
             document.body.appendChild(a);

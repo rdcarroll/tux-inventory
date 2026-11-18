@@ -4,7 +4,8 @@ import { Util } from '../../core';
 
 @Component({
     selector: 'loading-spinner',
-    template: "<div class='loading' *ngIf='show'><div class='center'><fa-icon [icon]=\"['fas', 'circle-notch']\" [spin]=\"true\" class=\"ettp-text-primary\" size=\"7x\"></fa-icon></div></div>"
+    template: "<div class='loading' *ngIf='show'><div class='center'>loading..............</div></div>"
+    //template: "<div class='loading' *ngIf='show'><div class='center'><fa-icon [icon]=\"['fas', 'circle-notch']\" [spin]=\"true\" class=\"ettp-text-primary\" size=\"7x\"></fa-icon></div></div>"
 })
 
 export class LoadingComponent implements OnInit, OnDestroy {

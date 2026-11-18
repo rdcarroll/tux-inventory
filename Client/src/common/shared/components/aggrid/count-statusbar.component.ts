@@ -1,5 +1,5 @@
 ﻿import { Component } from '@angular/core';
-import { IStatusPanelAngularComp } from 'ag-grid-angular-legacy';
+import { IStatusPanelAngularComp } from 'ag-grid-angular';
 import { IStatusPanelComp, IStatusPanelParams } from 'ag-grid-community';
 
 export interface IStatusBar {

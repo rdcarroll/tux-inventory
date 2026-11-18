@@ -5,7 +5,7 @@ import { ApiClientService, Util } from '../../../../common/core';
 import { Order } from '../../sales';
 import { forkJoin, Observable } from 'rxjs';
 import * as moment from 'moment';
-import * as root from '../../../../common/globals';
+import * as root from '../../../../environments/environment';
 
 @Component({
     selector: 'event-print',
@@ -40,17 +40,23 @@ export class EventPrintComponent implements OnChanges {
     }
     ngOnChanges(): void {
         if(this.id){
-            this.getOrder(this.id).subscribe(res=>{
-                this.getOrderItems(this.id)
-                .subscribe(res => {
-                    setTimeout(() => {
-                        this.action.emit(true);
-                    }, 500);
-                 }, (err) => {
+            this.getOrder(this.id).subscribe({
+                next: res => {
+                    this.getOrderItems(this.id)
+                    .subscribe({
+                        next: res => {
+                            setTimeout(() => {
+                                this.action.emit(true);
+                            }, 500);
+                        },
+                        error: err => {
+                            this.action.emit(false);
+                        }
+                    });
+                },
+                error: err => {
                     this.action.emit(false);
-                });
-            }, (err) => {
-                this.action.emit(false);
+                }
             });
         }
     }

@@ -6,16 +6,16 @@
 </div>
 
 <ng-template #pulltemplate>
-    <div class="modal-header">
+    <div class="modal-header p-2">
       <h4 class="modal-title pull-left">Pull items for Customer : {{order.Customer.FullName}} </h4>
-      <button type="button" class="close float-right" aria-label="Close" (click)="dialogRef.close()">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" class="btn-close pull-rightz" aria-label="Close" (click)="dialogRef.close()">
+        <!-- <span aria-hidden="true">&times;</span> -->
       </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body p-3">
       <div class="row padded">
         <div class="col-md-12">
-          <button type="button" class="btn btn-info float-right space-right" (click)="print(orderid)">Open Printable Ticket in a New Window</button>
+          <button type="button" class="btn btn-info float-end space-right" (click)="print(orderid)">Open Printable Ticket in a New Window</button>
         </div>
       </div>
       <table class="table table-striped table-condensed">
@@ -61,17 +61,17 @@
 
   
 <ng-template #pickuptemplate>
-  <div class="modal-header">
+  <div class="modal-header p-2">
     <h4 class="modal-title pull-left">Pickup Order for Customer : {{order.Customer.FullName}} </h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+      <button type="button" class="btn-close pull-rightz" aria-label="Close" (click)="dialogRef.close()">
+        <!-- <span aria-hidden="true">&times;</span> -->
+      </button>
   </div>
-  <div class="modal-body">
+  <div class="modal-body p-3">
     <div *ngIf="hasItemsToPickup; else no_items_topickup">
       <div class="row padded">
         <div class="col-md-12">
-          <button type="button" class="btn btn-info float-right space-right" (click)="print(orderid)">Open Printable Ticket in a New Window</button>
+          <button type="button" class="btn btn-info float-end space-right" (click)="print(orderid)">Open Printable Ticket in a New Window</button>
         </div>
       </div>
       <div class="alert alert-info">
@@ -113,17 +113,17 @@
 </ng-template>
   
 <ng-template #returntemplate>
-    <div class="modal-header">
+    <div class="modal-header p-2">
       <h4 class="modal-title pull-left">Return items for Customer : {{order.Customer.FullName}} </h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="dialogRef.close()">
-        <span aria-hidden="true">&times;</span>
+      <button type="button" class="btn-close pull-rightz" aria-label="Close" (click)="dialogRef.close()">
+        <!-- <span aria-hidden="true">&times;</span> -->
       </button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body p-3">
       <div *ngIf="hasItemsToReturn; else no_items_toreturn">
         <div class="row padded">
           <div class="col-md-12">
-            <button type="button" class="btn btn-info float-right space-right" (click)="print(orderid)">Open Printable Ticket in a New Window</button>
+            <button type="button" class="btn btn-info float-end space-right" (click)="print(orderid)">Open Printable Ticket in a New Window</button>
           </div>
         </div>
         <table class="table table-striped table-condensed">

@@ -47,7 +47,7 @@ export class EditableComponent implements OnDestroy {
             switchMapTo(clickOutside$),
             takeUntil(this.unsubscribe$)
         ).subscribe(event => {
-            this.update.next();
+            this.update.next(null);
             this.mode = 'view';
         });
     }

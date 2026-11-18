@@ -3,7 +3,7 @@ import { EventType } from '../admin';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../../common/shared';
+import { Column, Config, MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'my-eventtypes',
@@ -13,18 +13,23 @@ export class eventtypesComponent implements OnInit {
     items: EventType[];
     config: Config;
     searchText: string;
-    columns : Column[] = [
+    message:string="Event Types"
+    // Define the columns for the grid
+    columns : MyColumn[] = [
         {
             display: 'Name', //The text to display
             variable: 'Name', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
+            sortable: true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'Created Date',
             variable: 'createdAt',
             filter: 'date',
-            sortable: false
+            sortable: true,
+            filterable:true
         },
         {
             filter: 'button',
@@ -46,7 +51,7 @@ export class eventtypesComponent implements OnInit {
             page: 1,
             collectionSize: 0,
             maxSize: 5,
-            pageSize: this.util.PageSize()
+            pageSize: this.util.MaxPageSize()
         };
     }
 
@@ -88,8 +93,8 @@ export class eventtypesComponent implements OnInit {
     }
 
 
-    getRow(row: any): void {
-        //this.router.navigate(['/admin/administrators', row.ID]);
+    rowClick(row: any): void {
+        this.router.navigate(['/admin/eventtypes', row.ID]);
     }
     getBtn(args: any): void {
         switch (args[1]) {

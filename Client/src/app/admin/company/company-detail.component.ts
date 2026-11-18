@@ -22,7 +22,7 @@ export class CompanyDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.ApiClient.pGet("companies/" + this.id, {}).pipe(take(1))
             .subscribe(res => this.item = res);
     }

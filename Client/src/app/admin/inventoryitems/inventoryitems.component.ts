@@ -3,7 +3,7 @@ import { InventoryItem } from '../admin';
 import { ApiClientService, Util, APIParms } from '../../../common/core';
 import { finalize, take } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Column, Config } from '../../../common/shared';
+import { Column, Config, MyColumn } from '../../../common/shared';
 
 @Component({
     selector: 'my-inventoryitems',
@@ -13,30 +13,36 @@ export class inventoryitemsComponent implements OnInit {
     items: InventoryItem[];
     config: Config;
     searchText: string;
-    columns : Column[] = [
+    message:string="Inventory Items"
+    columns : MyColumn[] = [
         {
             display: 'Model Name', //The text to display
             variable: 'Inventory.ModelWDesc', //The name of the key that's apart of the data array
             filter: 'text', //The type data type of the column (number, text, date, etc.)
-            sortable: false
+            sortable: true,
+            filterable:true,
+            autosize:true
         },
         {
             display: 'SKU',
             variable: 'Barcode',
             filter: 'text',
-            sortable: false
+            sortable: true,
+            filterable:true
         },
         {
             display: 'Size',
             variable: 'Size',
             filter: 'text',
-            sortable: false
+            sortable: true,
+            filterable:true
         },
         {
             display: 'Status',
             variable: 'Status.Name',
             filter: 'text',
-            sortable: false
+            sortable: true,
+            filterable:true
         },
         {
             filter: 'button',

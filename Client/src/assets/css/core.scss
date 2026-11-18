@@ -35,7 +35,7 @@ body {
     text-align: center;
     background: rgb(0,0,0);
     background: rgba(0,0,0,.3);
-    *background: transparent;
+    // *background: transparent;
 }
 
 .loading .center {
@@ -141,7 +141,12 @@ select.ng-invalid {
     padding-top: 15px;
     padding-bottom: 15px;
 }
-
+.jumbotron {
+    padding: 2rem 1rem;
+    margin-bottom: 1rem;
+    background-color: #e9ecef;
+    border-radius: .3rem;
+}
 .ettp-condensed-form .form-group {
     margin-bottom: .1rem;
 }

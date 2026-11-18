@@ -33,7 +33,7 @@ export class InventoryItemDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         this.inventory_id = this.route.snapshot.queryParams["inventory_id"];
         if(this.inventory_id) this.backto = ['/admin/inventory',this.inventory_id];
         this.getLookups().subscribe(res=>{
@@ -61,23 +61,29 @@ export class InventoryItemDetailComponent implements OnInit {
     
     add(): void {
         this.ApiClient.pPost("inventory_items", {}, this.item).pipe(take(1))
-            .subscribe(res => {
-                this.item = res;
-                this.id = this.item.ID.toString();
-                this.router.navigate(this.backto);
-                this.util.alert("success", "Success Adding Inventory Item", false, { icon: 'check' }, true);
-            }, (err) => {
-                this.util.handleError(err, "Error Adding");
+            .subscribe({
+                next: res => {
+                    this.item = res;
+                    this.id = this.item.ID.toString();
+                    this.router.navigate(this.backto);
+                    this.util.alert("success", "Success Adding Inventory Item", false, { icon: 'check' }, true);
+                },
+                error: err => {
+                    this.util.handleError(err, "Error Adding");
+                }
             });
     }
 
     save(): void {
         this.ApiClient.pPut("inventory_items/" + this.id, {}, this.item).pipe(take(1))
-            .subscribe(res => {
-                this.router.navigate(this.backto);
-                this.util.alert("success", "Success Saving Inventory Item", false, { icon: 'check' }, true);
-            }, (err) => {
-                this.util.handleError(err, "Error Saving");
+            .subscribe({
+                next: res => {
+                    this.router.navigate(this.backto);
+                    this.util.alert("success", "Success Saving Inventory Item", false, { icon: 'check' }, true);
+                },
+                error: err => {
+                    this.util.handleError(err, "Error Saving");
+                }
             });
     }
 

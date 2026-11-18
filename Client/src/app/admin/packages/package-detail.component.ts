@@ -24,7 +24,7 @@ export class PackageDetailComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.id = this.route.snapshot.paramMap.get('id');
+        this.id = this.route.snapshot.paramMap.get('id')!;
         if (this.id === 'add') {
             this.item = new Package();
         }

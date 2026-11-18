@@ -34,7 +34,7 @@ export class MoneyComponent implements OnInit, OnChanges {
         //this.searchChanged.emit(this.searchText);
     }
     
-    formatMoney(value:number): string {
+    formatMoney(value:number): string|null {
         return this.currencyPipe.transform(value);
     }
 

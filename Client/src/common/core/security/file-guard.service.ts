@@ -18,7 +18,7 @@ export class FileGuard implements CanActivate {
     private observable: Observable<any>;
 
     private IMPORT_TEMPLATE(uri: string): Observable<any>{
-        let wbs_id = /wbs_id=([^&]+)/.test(uri) ? uri.match(/wbs_id=([^&]+)/)[1] : "undefined";
+        let wbs_id = /wbs_id=([^&]+)/.test(uri) ? uri.match(/wbs_id=([^&]+)/)![1] : "undefined";
         return this.ApiClient.pPost(`Wbs/${wbs_id}/TemplateFile`, { responseType: 'ArrayBuffer' }, { wbs_id: wbs_id }).pipe(take(1),
             map(
                 (res) => {

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SecurityService, Util } from '../../../core';
-import * as root from '../../../globals';
+import * as root from '../../../../environments/environment';
 
 @Component({
     selector: 'login',

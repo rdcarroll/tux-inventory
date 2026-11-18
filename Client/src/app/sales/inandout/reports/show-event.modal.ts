@@ -12,7 +12,7 @@ export interface EDialogData{
 
 @Component({
     selector: 'show-event-dialog',
-    template: '<div>Loading Order...Please Wait</div><event-print [hidden]="true" [id]="id" [mode]="mode" (action)="complete($event)"></event-print>'
+    template: '<div class="p-4">Loading Order...Please Wait</div><event-print [hidden]="true" [id]="id" [mode]="mode" (action)="complete($event)"></event-print>'
 })
 export class ShowEventDialog {
 

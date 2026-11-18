@@ -6,17 +6,13 @@
         <div class="col-md-12">
             <div class="card" *ngIf="item">
                 <div class="card-header">
-                    <my-backbutton class="float-right" [link]="['/sales/customers']"></my-backbutton>
-                    <h3><span>{{id==='add'?"Create":"Update"}} </span>Customer</h3>
+                    <my-backbutton class="float-end" [link]="['/sales/customers']"></my-backbutton>
+                    <h4><span>{{id==='add'?"Create":"Update"}} </span>Customer</h4>
                 </div>
                 <div class="card-body">
 
                     <form>
-                        <div class="row">
-                            <div class="col-md-6"></div>
-                            <div class="col-md-6"></div>
-                        </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">First Name</label>
@@ -34,7 +30,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">Phone</label>
@@ -52,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label">Address</label>
@@ -65,12 +61,12 @@
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label"></label>
                                     <div class="col-md-8">
-                                        <my-sizes *ngIf="item.ID" class="float-right space-left" [customerid]="item.ID" (closeEdit)="close()"></my-sizes>
+                                        <my-sizes *ngIf="item.ID" class="float-end space-left" [customerid]="item.ID" (closeEdit)="close()"></my-sizes>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row" *ngIf="item.OrderTickets">
+                        <div class="row mb-2" *ngIf="item.OrderTickets">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">

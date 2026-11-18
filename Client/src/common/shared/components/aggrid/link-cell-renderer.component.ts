@@ -1,5 +1,5 @@
 ﻿import { Component, OnDestroy } from '@angular/core';
-import { AgRendererComponent } from 'ag-grid-angular-legacy';
+import { AgRendererComponent } from 'ag-grid-angular';
 import { ICellRendererParams } from "ag-grid-community";
 
 

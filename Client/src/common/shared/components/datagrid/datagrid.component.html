@@ -83,7 +83,7 @@
                         [boundaryLinks]="true" [maxSize]="maxSize" [ellipses]="false" *ngIf="data && pageSize < collectionSize" size="sm"></ngb-pagination>
     </div>
     <div class="col-md-6">
-        <thru-of [page]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" [count]="data?.length" *ngIf="data && pageSize < collectionSize"></thru-of>
+        <thru-of [page]="page" [pageSize]="pageSize" [collectionSize]="collectionSize" [count]="data.length" *ngIf="data && pageSize < collectionSize"></thru-of>
     </div>
 </div>
 
